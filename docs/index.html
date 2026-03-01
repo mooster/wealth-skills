@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wealth Skills — Claude Code Skills for Wealth Management</title>
+    <meta name="description" content="AI-powered skills for wealth management professionals: portfolio review, client reporting, rebalancing, tax-loss harvesting.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0b;
+            --surface: #141416;
+            --border: #23232a;
+            --text: #e8e8ec;
+            --text-muted: #8b8b97;
+            --accent: #4fa8c4;
+            --accent-dim: rgba(79, 168, 196, 0.12);
+            --green: #34d399;
+            --blue: #60a5fa;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+        /* Hero */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            letter-spacing: 0.5px;
+        }
+        .hero-badge span { color: var(--accent); }
+        .hero h1 {
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+        }
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto 40px;
+        }
+
+        /* Coming soon */
+        .coming-soon {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 40px 28px;
+            display: inline-block;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .coming-soon h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        .coming-soon p {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 480px;
+        }
+
+        /* Skills preview */
+        .skills { padding: 60px 0 80px; }
+        .skills h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .skill-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            transition: border-color 0.2s;
+        }
+        .skill-card:hover { border-color: var(--accent); }
+        .skill-card .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--accent-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        .skill-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .skill-card .trigger {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 12px;
+            color: var(--accent);
+            background: var(--accent-dim);
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        .skill-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Why */
+        .why {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .why h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .why p {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+        .credibility {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .cred-item { text-align: center; }
+        .cred-item .num {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .cred-item .label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Also */
+        .also {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .also p {
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+        .also a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+        .also a:hover { text-decoration: underline; }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        footer a:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">Claude Code Plugin <span>&middot; Coming Soon</span></div>
+        <h1>AI skills for <em>wealth<br>management</em>.</h1>
+        <p>Portfolio reviews, client reporting, rebalancing, and tax-loss harvesting — built from real wealth management operating experience.</p>
+
+        <div class="coming-soon">
+            <h2>Launching Soon</h2>
+            <p>We're building Claude Code skills that encode real wealth management expertise. Built by the team behind Canopy Cloud — serving 60+ institutions and $80B+ in assets.</p>
+        </div>
+    </section>
+
+    <!-- Skills Preview -->
+    <section class="skills">
+        <h2>Planned Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="icon">&#9878;</div>
+                <h3>Client Review Prep</h3>
+                <div class="trigger">"prep for client review"</div>
+                <p>Generate a comprehensive client review brief — performance attribution, allocation drift, rebalancing needs, and talking points.</p>
+            </div>
+            <div class="skill-card">
+                <div class="icon">&#9635;</div>
+                <h3>Portfolio Rebalancer</h3>
+                <div class="trigger">"rebalance this portfolio"</div>
+                <p>Analyze drift from target allocation, generate trade recommendations with tax impact awareness and lot-level optimization.</p>
+            </div>
+            <div class="skill-card">
+                <div class="icon">&#9730;</div>
+                <h3>Tax-Loss Harvester</h3>
+                <div class="trigger">"find tax-loss harvesting opportunities"</div>
+                <p>Scan holdings for unrealized losses, identify swap candidates, flag wash sale risks. Built for multi-account households.</p>
+            </div>
+            <div class="skill-card">
+                <div class="icon">&#9998;</div>
+                <h3>Client Report Writer</h3>
+                <div class="trigger">"generate client report"</div>
+                <p>Transform raw portfolio data into polished quarterly reports with performance commentary, market context, and next steps.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why -->
+    <section class="why">
+        <h2>Built by wealth management operators.</h2>
+        <p>These skills encode domain expertise from serving institutional wealth managers — not generic finance templates.</p>
+        <div class="credibility">
+            <div class="cred-item">
+                <div class="num">$80B+</div>
+                <div class="label">Assets under reporting</div>
+            </div>
+            <div class="cred-item">
+                <div class="num">60+</div>
+                <div class="label">Institutional clients</div>
+            </div>
+            <div class="cred-item">
+                <div class="num">250+</div>
+                <div class="label">Custodian integrations</div>
+            </div>
+            <div class="cred-item">
+                <div class="num">1,600+</div>
+                <div class="label">Active users</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cross-promo -->
+    <section class="also">
+        <p>Also building a startup? Check out <a href="https://founderskills.ai">founderskills.ai</a> — Claude Code skills for founders.</p>
+    </section>
+</div>
+
+<footer>
+    <div class="container">
+        Built by <a href="https://github.com/mooster">Mu Chen</a> &middot; CEO @ <a href="https://canopycloud.com">Canopy Cloud</a>
+    </div>
+</footer>
+
+</body>
+</html>
