@@ -634,14 +634,39 @@ body::before {
   <header class="survey-header" id="surveyHeader">
     <div class="label">Amongst Families &mdash; Benchmark</div>
     <h1>AI &amp; Data Operations<br>in <em>Family Offices</em></h1>
-    <p>We're benchmarking how leading family offices navigate AI adoption and data operations. Takes 2 minutes. Results will be shared with participants.</p>
+    <p>We're benchmarking how leading family offices navigate AI adoption and data operations. Takes 2 minutes. All individual information is anonymized.</p>
   </header>
 
   <div class="questions-container" id="questionsContainer">
 
+    <!-- Q0: Role label -->
+    <div class="question-slide" data-q="0">
+      <div class="q-number">Question 1 of 7</div>
+      <h2 class="q-title">Which best describes your role?</h2>
+      <p class="q-subtitle"></p>
+      <div class="single-select" id="q0Single">
+        <div class="single-option" data-val="Family office professional">
+          <div class="radio"></div>
+          <span>Family office professional</span>
+        </div>
+        <div class="single-option" data-val="Wealth / asset manager">
+          <div class="radio"></div>
+          <span>Wealth / asset manager</span>
+        </div>
+        <div class="single-option" data-val="Technology / fintech">
+          <div class="radio"></div>
+          <span>Technology / fintech</span>
+        </div>
+        <div class="single-option" data-val="Other">
+          <div class="radio"></div>
+          <span>Other</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Q1: Rating Scale -->
     <div class="question-slide" data-q="1">
-      <div class="q-number">Question 1 of 6</div>
+      <div class="q-number">Question 2 of 7</div>
       <h2 class="q-title">How does your team split time between data preparation and actual analysis?</h2>
       <p class="q-subtitle">On a typical week.</p>
       <div class="rating-scale" id="q1Rating">
@@ -660,7 +685,7 @@ body::before {
 
     <!-- Q2: Multi-select -->
     <div class="question-slide" data-q="2">
-      <div class="q-number">Question 2 of 6</div>
+      <div class="q-number">Question 3 of 7</div>
       <h2 class="q-title">What's your biggest barrier to getting real operational value from AI?</h2>
       <p class="q-subtitle">Pick up to 2.</p>
       <div class="multi-select" id="q2Multi">
@@ -696,7 +721,7 @@ body::before {
 
     <!-- Q3: Single select -->
     <div class="question-slide" data-q="3">
-      <div class="q-number">Question 3 of 6</div>
+      <div class="q-number">Question 4 of 7</div>
       <h2 class="q-title">How many custodians or banks does your office aggregate data from monthly?</h2>
       <p class="q-subtitle"></p>
       <div class="single-select" id="q3Single">
@@ -721,7 +746,7 @@ body::before {
 
     <!-- Q4: Ranking -->
     <div class="question-slide" data-q="4">
-      <div class="q-number">Question 4 of 6</div>
+      <div class="q-number">Question 5 of 7</div>
       <h2 class="q-title">Rank these by how urgently your team needs improvement.</h2>
       <p class="q-subtitle">Drag to reorder. Top = most urgent.</p>
       <div class="ranking-list" id="q4Ranking">
@@ -755,7 +780,7 @@ body::before {
 
     <!-- Q5: Intent + conditional email -->
     <div class="question-slide" data-q="5">
-      <div class="q-number">Question 5 of 6</div>
+      <div class="q-number">Question 6 of 7</div>
       <h2 class="q-title">If a platform could cut your data preparation time by 70% &mdash; with built-in verification across all custodians &mdash; would you want a demo?</h2>
       <p class="q-subtitle"></p>
       <div class="single-select" id="q5Single">
@@ -780,7 +805,7 @@ body::before {
 
     <!-- Q6: Open-ended -->
     <div class="question-slide" data-q="6">
-      <div class="q-number">Question 6 of 6</div>
+      <div class="q-number">Question 7 of 7</div>
       <h2 class="q-title">Anything else you'd like to share about your data operations challenges?</h2>
       <p class="q-subtitle">Optional — but incredibly helpful.</p>
       <textarea class="open-textarea" id="q6Text" placeholder="E.g., &quot;We spend 3 days every month just reconciling custodian statements...&quot;"></textarea>
@@ -818,10 +843,10 @@ body::before {
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxv4bb-xyYVPAEZKfUwy7hviVPdhBP-4QUhyHbFIqf6YKMSS6ZQCHA6TzPVPa6G6mfdHA/exec';
 
   // State
-  const totalQ = 6;
-  let currentQ = 1;
+  const totalQ = 7;
+  let currentQ = 0;
   const startedAt = Date.now();
-  const answers = { q1: null, q2: [], q2_other: '', q3: null, q4: [], q5: null, email: '', q6: '' };
+  const answers = { q0_role: null, q1: null, q2: [], q2_other: '', q3: null, q4: [], q5: null, email: '', q6: '' };
 
   // Elements
   const progressFill = document.getElementById('progressFill');
@@ -834,7 +859,8 @@ body::before {
 
   // Init
   function init() {
-    showQuestion(1);
+    showQuestion(0);
+    setupQ0();
     setupQ1();
     setupQ2();
     setupQ3();
@@ -846,7 +872,7 @@ body::before {
   }
 
   function updateProgress() {
-    const pct = ((currentQ - 1) / totalQ) * 100;
+    const pct = (currentQ / totalQ) * 100;
     progressFill.style.width = pct + '%';
   }
 
@@ -865,7 +891,7 @@ body::before {
       if (target) target.classList.add('active');
     }, 50);
 
-    btnBack.classList.toggle('hidden', n === 1);
+    btnBack.classList.toggle('hidden', n === 0);
 
     if (n === 6) {
       btnNext.textContent = 'Submit';
@@ -883,6 +909,7 @@ body::before {
   function updateNextEnabled() {
     let enabled = false;
     switch (currentQ) {
+      case 0: enabled = answers.q0_role !== null; break;
       case 1: enabled = answers.q1 !== null; break;
       case 2: enabled = answers.q2.length > 0; break;
       case 3: enabled = answers.q3 !== null; break;
@@ -910,7 +937,19 @@ body::before {
   }
 
   function handleBack() {
-    if (currentQ > 1) showQuestion(currentQ - 1);
+    if (currentQ > 0) showQuestion(currentQ - 1);
+  }
+
+  // === Q0: Role label ===
+  function setupQ0() {
+    document.querySelectorAll('#q0Single .single-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        document.querySelectorAll('#q0Single .single-option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        answers.q0_role = opt.dataset.val;
+        updateNextEnabled();
+      });
+    });
   }
 
   // === Q1: Rating ===
@@ -1112,6 +1151,7 @@ body::before {
 
     const payload = {
       timestamp: new Date().toISOString(),
+      role: answers.q0_role,
       q1_time_split: answers.q1,
       q2_barriers: answers.q2.join('; '),
       q3_custodians: answers.q3,
