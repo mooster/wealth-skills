@@ -820,6 +820,7 @@ body::before {
   // State
   const totalQ = 6;
   let currentQ = 1;
+  const startedAt = Date.now();
   const answers = { q1: null, q2: [], q2_other: '', q3: null, q4: [], q5: null, email: '', q6: '' };
 
   // Elements
@@ -1105,6 +1106,9 @@ body::before {
     // Honeypot check — if filled, silently "succeed" without submitting
     const hp = document.getElementById('honeypot').value;
     if (hp) { showThankYou(); return; }
+
+    // Time check — < 15s is not human
+    if (Date.now() - startedAt < 15000) { showThankYou(); return; }
 
     const payload = {
       timestamp: new Date().toISOString(),
