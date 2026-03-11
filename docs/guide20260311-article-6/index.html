@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amongst Families — AI Security Toolkit for Teams</title>
+<meta name="description" content="Get a practical security checklist and setup guides for deploying AI agents in your team. Free PDF toolkit from Amongst Families.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --green: #549E39;
+  --green-dim: #549E3933;
+  --green-glow: #549E3966;
+  --bg: #141414;
+  --bg-card: #1C1C1C;
+  --bg-hover: #242424;
+  --text: #E8E4DF;
+  --text-dim: #8A857F;
+  --text-faint: #5A5650;
+  --border: #2A2A2A;
+  --border-active: #3A3A3A;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* === Grain overlay === */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* === Progress bar === */
+.progress-track {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--border);
+  z-index: 100;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--green);
+  width: 0%;
+  transition: width 0.6s var(--ease);
+  box-shadow: 0 0 12px var(--green-glow);
+}
+
+/* === Layout === */
+.survey-wrapper {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 80px 24px 60px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === Header === */
+.survey-header {
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease) 0.2s forwards;
+}
+.survey-header .label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 16px;
+}
+.survey-header h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.survey-header h1 em {
+  font-style: italic;
+  color: var(--green);
+}
+.survey-header p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-dim);
+  max-width: 480px;
+}
+
+/* === What you get === */
+.toolkit-items {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.toolkit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+.toolkit-item .icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--green-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  margin-top: 1px;
+}
+
+/* === Question slides === */
+.questions-container {
+  flex: 1;
+  position: relative;
+}
+.question-slide {
+  display: none;
+  opacity: 0;
+  transform: translateY(16px);
+}
+.question-slide.active {
+  display: block;
+  animation: fadeUp 0.5s var(--ease) forwards;
+}
+.question-slide.exiting {
+  display: block;
+  animation: fadeOut 0.3s var(--ease) forwards;
+}
+
+.q-number {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 12px;
+}
+.q-title {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+.q-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+/* === Single select === */
+.single-select {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.single-option {
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.single-option:hover {
+  border-color: var(--border-active);
+  background: var(--bg-hover);
+}
+.single-option.selected {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.single-option .radio {
+  width: 20px; height: 20px;
+  border: 1.5px solid var(--border-active);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s var(--ease);
+}
+.single-option.selected .radio {
+  border-color: var(--green);
+}
+.single-option.selected .radio::after {
+  content: '';
+  width: 10px; height: 10px;
+  background: var(--green);
+  border-radius: 50%;
+}
+
+/* === Multi-select === */
+.multi-select {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.multi-option {
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.multi-option:hover {
+  border-color: var(--border-active);
+  background: var(--bg-hover);
+}
+.multi-option.selected {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.multi-option .check {
+  width: 20px; height: 20px;
+  border: 1.5px solid var(--border-active);
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s var(--ease);
+}
+.multi-option.selected .check {
+  border-color: var(--green);
+  background: var(--green);
+}
+.multi-option.selected .check::after {
+  content: '';
+  width: 10px; height: 6px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg) translateY(-1px);
+}
+.multi-option.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* === Text input fields === */
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.25s var(--ease);
+}
+.form-input::placeholder { color: var(--text-faint); }
+.form-input:focus { border-color: var(--green); }
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-top: 8px;
+  padding-left: 4px;
+}
+
+/* === Navigation === */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.btn-back {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: color 0.2s;
+}
+.btn-back:hover { color: var(--text); }
+.btn-back.hidden { visibility: hidden; }
+
+.btn-next, .btn-submit {
+  padding: 12px 32px;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+.btn-next {
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-next:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-active);
+}
+.btn-next:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.btn-submit {
+  background: var(--green);
+  color: #fff;
+}
+.btn-submit:hover {
+  background: #62B545;
+  box-shadow: 0 4px 20px var(--green-glow);
+}
+.btn-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* === Thank you === */
+.thank-you {
+  display: none;
+  text-align: center;
+  padding: 80px 0;
+}
+.thank-you.active {
+  display: block;
+  animation: fadeUp 0.8s var(--ease) forwards;
+}
+.thank-you .check-circle {
+  width: 64px; height: 64px;
+  border: 2px solid var(--green);
+  border-radius: 50%;
+  margin: 0 auto 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scaleIn 0.5s var(--ease) 0.3s both;
+}
+.thank-you .check-circle svg {
+  width: 28px; height: 28px;
+  stroke: var(--green);
+  stroke-width: 2.5;
+  fill: none;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: drawCheck 0.6s var(--ease) 0.6s forwards;
+}
+.thank-you h2 {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+.thank-you p {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.65;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.thank-you .back-link {
+  display: inline-block;
+  margin-top: 32px;
+  color: var(--green);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.thank-you .back-link:hover { border-color: var(--green); }
+
+/* === Footer === */
+.survey-footer {
+  text-align: center;
+  padding: 40px 0 24px;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.survey-footer a {
+  color: var(--text-faint);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.survey-footer a:hover { color: var(--text-dim); }
+
+/* === Error state === */
+.submit-error {
+  text-align: center;
+  color: #E05252;
+  font-size: 0.85rem;
+  margin-top: 12px;
+  display: none;
+}
+.submit-error.visible { display: block; }
+
+/* === Spinner === */
+.spinner {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+/* === Animations === */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes scaleIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* === Mobile === */
+@media (max-width: 480px) {
+  .survey-wrapper { padding: 60px 20px 40px; }
+  .nav-bar { margin-top: 36px; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-track">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<div class="survey-wrapper">
+
+  <!-- Honeypot: hidden from humans, bots will fill it -->
+  <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;overflow:hidden;" aria-hidden="true">
+    <label for="website">Website</label>
+    <input type="text" id="honeypot" name="website" tabindex="-1" autocomplete="off">
+  </div>
+
+  <header class="survey-header" id="surveyHeader">
+    <div class="label">Amongst Families &mdash; Free Toolkit</div>
+    <h1>AI Security Checklist<br>for <em>Your Team</em></h1>
+    <p>A practical toolkit for deploying AI agents safely in your organization. Based on real CVEs, attack frameworks, and production setups.</p>
+    <div class="toolkit-items">
+      <div class="toolkit-item">
+        <div class="icon">&#x1F6E1;</div>
+        <span><strong>Security Audit Checklist</strong> &mdash; 30-point checklist across gateway, permissions, plugins, and secrets management</span>
+      </div>
+      <div class="toolkit-item">
+        <div class="icon">&#x2699;</div>
+        <span><strong>Configuration Guide</strong> &mdash; Copy-paste configs for sandbox, auth, network isolation, and multi-agent setups</span>
+      </div>
+      <div class="toolkit-item">
+        <div class="icon">&#x26A0;</div>
+        <span><strong>Threat Briefing</strong> &mdash; The 6 most critical AI agent vulnerabilities and how to defend against each</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="questions-container" id="questionsContainer">
+
+    <!-- Q0: Role -->
+    <div class="question-slide" data-q="0">
+      <div class="q-number">Step 1 of 3</div>
+      <h2 class="q-title">Which best describes your role?</h2>
+      <p class="q-subtitle">So we can tailor the guides to your context.</p>
+      <div class="single-select" id="q0Single">
+        <div class="single-option" data-val="Family office professional">
+          <div class="radio"></div>
+          <span>Family office professional</span>
+        </div>
+        <div class="single-option" data-val="Wealth / asset manager">
+          <div class="radio"></div>
+          <span>Wealth / asset manager</span>
+        </div>
+        <div class="single-option" data-val="CTO / Head of Technology">
+          <div class="radio"></div>
+          <span>CTO / Head of Technology</span>
+        </div>
+        <div class="single-option" data-val="Operations / COO">
+          <div class="radio"></div>
+          <span>Operations / COO</span>
+        </div>
+        <div class="single-option" data-val="Technology / fintech">
+          <div class="radio"></div>
+          <span>Technology / fintech</span>
+        </div>
+        <div class="single-option" data-val="Other">
+          <div class="radio"></div>
+          <span>Other</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1: Interest areas -->
+    <div class="question-slide" data-q="1">
+      <div class="q-number">Step 2 of 3</div>
+      <h2 class="q-title">Which security topics matter most to you?</h2>
+      <p class="q-subtitle">Pick up to 3. We'll prioritize these in your toolkit.</p>
+      <div class="multi-select" id="q1Multi">
+        <div class="multi-option" data-val="Gateway & access control">
+          <div class="check"></div>
+          <span>Gateway &amp; access control &mdash; who can talk to your AI</span>
+        </div>
+        <div class="multi-option" data-val="Prompt injection defense">
+          <div class="check"></div>
+          <span>Prompt injection defense &mdash; preventing AI from being &ldquo;tricked&rdquo;</span>
+        </div>
+        <div class="multi-option" data-val="Sandbox & execution limits">
+          <div class="check"></div>
+          <span>Sandbox &amp; execution limits &mdash; controlling what AI can do</span>
+        </div>
+        <div class="multi-option" data-val="Plugin & supply chain security">
+          <div class="check"></div>
+          <span>Plugin &amp; supply chain security &mdash; vetting third-party tools</span>
+        </div>
+        <div class="multi-option" data-val="Secrets & API key management">
+          <div class="check"></div>
+          <span>Secrets &amp; API key management &mdash; protecting credentials</span>
+        </div>
+        <div class="multi-option" data-val="Multi-agent architecture">
+          <div class="check"></div>
+          <span>Multi-agent architecture &mdash; isolating by data sensitivity</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2: Contact info -->
+    <div class="question-slide" data-q="2">
+      <div class="q-number">Step 3 of 3</div>
+      <h2 class="q-title">Where should we send the toolkit?</h2>
+      <p class="q-subtitle">We'll email you the PDF guides. No spam, ever.</p>
+      <div class="form-group">
+        <label for="nameInput">Your name</label>
+        <input type="text" class="form-input" id="nameInput" placeholder="e.g. Alex Chen" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label for="emailInput">Work email</label>
+        <input type="email" class="form-input" id="emailInput" placeholder="you@company.com" autocomplete="email">
+        <div class="form-hint">We'll send the toolkit to this address.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav-bar" id="navBar">
+    <button class="btn-back hidden" id="btnBack">&larr; Back</button>
+    <button class="btn-next" id="btnNext" disabled>Continue</button>
+  </div>
+  <div class="submit-error" id="submitError">Something went wrong. Please try again.</div>
+
+  <!-- Thank You -->
+  <div class="thank-you" id="thankYou">
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24"><polyline points="6 13 10 17 18 9"/></svg>
+    </div>
+    <h2>You're in.</h2>
+    <p>The AI Security Toolkit is on its way to your inbox. While you wait, the full article digs deeper into each attack surface with real CVEs and production configs.</p>
+    <a href="https://amongstfamilies.substack.com" class="back-link">Read the full article on Amongst Families &rarr;</a>
+  </div>
+
+  <footer class="survey-footer">
+    <a href="https://amongstfamilies.substack.com" target="_blank" rel="noopener">Amongst Families</a> &mdash; by Mu Chen
+  </footer>
+</div>
+
+<script>
+(() => {
+  // ========================================
+  // CONFIG: Replace with your Apps Script URL
+  // ========================================
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqMkyDvMptsG5czZ08NV0FyP3UbsdGbGV4r7EbE5fR1PrIFQNwoG2yN-pTUVM9UXQdpQ/exec';
+
+  // State
+  const totalSteps = 3;
+  let currentQ = 0;
+  const startedAt = Date.now();
+  const answers = { role: null, interests: [], name: '', email: '' };
+
+  // Elements
+  const progressFill = document.getElementById('progressFill');
+  const slides = document.querySelectorAll('.question-slide');
+  const btnNext = document.getElementById('btnNext');
+  const btnBack = document.getElementById('btnBack');
+  const navBar = document.getElementById('navBar');
+  const thankYou = document.getElementById('thankYou');
+  const submitError = document.getElementById('submitError');
+
+  // Init
+  function init() {
+    showQuestion(0);
+    setupQ0();
+    setupQ1();
+    setupQ2();
+    btnNext.addEventListener('click', handleNext);
+    btnBack.addEventListener('click', handleBack);
+  }
+
+  function updateProgress() {
+    const pct = (currentQ / totalSteps) * 100;
+    progressFill.style.width = pct + '%';
+  }
+
+  function showQuestion(n) {
+    currentQ = n;
+    updateProgress();
+    slides.forEach(s => {
+      if (s.classList.contains('active')) {
+        s.classList.remove('active');
+        s.classList.add('exiting');
+        setTimeout(() => s.classList.remove('exiting'), 300);
+      }
+    });
+    setTimeout(() => {
+      const target = document.querySelector(`[data-q="${n}"]`);
+      if (target) target.classList.add('active');
+    }, 50);
+
+    btnBack.classList.toggle('hidden', n === 0);
+
+    if (n === 2) {
+      btnNext.textContent = 'Get the Toolkit';
+      btnNext.classList.remove('btn-next');
+      btnNext.classList.add('btn-submit');
+    } else {
+      btnNext.textContent = 'Continue';
+      btnNext.classList.remove('btn-submit');
+      btnNext.classList.add('btn-next');
+    }
+    updateNextEnabled();
+  }
+
+  function updateNextEnabled() {
+    let enabled = false;
+    switch (currentQ) {
+      case 0: enabled = answers.role !== null; break;
+      case 1: enabled = answers.interests.length > 0; break;
+      case 2:
+        const name = answers.name.trim();
+        const email = answers.email.trim();
+        enabled = name.length > 0 && email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        break;
+    }
+    btnNext.disabled = !enabled;
+  }
+
+  function handleNext() {
+    if (btnNext.disabled) return;
+    if (currentQ === 2) {
+      submitForm();
+    } else {
+      showQuestion(currentQ + 1);
+    }
+  }
+
+  function handleBack() {
+    if (currentQ > 0) showQuestion(currentQ - 1);
+  }
+
+  // === Q0: Role ===
+  function setupQ0() {
+    document.querySelectorAll('#q0Single .single-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        document.querySelectorAll('#q0Single .single-option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        answers.role = opt.dataset.val;
+        updateNextEnabled();
+      });
+    });
+  }
+
+  // === Q1: Multi-select interests ===
+  function setupQ1() {
+    const options = document.querySelectorAll('#q1Multi .multi-option');
+
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        const val = opt.dataset.val;
+        const isSelected = opt.classList.contains('selected');
+
+        if (isSelected) {
+          opt.classList.remove('selected');
+          answers.interests = answers.interests.filter(v => v !== val);
+        } else {
+          if (answers.interests.length >= 3) return;
+          opt.classList.add('selected');
+          answers.interests.push(val);
+        }
+
+        // Disable unselected when 3 selected
+        options.forEach(o => {
+          if (!o.classList.contains('selected') && answers.interests.length >= 3) {
+            o.classList.add('disabled');
+          } else {
+            o.classList.remove('disabled');
+          }
+        });
+
+        updateNextEnabled();
+      });
+    });
+  }
+
+  // === Q2: Name & Email ===
+  function setupQ2() {
+    document.getElementById('nameInput').addEventListener('input', e => {
+      answers.name = e.target.value;
+      updateNextEnabled();
+    });
+    document.getElementById('emailInput').addEventListener('input', e => {
+      answers.email = e.target.value;
+      updateNextEnabled();
+    });
+  }
+
+  // === Submit ===
+  async function submitForm() {
+    btnNext.disabled = true;
+    btnNext.innerHTML = '<span class="spinner"></span>Sending...';
+    submitError.classList.remove('visible');
+
+    // Honeypot check
+    const hp = document.getElementById('honeypot').value;
+    if (hp) { showThankYou(); return; }
+
+    // Time check — < 8s is not human
+    if (Date.now() - startedAt < 8000) { showThankYou(); return; }
+
+    const payload = {
+      timestamp: new Date().toISOString(),
+      name: answers.name.trim(),
+      email: answers.email.trim(),
+      role: answers.role,
+      interests: answers.interests.join('; '),
+      source: 'article-06-ai-security-toolkit'
+    };
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      showThankYou();
+    } catch (err) {
+      console.error('Submit error:', err);
+      submitError.classList.add('visible');
+      btnNext.disabled = false;
+      btnNext.textContent = 'Get the Toolkit';
+      btnNext.classList.add('btn-submit');
+    }
+  }
+
+  function showThankYou() {
+    progressFill.style.width = '100%';
+    document.getElementById('questionsContainer').style.display = 'none';
+    navBar.style.display = 'none';
+    document.getElementById('surveyHeader').style.display = 'none';
+    thankYou.classList.add('active');
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
