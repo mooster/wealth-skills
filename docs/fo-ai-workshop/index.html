@@ -285,6 +285,7 @@ body {
       <div class="option" data-value="Kimi">Kimi</div>
       <div class="option" data-value="Bloomberg AI">Bloomberg AI</div>
       <div class="option" data-value="None">None yet</div>
+      <div class="option other-toggle" data-value="Other">Other</div>
     </div>
     <input type="text" class="other-input" id="otherTools" placeholder="Other tools you use...">
     <div class="btn-row">
@@ -335,6 +336,7 @@ body {
       <div class="option" data-value="Meeting prep">Meeting prep</div>
       <div class="option" data-value="Coding">Coding / automation</div>
       <div class="option" data-value="Not sure">Not sure yet</div>
+      <div class="option other-toggle" data-value="Other">Other</div>
     </div>
     <input type="text" class="other-input" id="otherUsecases" placeholder="Other use cases...">
     <div class="btn-row">
@@ -356,6 +358,7 @@ body {
       <div class="option" data-value="Cost">Cost / ROI unclear</div>
       <div class="option" data-value="Compliance">Compliance / regulatory risk</div>
       <div class="option" data-value="No concern">No major concerns — just want to do more</div>
+      <div class="option other-toggle" data-value="Other">Other</div>
     </div>
     <input type="text" class="other-input" id="otherConcern" placeholder="Other concerns...">
     <div class="btn-row">
@@ -377,6 +380,7 @@ body {
       <div class="option" data-value="Data privacy">Data privacy & compliance</div>
       <div class="option" data-value="Agent deployment">Deploying AI agents</div>
       <div class="option" data-value="Live demo">Just show me a live demo</div>
+      <div class="option other-toggle" data-value="Other">Other</div>
     </div>
     <input type="text" class="other-input" id="otherLearn" placeholder="Other topics you want covered...">
     <div style="margin-top:20px;">
@@ -435,13 +439,16 @@ document.querySelectorAll('.options .option').forEach(opt => {
       });
       opt.classList.toggle('selected');
     }
-    // Show "Other" input when any non-exclusive option is selected
+    // Show "Other" input ONLY when "Other" pill is selected
     const otherInput = opt.parentElement.nextElementSibling;
     if (otherInput && otherInput.classList.contains('other-input')) {
-      const hasSelected = opt.parentElement.querySelectorAll('.option.selected').length > 0;
-      const exclusiveSelected = opt.parentElement.querySelector('.option.selected[data-value="None"], .option.selected[data-value="Not sure"], .option.selected[data-value="No concern"]');
-      if (hasSelected && !exclusiveSelected) {
+      const otherSelected = opt.parentElement.querySelector('.option.other-toggle.selected');
+      if (otherSelected) {
         otherInput.classList.add('visible');
+        otherInput.focus();
+      } else {
+        otherInput.classList.remove('visible');
+        otherInput.value = '';
       }
     }
     // Collect values
