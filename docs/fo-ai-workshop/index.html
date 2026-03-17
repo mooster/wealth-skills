@@ -98,7 +98,7 @@ body {
 /* Options (pill-style multi-select) */
 .options {
   display: flex; flex-wrap: wrap; gap: 10px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 .option {
   display: inline-flex; align-items: center;
@@ -119,8 +119,8 @@ body {
   color: white;
 }
 
-/* Single select */
-.single-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+/* Single select → now multi-select for Q4 */
+.single-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
 .single-option {
   display: flex; align-items: center; gap: 12px;
   padding: 14px 18px;
@@ -153,6 +153,10 @@ body {
   border-radius: 50%;
   background: var(--green);
 }
+/* Multi-select checkbox style */
+.multi-option .radio { border-radius: 4px; }
+.multi-option.selected .radio { border-radius: 4px; }
+.multi-option.selected .radio::after { border-radius: 2px; }
 
 /* Text input */
 .text-input {
@@ -166,10 +170,27 @@ body {
   background: white;
   outline: none;
   transition: border-color 0.2s;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 .text-input:focus { border-color: var(--green); }
 .text-input::placeholder { color: #b0b0b0; }
+.other-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: var(--font);
+  color: var(--ink);
+  background: white;
+  outline: none;
+  transition: border-color 0.2s;
+  margin-bottom: 16px;
+  display: none;
+}
+.other-input:focus { border-color: var(--green); }
+.other-input::placeholder { color: #b0b0b0; }
+.other-input.visible { display: block; margin-top: 10px; }
 
 /* Buttons */
 .btn-row { display: flex; gap: 12px; margin-top: 8px; }
@@ -255,7 +276,9 @@ body {
     <div class="question-hint">Select all that apply</div>
     <div class="options" data-field="tools">
       <div class="option" data-value="ChatGPT">ChatGPT</div>
-      <div class="option" data-value="Claude">Claude</div>
+      <div class="option" data-value="Claude Chat">Claude Chat</div>
+      <div class="option" data-value="Claude Cowork">Claude Cowork</div>
+      <div class="option" data-value="Claude Code">Claude Code / Code CLI</div>
       <div class="option" data-value="Perplexity">Perplexity</div>
       <div class="option" data-value="Copilot">Microsoft Copilot</div>
       <div class="option" data-value="Gemini">Google Gemini</div>
@@ -263,6 +286,7 @@ body {
       <div class="option" data-value="Bloomberg AI">Bloomberg AI</div>
       <div class="option" data-value="None">None yet</div>
     </div>
+    <input type="text" class="other-input" id="otherTools" placeholder="Other tools you use...">
     <div class="btn-row">
       <button class="btn btn-next" onclick="nextStep()">Continue</button>
     </div>
@@ -312,38 +336,28 @@ body {
       <div class="option" data-value="Coding">Coding / automation</div>
       <div class="option" data-value="Not sure">Not sure yet</div>
     </div>
+    <input type="text" class="other-input" id="otherUsecases" placeholder="Other use cases...">
     <div class="btn-row">
       <button class="btn btn-back" onclick="prevStep()">Back</button>
       <button class="btn btn-next" onclick="nextStep()">Continue</button>
     </div>
   </div>
 
-  <!-- Step 4: Biggest challenge -->
+  <!-- Step 4: Biggest concerns (NOW MULTI-SELECT) -->
   <div class="step" data-step="4">
     <div class="question-label">Question 4 of 5</div>
-    <div class="question-text">What's your biggest concern about using AI?</div>
-    <div class="single-options" data-field="concern">
-      <div class="single-option" data-value="Accuracy">
-        <div class="radio"></div>
-        <span>Accuracy — can I trust the output?</span>
-      </div>
-      <div class="single-option" data-value="Data privacy">
-        <div class="radio"></div>
-        <span>Data privacy — where does my data go?</span>
-      </div>
-      <div class="single-option" data-value="Don't know where to start">
-        <div class="radio"></div>
-        <span>I don't know where to start</span>
-      </div>
-      <div class="single-option" data-value="Time to learn">
-        <div class="radio"></div>
-        <span>Takes too much time to learn</span>
-      </div>
-      <div class="single-option" data-value="No concern">
-        <div class="radio"></div>
-        <span>No major concerns — just want to do more</span>
-      </div>
+    <div class="question-text">What are your biggest concerns about using AI?</div>
+    <div class="question-hint">Select all that apply</div>
+    <div class="options" data-field="concern">
+      <div class="option" data-value="Accuracy">Accuracy — can I trust the output?</div>
+      <div class="option" data-value="Data privacy">Data privacy — where does my data go?</div>
+      <div class="option" data-value="Don't know where to start">I don't know where to start</div>
+      <div class="option" data-value="Time to learn">Takes too much time to learn</div>
+      <div class="option" data-value="Cost">Cost / ROI unclear</div>
+      <div class="option" data-value="Compliance">Compliance / regulatory risk</div>
+      <div class="option" data-value="No concern">No major concerns — just want to do more</div>
     </div>
+    <input type="text" class="other-input" id="otherConcern" placeholder="Other concerns...">
     <div class="btn-row">
       <button class="btn btn-back" onclick="prevStep()">Back</button>
       <button class="btn btn-next" onclick="nextStep()">Continue</button>
@@ -354,6 +368,7 @@ body {
   <div class="step" data-step="5">
     <div class="question-label">Question 5 of 5</div>
     <div class="question-text">What would you most like to learn at the workshop?</div>
+    <div class="question-hint">Select all that apply</div>
     <div class="options" data-field="learn">
       <div class="option" data-value="Getting started">Getting started with AI tools</div>
       <div class="option" data-value="Investment research">AI for investment research</div>
@@ -363,6 +378,7 @@ body {
       <div class="option" data-value="Agent deployment">Deploying AI agents</div>
       <div class="option" data-value="Live demo">Just show me a live demo</div>
     </div>
+    <input type="text" class="other-input" id="otherLearn" placeholder="Other topics you want covered...">
     <div style="margin-top:20px;">
       <div class="question-hint">Email (optional — we'll send you the slides and prompt templates after)</div>
       <input type="email" class="text-input" id="emailField" placeholder="name@example.com">
@@ -395,20 +411,38 @@ let currentStep = 1;
 const totalSteps = 5;
 const answers = {};
 
-// Multi-select options
+// Multi-select pill options (Q1, Q3, Q4, Q5)
 document.querySelectorAll('.options .option').forEach(opt => {
   opt.addEventListener('click', () => {
     const field = opt.parentElement.dataset.field;
-    // "None" / "Not sure" deselects others
-    if (opt.dataset.value === 'None' || opt.dataset.value === 'Not sure') {
+    const val = opt.dataset.value;
+    // "None" / "Not sure" / "No concern" deselects others
+    if (val === 'None' || val === 'Not sure' || val === 'No concern') {
       opt.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
       opt.classList.add('selected');
+      // Hide other input
+      const otherInput = opt.parentElement.nextElementSibling;
+      if (otherInput && otherInput.classList.contains('other-input')) {
+        otherInput.classList.remove('visible');
+        otherInput.value = '';
+      }
     } else {
-      // Deselect "None"/"Not sure" if selecting something else
+      // Deselect exclusive options
       opt.parentElement.querySelectorAll('.option').forEach(o => {
-        if (o.dataset.value === 'None' || o.dataset.value === 'Not sure') o.classList.remove('selected');
+        if (o.dataset.value === 'None' || o.dataset.value === 'Not sure' || o.dataset.value === 'No concern') {
+          o.classList.remove('selected');
+        }
       });
       opt.classList.toggle('selected');
+    }
+    // Show "Other" input when any non-exclusive option is selected
+    const otherInput = opt.parentElement.nextElementSibling;
+    if (otherInput && otherInput.classList.contains('other-input')) {
+      const hasSelected = opt.parentElement.querySelectorAll('.option.selected').length > 0;
+      const exclusiveSelected = opt.parentElement.querySelector('.option.selected[data-value="None"], .option.selected[data-value="Not sure"], .option.selected[data-value="No concern"]');
+      if (hasSelected && !exclusiveSelected) {
+        otherInput.classList.add('visible');
+      }
     }
     // Collect values
     const selected = [...opt.parentElement.querySelectorAll('.option.selected')].map(o => o.dataset.value);
@@ -416,7 +450,7 @@ document.querySelectorAll('.options .option').forEach(opt => {
   });
 });
 
-// Single select options
+// Single select options (Q2 only)
 document.querySelectorAll('.single-options .single-option').forEach(opt => {
   opt.addEventListener('click', () => {
     const field = opt.parentElement.dataset.field;
@@ -437,7 +471,7 @@ function showStep(n) {
   if (target) {
     target.classList.add('active');
     target.style.animation = 'none';
-    target.offsetHeight; // trigger reflow
+    target.offsetHeight;
     target.style.animation = '';
   }
 }
@@ -459,24 +493,43 @@ function prevStep() {
 }
 
 async function submitSurvey() {
+  // Collect "other" text inputs
+  const otherTools = document.getElementById('otherTools').value.trim();
+  const otherUsecases = document.getElementById('otherUsecases').value.trim();
+  const otherConcern = document.getElementById('otherConcern').value.trim();
+  const otherLearn = document.getElementById('otherLearn').value.trim();
+
   answers.email = document.getElementById('emailField').value || '';
   answers.name = document.getElementById('nameField').value || '(anonymous)';
   answers.timestamp = new Date().toISOString();
+
+  // Append "other" values
+  let tools = (answers.tools || []).join(', ');
+  if (otherTools) tools += (tools ? ', ' : '') + 'Other: ' + otherTools;
+
+  let usecases = (answers.usecases || []).join(', ');
+  if (otherUsecases) usecases += (usecases ? ', ' : '') + 'Other: ' + otherUsecases;
+
+  let concern = (answers.concern || []).join(', ');
+  if (otherConcern) concern += (concern ? ', ' : '') + 'Other: ' + otherConcern;
+
+  let learn = (answers.learn || []).join(', ');
+  if (otherLearn) learn += (learn ? ', ' : '') + 'Other: ' + otherLearn;
 
   // Show thank you immediately
   document.getElementById('progress').style.width = '100%';
   showStep('done');
 
-  // Try to submit to Google Sheets (same Apps Script as other surveys)
+  // Submit to Google Sheets
   try {
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxv4bb-xyYVPAEZKfUwy7hviVPdhBP-4QUhyHbFIqf6YKMSS6ZQCHA6TzPVPa6G6mfdHA/exec';
     const payload = {
       survey: 'fo-ai-workshop-pretalk',
-      tools: (answers.tools || []).join(', '),
+      tools: tools,
       frequency: answers.frequency || '',
-      usecases: (answers.usecases || []).join(', '),
-      concern: answers.concern || '',
-      learn: (answers.learn || []).join(', '),
+      usecases: usecases,
+      concern: concern,
+      learn: learn,
       email: answers.email,
       name: answers.name,
       timestamp: answers.timestamp
