@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI for Family Offices — Nan Fung Workshop</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --ink: #1a2420;
+      --muted: #6b7c74;
+      --accent: #19824a;
+      --accent-dark: #145f37;
+      --accent-soft: #e8f5ee;
+      --accent-mid: #b8ddc8;
+      --warn: #c0392b;
+      --warn-soft: #fdecea;
+      --yellow: #f39c12;
+      --yellow-soft: #fef9e7;
+      --line: #d4ddd8;
+      --bg: #f8f7f2;
+    }
+    html, body { background: var(--bg); }
+    .reveal { font-family: 'Inter', system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+    /* Section dividers — full-bleed, centered text */
+    .reveal .slides > section.divider { text-align: center; }
+    .reveal .slides > section.divider h2 { text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
+    .reveal .slides > section.divider > * { margin-left: auto; margin-right: auto; }
+    .reveal h1 { color: var(--ink); font-weight: 900; line-height: 1.15; }
+    .reveal h2 { color: var(--ink); font-weight: 800; font-size: clamp(20px, 2vw, 30px); line-height: 1.3; text-align: left; margin-bottom: 0.6em; }
+    .reveal p, .reveal li { font-size: clamp(13px, 1.1vw, 17px); line-height: 1.6; }
+    .reveal ul { list-style: none; padding: 0; }
+    .reveal ul li::before { content: "→ "; color: var(--accent); font-weight: 700; }
+    .eyebrow {
+      font-size: clamp(10px, 0.8vw, 13px);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 0.4em;
+      text-align: left;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      text-align: left;
+    }
+    .card-green { background: var(--accent-soft); border: 1px solid var(--accent-mid); }
+    .card-warn { background: var(--warn-soft); border: 1px solid #f5c6c2; }
+    .card-yellow { background: var(--yellow-soft); border: 1px solid #fde68a; }
+    .pill {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--accent);
+      color: white;
+      letter-spacing: 0.04em;
+    }
+    .pill-warn { background: var(--warn); }
+    .pill-muted { background: var(--muted); }
+    .pill-yellow { background: var(--yellow); }
+    .big-num {
+      font-size: clamp(48px, 5.5vw, 80px);
+      font-weight: 900;
+      line-height: 1;
+    }
+    .big-label {
+      font-size: clamp(11px, 0.9vw, 14px);
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .hedge { color: var(--warn); font-weight: 700; text-decoration: underline dotted; }
+    .footer-note {
+      font-size: clamp(10px, 0.8vw, 12px);
+      color: var(--muted);
+      font-style: italic;
+      position: absolute;
+      bottom: 16px;
+      left: 0; right: 0;
+      text-align: center;
+    }
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-weight: 700;
+      font-size: clamp(12px, 1vw, 16px);
+      margin-bottom: 12px;
+    }
+    .reveal table { width: 100%; border-collapse: collapse; font-size: clamp(11px, 0.9vw, 14px); }
+    .reveal table th { background: var(--accent); color: white; padding: 8px 12px; text-align: left; font-weight: 700; }
+    .reveal table td { padding: 7px 12px; border-bottom: 1px solid var(--line); }
+    .reveal table tr:nth-child(even) td { background: #f5f7f5; }
+    .td-warn { color: var(--warn); font-weight: 700; }
+    .td-ok { color: var(--accent); font-weight: 700; }
+    .slide-body { padding: 40px 56px; box-sizing: border-box; }
+
+    /* === AI TITLE SLIDE === */
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+      50% { transform: translate(40px, -30px) scale(1.15); opacity: 0.6; }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+      50% { transform: translate(-30px, 40px) scale(1.2); opacity: 0.5; }
+    }
+    @keyframes float3 {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+      50% { transform: translate(20px, 20px) scale(1.1); opacity: 0.35; }
+    }
+    @keyframes pulse-line {
+      0%, 100% { width: 48px; opacity: 0.6; }
+      50% { width: 72px; opacity: 1; }
+    }
+    @keyframes fade-in-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .title-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .title-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(25,130,74,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(25,130,74,0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- SLIDE 01: TITLE — AI-themed dark design -->
+<section data-background-color="#0a1a14" style="text-align:center;overflow:hidden;">
+  <!-- Floating gradient orbs -->
+  <div class="title-orb" style="top:-15%;left:-5%;width:45%;height:45%;background:radial-gradient(circle,rgba(25,130,74,0.35) 0%,transparent 70%);animation:float1 8s ease-in-out infinite;"></div>
+  <div class="title-orb" style="bottom:-20%;right:-8%;width:55%;height:55%;background:radial-gradient(circle,rgba(25,130,74,0.25) 0%,transparent 70%);animation:float2 10s ease-in-out infinite;"></div>
+  <div class="title-orb" style="top:30%;right:15%;width:25%;height:25%;background:radial-gradient(circle,rgba(184,221,200,0.15) 0%,transparent 70%);animation:float3 12s ease-in-out infinite;"></div>
+  <!-- Subtle grid overlay -->
+  <div class="title-grid"></div>
+  <!-- Content -->
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:clamp(10px,0.85vw,13px);text-transform:uppercase;letter-spacing:0.18em;color:rgba(25,130,74,0.8);font-weight:700;margin-bottom:24px;animation:fade-in-up 0.8s ease-out;">Nan Fung Family Office · AI Workshop · 2026</div>
+    <h1 style="font-size:clamp(34px,4vw,58px);line-height:1.2;max-width:80%;margin:0 auto 28px;color:white;animation:fade-in-up 1s ease-out 0.2s both;">
+      You're already using AI —<br>but most of the value is somewhere<br>you <span style="color:#4ade80;">haven't reached yet</span>
+    </h1>
+    <div style="height:3px;background:linear-gradient(90deg,transparent,#19824a,transparent);margin:0 auto 28px;border-radius:2px;animation:pulse-line 3s ease-in-out infinite;"></div>
+    <div style="font-weight:700;font-size:clamp(15px,1.3vw,20px);color:rgba(255,255,255,0.95);animation:fade-in-up 1s ease-out 0.6s both;">Mu Chen</div>
+    <div style="color:rgba(255,255,255,0.5);font-size:clamp(12px,1vw,15px);margin-top:6px;animation:fade-in-up 1s ease-out 0.8s both;">CEO, Canopy Cloud · $120B AUR · 60+ institutional clients</div>
+  </div>
+  <aside class="notes">
+    <p><strong>Duration: ~1 min</strong></p>
+    <p>Don't introduce yourself. Go straight to the title. Pause 5 seconds. Then: "I'm not here to tell you AI is powerful. You already know that. I want to talk about why the tools you're using today are only delivering 20% of their value."</p>
+    <p><strong>Transition:</strong> Let me start with one number.</p>
+  </aside>
+</section>
+
+<!-- SLIDE 02: TENSION — THE GAP -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">The Reality</div>
+    <h2>95% of institutions have deployed AI — but only 27% report meaningful business impact</h2>
+    <div style="display:flex;gap:40px;align-items:flex-end;margin-top:20px;">
+      <div style="text-align:center;flex:1;">
+        <div class="big-num" style="color:var(--accent);">95%</div>
+        <div class="big-label">of institutions using GenAI<br><span style="color:var(--muted);">EY · 100 asset managers · 2025</span></div>
+      </div>
+      <div style="font-size:clamp(32px,4vw,60px);color:var(--line);font-weight:300;padding-bottom:16px;">→</div>
+      <div style="text-align:center;flex:1;">
+        <div class="big-num" style="color:var(--warn);">27%</div>
+        <div class="big-label">report meaningful business impact<br><span style="color:var(--muted);">EY · same survey · 2025</span></div>
+      </div>
+      <div style="flex:1.5;padding-left:20px;border-left:2px solid var(--line);">
+        <div style="font-size:clamp(13px,1.1vw,17px);color:var(--ink);line-height:1.7;">
+          The gap isn't about tools —<br>it's about <strong>depth</strong>.<br><br>
+          Most people stop at Level 1,<br>while the real leverage is at Level 3–4.
+        </div>
+      </div>
+    </div>
+    <div class="footer-note">Source: EY GenAI in Wealth & Asset Management Survey, 2025 · RBC/Campden 2025 · J.P. Morgan Global FO Report 2026</div>
+    <aside class="notes">
+      <p><strong>Duration: ~2 min</strong></p>
+      <p>"This isn't about effort. It's about method. Most people are stuck at Level 1 of the AI toolchain. Level 1 has value — but the combined value of the next three levels is four times greater."</p>
+      <p><strong>Transition:</strong> Let me establish some credibility, then we'll talk about why.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 03: CREDIBILITY -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">About Today's Speaker</div>
+    <h2>Two perspectives on AI in wealth — I've operated at both ends of the spectrum</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px;">
+      <!-- LEFT: Personal (Aggressive Adoption) -->
+      <div class="card" style="border-top:3px solid var(--yellow);background:var(--yellow-soft);">
+        <div style="font-size:clamp(10px,0.8vw,12px);text-transform:uppercase;letter-spacing:0.12em;font-weight:700;color:#b7770d;margin-bottom:6px;">Aggressive Adoption</div>
+        <div style="font-weight:800;font-size:clamp(14px,1.2vw,18px);margin-bottom:10px;color:var(--ink);">My Personal AI Setup</div>
+        <ul style="font-size:clamp(12px,1vw,15px);line-height:1.8;">
+          <li>Two servers running AI agents 24/7</li>
+          <li>Slack, WhatsApp, iMessage — all automated</li>
+          <li>Automated morning briefings &amp; anomaly scans</li>
+          <li>Autonomously trades on prediction markets</li>
+        </ul>
+      </div>
+      <!-- RIGHT: Canopy (Reliable & Scalable) -->
+      <div class="card card-green" style="border-top:3px solid var(--accent);">
+        <div style="font-size:clamp(10px,0.8vw,12px);text-transform:uppercase;letter-spacing:0.12em;font-weight:700;color:var(--accent-dark);margin-bottom:6px;">Reliable &amp; Scalable</div>
+        <div style="font-weight:800;font-size:clamp(14px,1.2vw,18px);margin-bottom:10px;color:var(--ink);">Canopy Cloud</div>
+        <ul style="font-size:clamp(12px,1vw,15px);line-height:1.8;">
+          <li>$120B+ assets under reporting</li>
+          <li>60+ institutional clients, 1,600+ users</li>
+          <li>100+ bank data connectors</li>
+          <li>9 years of wealth data infrastructure</li>
+        </ul>
+        <div style="margin-top:12px;font-size:clamp(11px,0.9vw,13px);color:var(--accent-dark);font-style:italic;font-weight:600;border-top:1px solid var(--accent-mid);padding-top:10px;">Bringing reliable and scalable AI to wealth</div>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:clamp(12px,1vw,15px);color:var(--muted);font-style:italic;">
+      Today's content: 90% is what you can use immediately. 10% is what Canopy can do for you.
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~2 min</strong></p>
+      <p>"I sit at both ends of the spectrum. Personally I run aggressive experiments — AI agents trading autonomously, processing all my messages. Professionally at Canopy, everything has to be reliable enough for $120B of client assets. Today I'll share what I've learned on both sides."</p>
+      <p><strong>Transition:</strong> Let's start with the framework — four distinct levels of AI.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 04: SECTION DIVIDER — 4 LEVELS -->
+<section class="divider" data-background-color="#19824a">
+  <div style="color:rgba(255,255,255,0.6);font-size:clamp(12px,1vw,16px);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:16px;">Framework</div>
+  <h2 style="color:white;font-size:clamp(28px,3vw,44px);text-align:center;max-width:75%;">
+    AI isn't one tool — it's four distinct levels
+  </h2>
+  <div style="color:rgba(255,255,255,0.75);font-size:clamp(14px,1.2vw,18px);margin-top:16px;">Each level has different capabilities — and a different ceiling</div>
+  <aside class="notes"><p>Brief transition. "Each level has its tools, its use cases, and its limits. Let's go through them."</p></aside>
+</section>
+
+<!-- SLIDE 05: LEVEL 1 -->
+<section>
+  <div class="slide-body">
+    <div class="level-badge">Level 1 · Conversational AI</div>
+    <h2>ChatGPT / Claude handles 80% of knowledge work — but it can't see your data</h2>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:24px;margin-top:8px;">
+      <div>
+        <div style="font-size:clamp(11px,0.9vw,14px);font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.08em;">What FOs can do with this</div>
+        <ul style="font-size:clamp(12px,1vw,15px);line-height:2;">
+          <li>Meeting notes + action item extraction</li>
+          <li>Client update email drafts</li>
+          <li>Research note summaries / translation</li>
+          <li>IC agenda preparation</li>
+          <li>Contract key clause extraction</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card card-green">
+          <div style="font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--accent);margin-bottom:4px;">Tools &amp; Cost</div>
+          <div style="font-size:clamp(11px,0.9vw,14px);line-height:1.8;">ChatGPT Pro · $20/mo<br>Claude Pro · $20/mo<br>Kimi · $3/mo</div>
+        </div>
+        <div class="card card-warn">
+          <div style="font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--warn);margin-bottom:4px;">The ceiling</div>
+          <div style="font-size:clamp(11px,0.9vw,14px);line-height:1.6;">It can't see your portfolio, your clients, your private data. Ask it about your holdings — it doesn't know.</div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~2.5 min</strong></p>
+      <p>"Level 1 is what everyone knows. It's genuinely useful — but it lives in a sandbox. It can't see your world."</p>
+      <p><strong>Transition:</strong> Level 2 starts connecting to the public world.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 06: LEVEL 2 — Before/After layout -->
+<section>
+  <div class="slide-body">
+    <div class="level-badge">Level 2 · Deep Research</div>
+    <h2>Perplexity compresses market scans from half a day to 2 minutes — with citations</h2>
+    <div style="display:grid;grid-template-columns:1fr 0.08fr 1fr;gap:12px;margin-top:12px;align-items:stretch;">
+      <!-- BEFORE -->
+      <div class="card card-warn" style="padding:16px;">
+        <div style="font-size:clamp(10px,0.85vw,12px);font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Manual research</div>
+        <ul style="font-size:clamp(11px,0.9vw,14px);line-height:1.9;">
+          <li>Open Bloomberg, Reuters, FT, SCMP separately</li>
+          <li>Keyword search, scan headlines, read 10 articles</li>
+          <li>Copy key points into a doc manually</li>
+          <li>Cross-check sources yourself</li>
+        </ul>
+        <div style="margin-top:12px;font-size:clamp(20px,2vw,28px);font-weight:900;color:var(--warn);text-align:center;">~3 hours</div>
+      </div>
+      <!-- Arrow -->
+      <div style="display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:28px;color:var(--accent);font-weight:900;">→</div>
+      </div>
+      <!-- AFTER -->
+      <div class="card card-green" style="padding:16px;">
+        <div style="font-size:clamp(10px,0.85vw,12px);font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Perplexity Pro ($20/mo)</div>
+        <ul style="font-size:clamp(11px,0.9vw,14px);line-height:1.9;">
+          <li>One structured prompt → comprehensive report</li>
+          <li>Every claim comes with a source link</li>
+          <li>Follow-up questions in the same session</li>
+          <li>Industry scans, pre-earnings setup, news aggregation</li>
+        </ul>
+        <div style="margin-top:12px;font-size:clamp(20px,2vw,28px);font-weight:900;color:var(--accent);text-align:center;">~2 minutes</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:clamp(11px,0.9vw,14px);color:var(--warn);font-weight:600;text-align:center;">
+      Ceiling: only searches public information. Your internal files, your valuation models — out of reach.
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~2.5 min</strong></p>
+      <p>"Level 2 connects to the public world. The key is citations — every claim AI makes has a source you can verify. But it still can't see your data."</p>
+      <p><strong>Transition:</strong> Level 3 starts working with your own files.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 07: LEVEL 3 -->
+<section>
+  <div class="slide-body">
+    <div class="level-badge">Level 3 · Workflow AI</div>
+    <h2>Upload your files: AI cross-reads multiple documents and extracts exactly what you ask</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px;">
+      <div>
+        <div style="font-size:clamp(11px,0.9vw,14px);font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.08em;">Today's demo lives here</div>
+        <ul style="font-size:clamp(12px,1vw,15px);line-height:2;">
+          <li>Upload earnings PDF → extract key data points</li>
+          <li>Upload call transcript → analyse management tone</li>
+          <li>Upload your DCF → AI audits your assumptions</li>
+          <li>Multi-turn follow-ups in one session, context preserved</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card card-green">
+          <div style="font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--accent);margin-bottom:4px;">Tools &amp; Cost</div>
+          <div style="font-size:clamp(11px,0.9vw,14px);line-height:1.8;">Claude.ai Projects · $20/mo<br>1M token context window</div>
+        </div>
+        <div class="card">
+          <div style="font-size:clamp(11px,0.9vw,13px);font-weight:700;margin-bottom:4px;">Context window</div>
+          <div style="font-size:clamp(11px,0.9vw,14px);line-height:1.6;">Claude: 1M tokens ≈ 750 pages<br>in a single session. Enough for<br>an entire earnings call + DCF model.</div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~2.5 min</strong></p>
+      <p>"Level 3 is where today's demo lives. AI starts reading your own material."</p>
+      <p><strong>Transition:</strong> Level 4 is where AI comes to you — you don't go to it.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 08: LEVEL 4 — Timeline/flow layout -->
+<section>
+  <div class="slide-body">
+    <div class="level-badge">Level 4 · Agent AI</div>
+    <h2>Agent AI is the only level you don't trigger — it works while you sleep</h2>
+    <!-- Timeline flow -->
+    <div style="display:flex;align-items:center;gap:8px;margin-top:20px;justify-content:center;">
+      <div style="background:var(--ink);color:white;border-radius:10px;padding:14px 18px;text-align:center;flex:1;max-width:200px;">
+        <div style="font-size:clamp(18px,1.8vw,26px);font-weight:900;margin-bottom:4px;">2:00 AM</div>
+        <div style="font-size:clamp(10px,0.85vw,12px);opacity:0.8;">Agent scans your entire portfolio for news, filings, anomalies</div>
+      </div>
+      <div style="font-size:20px;color:var(--accent);font-weight:900;">→</div>
+      <div style="background:var(--accent);color:white;border-radius:10px;padding:14px 18px;text-align:center;flex:1;max-width:200px;">
+        <div style="font-size:clamp(18px,1.8vw,26px);font-weight:900;margin-bottom:4px;">8:00 AM</div>
+        <div style="font-size:clamp(10px,0.85vw,12px);opacity:0.9;">Briefing lands in your Slack / WhatsApp / email</div>
+      </div>
+      <div style="font-size:20px;color:var(--accent);font-weight:900;">→</div>
+      <div style="background:var(--yellow);color:white;border-radius:10px;padding:14px 18px;text-align:center;flex:1;max-width:200px;">
+        <div style="font-size:clamp(18px,1.8vw,26px);font-weight:900;margin-bottom:4px;">8:05 AM</div>
+        <div style="font-size:clamp(10px,0.85vw,12px);opacity:0.9;">You read it with coffee — priorities already ranked</div>
+      </div>
+      <div style="font-size:20px;color:var(--warn);font-weight:900;">→</div>
+      <div style="background:var(--warn);color:white;border-radius:10px;padding:14px 18px;text-align:center;flex:1;max-width:200px;">
+        <div style="font-size:clamp(18px,1.8vw,26px);font-weight:900;margin-bottom:4px;">Anytime</div>
+        <div style="font-size:clamp(10px,0.85vw,12px);opacity:0.9;">Data anomaly detected → auto-escalates to you immediately</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;">
+      <div class="card card-green" style="padding:14px;">
+        <div style="font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--accent);margin-bottom:4px;">My setup</div>
+        <div style="font-size:clamp(11px,0.9vw,13px);line-height:1.6;">Two servers, self-deployed. Handles 70% of my daily information processing. Unified across Slack, WhatsApp, iMessage.</div>
+      </div>
+      <div class="card card-warn" style="padding:14px;">
+        <div style="font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--warn);margin-bottom:4px;">Prerequisites</div>
+        <div style="font-size:clamp(11px,0.9vw,13px);line-height:1.6;">Requires technical setup + data integration. This is where platform support (like Canopy) matters most.</div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~2.5 min</strong></p>
+      <p>"This is what my morning looks like. I don't open anything. The briefing is waiting for me. If something breaks overnight, I already know before I sit down."</p>
+      <p><strong>Transition:</strong> Four levels covered. Now: what can you do yourself, and what needs a platform?</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 09: BOUNDARY CHART -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Positioning</div>
+    <h2>Four levels, two zones: what you do yourself vs. what needs a data platform</h2>
+    <table style="margin-top:12px;">
+      <thead>
+        <tr>
+          <th style="width:18%;">Level</th>
+          <th style="width:36%;background:var(--accent);">✅ You can do this yourself</th>
+          <th style="width:46%;background:#2c3e50;">🔗 Requires platform support</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pill">L1</span> Chat</td>
+          <td style="color:var(--accent-dark);">Writing, summaries, translation, email</td>
+          <td style="color:var(--muted);font-style:italic;">No platform needed</td>
+        </tr>
+        <tr>
+          <td><span class="pill">L2</span> Research</td>
+          <td style="color:var(--accent-dark);">Public data search, industry scans</td>
+          <td style="color:var(--muted);font-style:italic;">No platform needed</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-yellow">L3</span> Workflow</td>
+          <td>Upload &amp; analyse public docs, multi-turn</td>
+          <td style="color:#b7770d;font-weight:600;">Private data (holdings, valuation models, client files) requires system integration</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-warn">L4</span> Agent</td>
+          <td style="color:var(--muted);font-style:italic;">Higher technical threshold</td>
+          <td style="color:var(--warn);font-weight:600;">Data pipelines + security compliance + infrastructure = what platforms handle</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:14px;padding:10px 16px;background:var(--accent-soft);border-radius:8px;font-size:clamp(12px,1vw,15px);border-left:3px solid var(--accent);">
+      Today we focus on <strong>L1–L3 — what you can do yourself</strong>. The prerequisite for L3–L4 with private data isn't an AI subscription — it's data that's clean, connected, and governed. That's what Canopy is built to solve.
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~3 min</strong></p>
+      <p>"This is the most important slide today. L1–L2 you can start using tomorrow. L3 with public files — that's the demo. L3–L4 with private data — that's a different conversation."</p>
+      <p><strong>Transition:</strong> Enough theory. Let's look at something real.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 10: DEMO SECTION DIVIDER -->
+<section class="divider" data-background-color="#1a2420">
+  <div style="color:rgba(255,255,255,0.5);font-size:clamp(11px,0.9vw,14px);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:16px;">Live Demo</div>
+  <h2 style="color:white;font-size:clamp(24px,2.8vw,40px);text-align:center;max-width:80%;">
+    Xiaomi Q4 earnings drop in 3 days —<br>this is what analysts are doing right now
+  </h2>
+  <div style="display:flex;gap:32px;margin-top:28px;justify-content:center;">
+    <div style="text-align:center;">
+      <div style="font-size:clamp(22px,2.5vw,36px);font-weight:900;color:#19824a;">Track A</div>
+      <div style="color:rgba(255,255,255,0.7);font-size:clamp(12px,1vw,16px);margin-top:4px;">Transcript Intelligence</div>
+    </div>
+    <div style="width:1px;background:rgba(255,255,255,0.2);margin:4px 0;"></div>
+    <div style="text-align:center;">
+      <div style="font-size:clamp(22px,2.5vw,36px);font-weight:900;color:#f39c12;">Track B</div>
+      <div style="color:rgba(255,255,255,0.7);font-size:clamp(12px,1vw,16px);margin-top:4px;">DCF Assumption Audit</div>
+    </div>
+  </div>
+  <aside class="notes"><p>"The next 15 minutes: two things that are genuinely useful. Not textbook examples — Xiaomi reports next week, and here's what we can do today."</p></aside>
+</section>
+
+<!-- SLIDE 11: TRACK A SETUP -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Track A · Transcript Intelligence</div>
+    <h2>10 minutes after the call ends — AI reads what management said, and what they didn't</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:12px;">
+      <div class="card">
+        <div style="font-weight:700;margin-bottom:10px;">What you feed to AI</div>
+        <ul style="font-size:clamp(12px,1vw,15px);line-height:1.9;">
+          <li>Full Q3 2025 earnings call transcript</li>
+          <li>Prior quarter transcript (Q2 2025)</li>
+          <li>A structured prompt (example ↓)</li>
+        </ul>
+        <div style="margin-top:10px;font-family:monospace;font-size:clamp(10px,0.82vw,12px);background:#f8f7f2;border:1px solid var(--line);border-radius:6px;padding:10px 12px;line-height:1.7;color:var(--ink);">
+          Read both transcripts. For each EV margin statement:<br>
+          1. Quote verbatim + speaker name + page #<br>
+          2. Tag: [confident / hedged / evasive]<br>
+          3. Did tone change vs Q2? Flag any reversal.
+        </div>
+      </div>
+      <div class="card card-green">
+        <div style="font-weight:700;margin-bottom:10px;color:var(--accent);">What you get</div>
+        <ul style="font-size:clamp(12px,1vw,15px);line-height:1.9;">
+          <li>Management tone shift comparison Q2 vs Q3</li>
+          <li>Questions analysts asked that management deflected</li>
+          <li>Credibility tags on all forward guidance</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:clamp(12px,1vw,15px);color:var(--muted);font-style:italic;">
+      This is 2–3 hours of manual analyst work.
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~1.5 min setup</strong></p>
+      <p>"We downloaded the Xiaomi Q3 transcript, uploaded it to Claude with a structured prompt. Let's see what it found."</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 12: HEDGE WORDS -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Track A · Finding #1</div>
+    <h2>On EV margins, management used 4 hedge words in Q3 — versus 0 in Q2</h2>
+    <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:24px;margin-top:12px;align-items:start;">
+      <div>
+        <canvas id="hedge-chart" style="max-height:220px;"></canvas>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card card-warn" style="font-size:clamp(12px,1vw,15px);">
+          <div style="font-weight:700;color:var(--warn);margin-bottom:8px;">Q3 earnings call verbatim (underlined = hedge words)</div>
+          <p style="line-height:1.8;margin:0 0 8px;">"The gross profit margin of Xiaomi Auto next year <span class="hedge">may decline</span> compared with this year."<br><span style="color:var(--muted);font-size:11px;">— Lu Weibing, President</span></p>
+          <p style="line-height:1.8;margin:0 0 8px;">"Volume is <span class="hedge">still our target</span> and gross margin is <span class="hedge">not our most important target</span>."<br><span style="color:var(--muted);font-size:11px;">— Alain Lam, CFO</span></p>
+          <p style="line-height:1.8;margin:0;">"Rising memory costs <span class="hedge">could further squeeze</span> margins."<br><span style="color:var(--muted);font-size:11px;">— Lu Weibing</span></p>
+        </div>
+      </div>
+    </div>
+    <script>
+      new Chart(document.getElementById('hedge-chart'), {
+        type: 'bar',
+        data: {
+          labels: ['Q2 2025', 'Q3 2025'],
+          datasets: [{
+            label: 'EV Margin Hedge Words',
+            data: [0, 4],
+            backgroundColor: ['#b8ddc8', '#c0392b'],
+            borderRadius: 8,
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, max: 5, ticks: { stepSize: 1 }, grid: { color: '#f0f0f0' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    </script>
+    <aside class="notes">
+      <p><strong>Duration: ~3 min</strong></p>
+      <p>"This isn't AI guessing — it's AI extracting from the original transcript. In Q2 management was confident on EV margins. By Q3, the hedging starts. How long would this take manually? AI does it in seconds."</p>
+      <p><strong>Transition:</strong> The dodged questions are equally important.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 13: DODGED QUESTIONS -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Track A · Finding #2</div>
+    <h2>Two key risks — analysts asked, management deflected</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px;">
+      <div class="card card-warn">
+        <div style="font-size:clamp(12px,1vw,14px);font-weight:700;color:var(--warn);margin-bottom:10px;">⚠ Order backlog burn rate</div>
+        <p style="font-size:clamp(12px,1vw,14px);line-height:1.7;margin:0 0 6px;">Analysts asked: are new orders keeping pace with deliveries?<br><span style="font-size:11px;color:var(--muted);">[Transcript p.14, Q&amp;A — management gave no specific figure]</span></p>
+        <p style="font-size:clamp(12px,1vw,14px);line-height:1.7;margin:0;color:var(--muted);">Dolphin Research estimates <span style="font-size:11px;">[Nov 2025 note]</span>:<br>~4,000–5,000 new orders/week<br>~30,000 deliveries/month consumed</p>
+        <div style="margin-top:10px;padding:8px 10px;background:white;border-radius:6px;font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--warn);">
+          Mid-2026: supply-constrained → demand-constrained
+        </div>
+      </div>
+      <div class="card card-warn">
+        <div style="font-size:clamp(12px,1vw,14px);font-weight:700;color:var(--warn);margin-bottom:10px;">⚠ 370K-unit recall overhang</div>
+        <p style="font-size:clamp(12px,1vw,14px);line-height:1.7;margin:0 0 6px;">Door handle safety: regulators pressuring recall of 370,000 first-gen SU7s <span style="font-size:11px;color:var(--muted);">[Yicai / CnEVPost, Feb 2026]</span><br>Plus ADAS software recall of 117,000 units already executed <span style="font-size:11px;color:var(--muted);">[Sept 2025]</span></p>
+        <p style="font-size:clamp(12px,1vw,14px);line-height:1.7;margin:0;color:var(--muted);">2 fatal crashes + 3 fire incidents in 2025 <span style="font-size:11px;">[CnEVPost, Caixin]</span>. Oct crash wiped<br><strong style="color:var(--warn);">$10B</strong> in market cap in a single day <span style="font-size:11px;">[Caixin Global, Oct 14 2025]</span></p>
+        <div style="margin-top:10px;padding:8px 10px;background:white;border-radius:6px;font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--warn);">
+          This tail risk isn't modelled in any DCF we've seen
+        </div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~2.5 min</strong></p>
+      <p>"The most valuable information in an earnings call is often not what management said — it's what they went around. AI can systematically find those places."</p>
+      <p><strong>Transition:</strong> Track A done. Now let's look at your DCF model.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 14: TRACK B SECTION DIVIDER -->
+<section class="divider" data-background-color="#f39c12">
+  <div style="color:rgba(255,255,255,0.75);font-size:clamp(11px,0.9vw,14px);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:16px;">Track B · DCF Assumption Audit</div>
+  <h2 style="color:white;font-size:clamp(26px,2.8vw,40px);text-align:center;max-width:80%;">
+    Upload your DCF assumptions to AI —<br>and let it stress-test your own model
+  </h2>
+  <aside class="notes"><p>"Track B is the one I find most interesting myself. Not letting AI build your model — letting AI challenge your assumptions."</p></aside>
+</section>
+
+<!-- SLIDE 15: DCF GAP TABLE -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Track B · Findings</div>
+    <h2>Two core assumptions are wrong simultaneously — in opposite directions</h2>
+    <table style="margin-top:14px;font-size:clamp(11px,0.95vw,14px);">
+      <thead>
+        <tr>
+          <th>Assumption</th>
+          <th>Model figure</th>
+          <th>Reality / Management guidance</th>
+          <th>Gap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FY2025 Group Gross Margin</strong></td>
+          <td>21.5%</td>
+          <td class="td-ok">Q3 actual already 22.9%</td>
+          <td class="td-ok">Model understated by +1.4pp</td>
+        </tr>
+        <tr>
+          <td><strong>EV Gross Margin (2026)</strong></td>
+          <td>Implies expansion</td>
+          <td class="td-warn">Management explicitly said "will decline"</td>
+          <td class="td-warn">Model too optimistic</td>
+        </tr>
+        <tr>
+          <td><strong>EV Revenue FY2025E</strong></td>
+          <td>~$8.6B USD</td>
+          <td class="td-ok">Q3 alone was RMB 29B — full year will far exceed</td>
+          <td class="td-ok">Model severely understated</td>
+        </tr>
+        <tr>
+          <td><strong>2026 NEV Subsidy</strong></td>
+          <td>Not modelled</td>
+          <td class="td-warn">Purchase tax rising 0% → 5%, subsidy cap halved</td>
+          <td class="td-warn">Missed a structural negative</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px;">
+      <div style="padding:10px 14px;background:var(--accent-soft);border-radius:8px;font-size:clamp(11px,0.9vw,14px);border-left:3px solid var(--accent);">
+        <strong>EV revenue understated</strong> → if corrected, valuation moves up
+      </div>
+      <div style="padding:10px 14px;background:var(--warn-soft);border-radius:8px;font-size:clamp(11px,0.9vw,14px);border-left:3px solid var(--warn);">
+        <strong>EV margin too optimistic + missing subsidy</strong> → if corrected, valuation moves down
+      </div>
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~3 min</strong></p>
+      <p>"AI found these four issues in 5 minutes. Not saying the model is wrong — saying these are decisions you need to make consciously, not just accept. That's AI as devil's advocate."</p>
+      <p><strong>Transition:</strong> Put both tracks together — what do you see?</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 16: SYNTHESIS — ALPHA -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Synthesis</div>
+    <h2>Track A and Track B converge on one question: can Xiaomi protect EV margins while scaling volume?</h2>
+    <div style="display:grid;grid-template-columns:1fr 0.1fr 1fr;gap:16px;align-items:center;margin-top:16px;">
+      <div class="card card-warn">
+        <div style="font-weight:700;color:var(--warn);margin-bottom:10px;">Track A finding</div>
+        <p style="font-size:clamp(12px,1vw,15px);line-height:1.7;margin:0;">Management used 4 hedge words on EV margins. CFO's words: <strong>volume is the priority, margins are not.</strong></p>
+      </div>
+      <div style="text-align:center;font-size:32px;font-weight:900;color:var(--accent);">+</div>
+      <div class="card" style="border:1px solid var(--line);">
+        <div style="font-weight:700;margin-bottom:10px;color:var(--ink);">Track B finding</div>
+        <p style="font-size:clamp(11px,0.9vw,14px);line-height:1.7;margin:0 0 8px;"><span style="color:var(--accent);font-weight:700;">↑ Bullish error:</span> EV revenue severely understated — valuation may be too low</p>
+        <p style="font-size:clamp(11px,0.9vw,14px);line-height:1.7;margin:0;"><span style="color:var(--warn);font-weight:700;">↓ Bearish errors:</span> EV margin too optimistic + 2026 subsidy cliff missing entirely</p>
+        <div style="margin-top:8px;font-size:clamp(10px,0.85vw,12px);color:var(--muted);font-style:italic;">Two errors, opposite directions — the margin story is what decides your call</div>
+      </div>
+    </div>
+    <div style="margin-top:18px;padding:16px 20px;background:var(--accent);border-radius:10px;color:white;">
+      <div style="font-size:clamp(13px,1.1vw,17px);font-weight:700;margin-bottom:6px;">Sell-side divergence: Deutsche Bank HKD 71 vs Nomura HKD 33 — a 100% gap</div>
+      <div style="font-size:clamp(12px,1vw,15px);opacity:0.9;">The debate comes down to two questions: how many EVs can they sell, and how well can they protect margins. The earnings call already gave you the signals.</div>
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~2 min</strong></p>
+      <p>"This is where alpha comes from. Not from AI doing something magical — from AI systematically finding consistency issues that humans tend to miss."</p>
+      <p><strong>Transition:</strong> Before we continue, three things need to be said clearly.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 17: HONEST LIMITS -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Important</div>
+    <h2>Three hard limits — know these before using AI for investment analysis</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px;">
+      <div class="card card-warn" style="text-align:center;padding:20px 16px;">
+        <div style="font-size:clamp(28px,3vw,44px);margin-bottom:8px;">🚫</div>
+        <div style="font-weight:700;font-size:clamp(13px,1.1vw,16px);color:var(--warn);margin-bottom:8px;">Never trust AI's maths</div>
+        <div style="font-size:clamp(11px,0.9vw,14px);color:var(--muted);line-height:1.6;">XIRR, TWR, IRR —<br>LLMs get calculations wrong.<br>Always verify in Excel.</div>
+      </div>
+      <div class="card card-yellow" style="text-align:center;padding:20px 16px;">
+        <div style="font-size:clamp(28px,3vw,44px);margin-bottom:8px;">⏱</div>
+        <div style="font-weight:700;font-size:clamp(13px,1.1vw,16px);color:var(--yellow);margin-bottom:8px;">Data has an expiry date</div>
+        <div style="font-size:clamp(11px,0.9vw,14px);color:var(--muted);line-height:1.6;">AI has a training cutoff date.<br>Always check the date on sources.<br>Use Perplexity for real-time data.</div>
+      </div>
+      <div class="card card-green" style="text-align:center;padding:20px 16px;">
+        <div style="font-size:clamp(28px,3vw,44px);margin-bottom:8px;">🎯</div>
+        <div style="font-weight:700;font-size:clamp(13px,1.1vw,16px);color:var(--accent);margin-bottom:8px;">Your judgement is the last line</div>
+        <div style="font-size:clamp(11px,0.9vw,14px);color:var(--muted);line-height:1.6;">AI gives you an 80% starting point.<br>Your experience and judgement<br>determine the final 20%.</div>
+      </div>
+    </div>
+    <div style="margin-top:14px;text-align:center;font-size:clamp(13px,1.05vw,16px);color:var(--muted);font-style:italic;">
+      Total cost for everything you saw today: Claude Pro $20/mo + Perplexity Pro $20/mo = $40/mo
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~2 min</strong></p>
+      <p>"These three limits are real — not a disclaimer. They're the right mental model for using AI."</p>
+      <p><strong>Transition:</strong> Demo done. Now let's talk about how to actually use Claude well.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 18: SECTION DIVIDER — CLAUDE COWORK -->
+<section class="divider" data-background-color="#19824a">
+  <div style="color:rgba(255,255,255,0.6);font-size:clamp(11px,0.9vw,14px);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:16px;">Practical</div>
+  <h2 style="color:white;font-size:clamp(26px,2.8vw,40px);text-align:center;max-width:80%;">
+    How to actually use Claude.ai —<br>three setups that turn it into a work partner
+  </h2>
+  <aside class="notes"><p><strong>⚡ ATTENTION RESET — pause here.</strong> Before advancing: "Quick show of hands — who has used Claude Projects? Who has set up a Scheduled Task? Okay — that tells me exactly where to focus the next 8 minutes." Then advance.</p><p>"Most people open a chat box, ask a question, close it. Three features turn it into a long-term work partner."</p></aside>
+</section>
+
+<!-- SLIDE 19: IDENTITY — Profile + Memory -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Claude.ai · 1/3 · Identity</div>
+    <h2>First: tell AI who you are — set your profile once, turn on Memory, and never repeat yourself</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:14px;">
+      <div class="card card-green" style="padding:16px;">
+        <div style="font-weight:700;color:var(--accent);margin-bottom:8px;">Profile (Settings → Customize)</div>
+        <ul style="font-size:clamp(11px,0.9vw,13px);line-height:1.8;">
+          <li>Your role &amp; investment mandate</li>
+          <li>Geography and asset class focus</li>
+          <li>Output preferences (format, language, detail)</li>
+          <li>Your work rhythm (daily reviews, markets)</li>
+        </ul>
+        <div style="font-size:clamp(10px,0.82vw,12px);color:var(--muted);margin-top:8px;font-style:italic;">Set once. Every conversation starts in context.</div>
+      </div>
+      <div class="card" style="padding:16px;">
+        <div style="font-weight:700;margin-bottom:8px;">Memory (Settings → Memory)</div>
+        <ul style="font-size:clamp(11px,0.9vw,13px);line-height:1.8;">
+          <li>Your views on individual stocks</li>
+          <li>Investment principles &amp; constraints</li>
+          <li>Conclusions from past discussions</li>
+          <li>Research preferences</li>
+        </ul>
+        <div style="font-size:clamp(10px,0.82vw,12px);color:var(--muted);margin-top:8px;font-style:italic;">Grows over time. Tell Claude "remember this."</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card card-warn" style="padding:14px;">
+          <div style="font-weight:700;color:var(--warn);font-size:clamp(11px,0.9vw,13px);margin-bottom:6px;">Without</div>
+          <div style="font-size:clamp(10px,0.85vw,12px);color:var(--muted);line-height:1.5;">"Last time we discussed Xiaomi's margin pressure…"<br>→ AI doesn't remember.<br>→ Every session starts from scratch.</div>
+        </div>
+        <div class="card card-green" style="padding:14px;">
+          <div style="font-weight:700;color:var(--accent);font-size:clamp(11px,0.9vw,13px);margin-bottom:6px;">With</div>
+          <div style="font-size:clamp(10px,0.85vw,12px);line-height:1.5;">AI knows you follow Asian equities, knows your reporting format, remembers your Xiaomi thesis from last week.</div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes"><p><strong>Duration: ~2.5 min</strong></p><p>"Five-minute setup, permanent benefit. Settings → Customize Claude for your profile. Settings → Memory → turn on. Then actively tell it: 'remember that I think Xiaomi margins will compress in 2026.' It accumulates over time."</p></aside>
+  </div>
+</section>
+
+<!-- SLIDE 20: STRUCTURE — Folders + Skills -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Claude.ai · 2/3 · Structure</div>
+    <h2>Organize by Project, write Skills as SOPs — AI switches roles between workspaces automatically</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px;">
+      <div>
+        <div style="font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Folder structure</div>
+        <div style="font-family:monospace;font-size:clamp(11px,0.92vw,13px);background:#f5f7f5;border-radius:8px;padding:12px 14px;line-height:2;border:1px solid var(--line);">
+          📁 Portfolio Companies<br>
+          &nbsp;&nbsp;└ 📄 Xiaomi (1810.HK)<br>
+          &nbsp;&nbsp;└ 📄 TSMC (2330.TW)<br>
+          📁 Research Projects<br>
+          📁 Client Materials
+        </div>
+        <div style="margin-top:10px;font-size:clamp(11px,0.9vw,13px);color:var(--muted);">Each Project has its own context, Skills, and files. No cross-contamination.</div>
+      </div>
+      <div>
+        <div style="font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Skills = your SOPs for AI</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="padding:10px 12px;background:white;border-radius:6px;border:1px solid var(--line);font-size:clamp(11px,0.9vw,13px);">
+            <div style="color:var(--warn);font-weight:600;font-size:10px;margin-bottom:3px;">WITHOUT SKILL</div>
+            <div style="color:var(--muted);">"Write a client update" → generic filler</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--accent-soft);border-radius:6px;border:1px solid var(--accent-mid);font-size:clamp(11px,0.9vw,13px);">
+            <div style="color:var(--accent);font-weight:600;font-size:10px;margin-bottom:3px;">WITH SKILL</div>
+            <div>"Write a client update" → your format, your voice, benchmark comparison auto-included</div>
+          </div>
+          <div style="font-size:clamp(10px,0.85vw,12px);color:var(--muted);font-style:italic;">Skills to build: earnings memo format, IC template, due diligence checklist, market scan output</div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes"><p><strong>Duration: ~2.5 min</strong></p><p>"A Project is Claude's workspace unit. A Skill is a saved prompt template — think: what SOP would you write for a new analyst joining the team? Write that once, every output matches your style."</p></aside>
+  </div>
+</section>
+
+<!-- SLIDE 21: AUTOMATION — Scheduled Tasks + Agents -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Claude.ai · 3/3 · Automation</div>
+    <h2>Scheduled Tasks push AI to you daily — Agents take it further with 24/7 autonomous workflows</h2>
+    <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:20px;margin-top:14px;">
+      <div>
+        <div style="font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Scheduled Tasks (start here)</div>
+        <div style="font-family:monospace;font-size:clamp(10px,0.85vw,12px);background:#f5f7f5;border-radius:8px;padding:12px 14px;line-height:1.8;border:1px solid var(--line);">
+          <span style="color:var(--accent);font-weight:700;">Every morning at 8:00am</span> run:<br><br>
+          "Search for news from last 24h on:<br>
+          Xiaomi, Tencent, SMIC. Format:<br>
+          Company / Event / Impact / Priority.<br>
+          Only send High &amp; Medium."
+        </div>
+        <div style="margin-top:8px;font-size:clamp(10px,0.85vw,12px);color:var(--muted);">Claude.ai → bottom left → Schedule. No technical setup needed.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="card card-green" style="padding:14px;">
+          <div style="font-weight:700;color:var(--accent);font-size:clamp(11px,0.9vw,13px);margin-bottom:6px;">What you can automate</div>
+          <ul style="font-size:clamp(10px,0.85vw,12px);line-height:1.8;margin:0;">
+            <li>Daily portfolio news digest</li>
+            <li>Regulatory announcement tracking</li>
+            <li>Weekly competitor activity summary</li>
+            <li>Sector-specific monitoring</li>
+          </ul>
+        </div>
+        <div class="card card-yellow" style="padding:14px;">
+          <div style="font-weight:700;color:#b7770d;font-size:clamp(11px,0.9vw,13px);margin-bottom:6px;">Agents (advanced)</div>
+          <div style="font-size:clamp(10px,0.85vw,12px);line-height:1.6;">Full autonomous workflows: portfolio monitoring, research synthesis, meeting prep, weekly reporting. Requires the first three features as foundation.</div>
+          <div style="margin-top:6px;font-size:clamp(10px,0.82vw,11px);color:var(--muted);font-style:italic;">Sequence: 1. Identity → 2. Structure → 3. Automation</div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes"><p><strong>Duration: ~2.5 min</strong></p><p>"Scheduled Tasks is the closest you can get to Level 4 without any technical setup. Start there. If you want to go deeper into building agents, let's connect separately."</p></aside>
+  </div>
+</section>
+
+<!-- SLIDE 25: TOOLS QUADRANT -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Tool Selection</div>
+    <h2>Which tool goes where: use case × data depth</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px;">
+      <div class="card card-green">
+        <div style="font-weight:700;color:var(--accent);margin-bottom:8px;font-size:clamp(13px,1.1vw,16px);">Chat + Writing</div>
+        <div style="font-size:clamp(20px,2vw,28px);margin-bottom:6px;">✍️</div>
+        <div style="font-size:clamp(11px,0.9vw,14px);line-height:1.8;">
+          <strong>Claude Pro</strong> — long-form, analysis, multi-turn<br>
+          <strong>ChatGPT</strong> — code help, data viz<br>
+          <strong>Kimi</strong> — Chinese content, low cost
+        </div>
+      </div>
+      <div class="card" style="border-color:var(--accent-mid);">
+        <div style="font-weight:700;margin-bottom:8px;font-size:clamp(13px,1.1vw,16px);">Live Research</div>
+        <div style="font-size:clamp(20px,2vw,28px);margin-bottom:6px;">🔍</div>
+        <div style="font-size:clamp(11px,0.9vw,14px);line-height:1.8;">
+          <strong>Perplexity Pro</strong> — cited search<br>
+          <strong>Claude + search</strong> — deep analysis<br>
+          <strong>Kimi</strong> — Chinese source coverage
+        </div>
+      </div>
+      <div class="card" style="border-color:var(--accent);background:var(--accent-soft);">
+        <div style="font-weight:700;color:var(--accent-dark);margin-bottom:8px;font-size:clamp(13px,1.1vw,16px);">Workflow + Private Data</div>
+        <div style="font-size:clamp(20px,2vw,28px);margin-bottom:6px;">⚙️</div>
+        <div style="font-size:clamp(11px,0.9vw,14px);line-height:1.8;">
+          <strong>Claude Projects</strong> — files + Skills + Memory<br>
+          <strong>MS Copilot</strong> — Office ecosystem<br>
+          <strong>Canopy</strong> — private data + agent layer
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:12px;text-align:center;font-size:clamp(12px,1vw,15px);color:var(--muted);">Total cost: Claude Pro + Perplexity Pro = <strong style="color:var(--ink);">$40/month</strong> · minimum viable setup to get started</div>
+    <aside class="notes"><p><strong>Duration: ~2 min</strong></p><p>"Here's the full toolkit. Claude handles depth. Perplexity handles live research. The third column is where Canopy sits. Let me show you the Perplexity technique specifically — it's the one most people do wrong."</p></aside>
+  </div>
+</section>
+
+<!-- SLIDE 26: PERPLEXITY TIPS -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Tool Technique · Perplexity</div>
+    <h2>Structured prompt + verify 3 citations — the two habits that separate good from bad AI research</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px;">
+      <div>
+        <div style="font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--warn);margin-bottom:8px;text-transform:uppercase;">❌ How most people use it</div>
+        <div style="font-family:monospace;font-size:clamp(11px,0.9vw,13px);background:#fef2f2;border-radius:8px;padding:12px 14px;border:1px solid #fca5a5;line-height:1.8;color:var(--muted);">
+          "What do you think of Xiaomi stock?"
+        </div>
+        <div style="margin-top:8px;font-size:clamp(11px,0.9vw,13px);color:var(--muted);">→ Generic answer, no structure, hard to verify</div>
+      </div>
+      <div>
+        <div style="font-size:clamp(11px,0.9vw,13px);font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase;">✅ Structured prompt</div>
+        <div style="font-family:monospace;font-size:clamp(11px,0.9vw,13px);background:var(--accent-soft);border-radius:8px;padding:12px 14px;border:1px solid var(--accent-mid);line-height:1.8;">
+          "Analyse Xiaomi (1810.HK) heading<br>
+          into Q4 earnings. Cover: ① Q3 results<br>
+          summary + key numbers ② EV segment<br>
+          trajectory ③ Q4 consensus expectations<br>
+          ④ Bull/bear scenarios ⑤ 3 things to watch.<br>
+          Cite every data point."
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;padding:10px 16px;background:var(--accent-soft);border-radius:8px;font-size:clamp(12px,1vw,15px);border-left:3px solid var(--accent);">
+      <strong>Golden rule:</strong> when you get an answer, click 3 random citations to verify. This builds your calibration for AI output quality.
+    </div>
+    <aside class="notes"><p><strong>Duration: ~2 min</strong></p></aside>
+  </div>
+</section>
+
+<!-- SLIDE 27: DATA PRIVACY -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Compliance</div>
+    <h2>Data security isn't binary — four options, find where you sit</h2>
+    <table style="margin-top:14px;font-size:clamp(11px,0.92vw,14px);">
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Where data goes</th>
+          <th>Best for</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pill pill-muted">Free</span></td>
+          <td>Used to train models</td>
+          <td>Public information research</td>
+          <td>$0</td>
+        </tr>
+        <tr>
+          <td><span class="pill">Pro</span></td>
+          <td>Encrypted, not used for training</td>
+          <td>Internal document analysis (non-confidential)</td>
+          <td>$20/mo</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-yellow">Enterprise</span></td>
+          <td>Zero data retention</td>
+          <td>Confidential files, client data</td>
+          <td>$30+/user/mo</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-warn">On-Premise</span></td>
+          <td>Never leaves your servers</td>
+          <td>Highest compliance requirements</td>
+          <td>Custom</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:14px;padding:10px 16px;background:var(--accent-soft);border-radius:8px;font-size:clamp(12px,1vw,15px);border-left:3px solid var(--accent);">
+      <strong>Recommended starting point:</strong> use Pro for public research; before uploading internal files, confirm Enterprise agreement or use an isolated workspace.
+    </div>
+    <aside class="notes"><p><strong>Duration: ~2 min</strong></p></aside>
+  </div>
+</section>
+
+<!-- SLIDE 28: FUTURE -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Industry Signal</div>
+    <h2>Every major platform launched a finance-specific product in the past 12 months</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
+
+      <!-- Anthropic -->
+      <div class="card" style="padding:14px 16px;border-left:3px solid var(--accent);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div style="font-weight:800;font-size:clamp(12px,1vw,15px);color:var(--accent);">Anthropic</div>
+          <div style="font-size:10px;color:var(--muted);font-style:italic;">anthropic.com/news, 2026</div>
+        </div>
+        <div style="font-weight:700;font-size:clamp(11px,0.9vw,13px);margin-bottom:5px;">Claude for Financial Services</div>
+        <div style="font-size:clamp(10px,0.85vw,12px);color:var(--muted);line-height:1.6;">6 pre-built agent skills: comparable company analysis, DCF models, due diligence packs, earnings analysis, initiating coverage. Live data connectors to <strong style="color:var(--ink);">S&amp;P Global, PitchBook, Daloopa</strong> directly in Excel via MCP.</div>
+      </div>
+
+      <!-- OpenAI -->
+      <div class="card" style="padding:14px 16px;border-left:3px solid #10a37f;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div style="font-weight:800;font-size:clamp(12px,1vw,15px);color:#10a37f;">OpenAI</div>
+          <div style="font-size:10px;color:var(--muted);font-style:italic;">openai.com/index, 2026</div>
+        </div>
+        <div style="font-weight:700;font-size:clamp(11px,0.9vw,13px);margin-bottom:5px;">ChatGPT for Excel + BBVA deployment</div>
+        <div style="font-size:clamp(10px,0.85vw,12px);color:var(--muted);line-height:1.6;">Live data from <strong style="color:var(--ink);">FactSet, LSEG, Dow Jones Factiva</strong> inside ChatGPT. BBVA deployed to <strong style="color:var(--ink);">120,000 employees across 25 countries</strong> — 80% daily engagement, 3 hrs/week saved per person.</div>
+      </div>
+
+      <!-- Microsoft -->
+      <div class="card" style="padding:14px 16px;border-left:3px solid #0078d4;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div style="font-weight:800;font-size:clamp(12px,1vw,15px);color:#0078d4;">Microsoft</div>
+          <div style="font-size:10px;color:var(--muted);font-style:italic;">microsoft.com IR, FY26 Q2</div>
+        </div>
+        <div style="font-weight:700;font-size:clamp(11px,0.9vw,13px);margin-bottom:5px;">Copilot for Finance — generally available</div>
+        <div style="font-size:clamp(10px,0.85vw,12px);color:var(--muted);line-height:1.6;">Connected to SAP and Dynamics 365 inside Excel and Outlook. <strong style="color:var(--ink);">4.7 million paid Copilot subscribers, up 75% year-over-year</strong> — from Microsoft's own earnings call.</div>
+      </div>
+
+      <!-- Bloomberg -->
+      <div class="card" style="padding:14px 16px;border-left:3px solid #f39c12;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div style="font-weight:800;font-size:clamp(12px,1vw,15px);color:#b7770d;">Bloomberg</div>
+          <div style="font-size:10px;color:var(--muted);font-style:italic;">bloomberg.com/company/press</div>
+        </div>
+        <div style="font-weight:700;font-size:clamp(11px,0.9vw,13px);margin-bottom:5px;">BloombergGPT + Terminal AI news tools</div>
+        <div style="font-size:clamp(10px,0.85vw,12px);color:var(--muted);line-height:1.6;">50B-parameter LLM trained on Bloomberg's proprietary financial corpus. AI news discovery and summarization now live in Terminal — built for speed-to-insight on market-moving events.</div>
+      </div>
+
+    </div>
+    <div style="margin-top:12px;padding:10px 16px;background:var(--accent-soft);border-radius:8px;font-size:clamp(11px,0.95vw,14px);border-left:3px solid var(--accent);">
+      These are product launch announcements, not forecasts. The infrastructure layer is already built. The question is whether your workflow is connected to it.
+    </div>
+    <aside class="notes">
+      <p><strong>Duration: ~2 min</strong></p>
+      <p>"I'm deliberately showing you primary sources — not consulting firm predictions. Anthropic, OpenAI, Microsoft, Bloomberg have all shipped finance-specific products in the past 12 months. When the platforms themselves are building vertical finance products, it means the wave is here, not coming."</p>
+      <p><strong>Transition:</strong> Three things you can start tomorrow.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- SLIDE 29: NEXT STEPS -->
+<section>
+  <div class="slide-body">
+    <div class="eyebrow">Action</div>
+    <h2>Three things you can start tomorrow</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:20px;">
+      <div class="card" style="text-align:center;padding:24px 16px;">
+        <div style="font-size:clamp(36px,4vw,56px);font-weight:900;color:var(--accent);margin-bottom:10px;">1</div>
+        <div style="font-weight:700;font-size:clamp(13px,1.1vw,16px);margin-bottom:10px;">Build your personal profile</div>
+        <div style="font-size:clamp(11px,0.9vw,14px);color:var(--muted);line-height:1.6;">Claude.ai Settings → Customize Claude. Write who you are, your mandate, your output preferences. 5 minutes.</div>
+      </div>
+      <div class="card card-green" style="text-align:center;padding:24px 16px;">
+        <div style="font-size:clamp(36px,4vw,56px);font-weight:900;color:var(--accent);margin-bottom:10px;">2</div>
+        <div style="font-weight:700;font-size:clamp(13px,1.1vw,16px);margin-bottom:10px;">Use today's demo prompt</div>
+        <div style="font-size:clamp(11px,0.9vw,14px);color:var(--muted);line-height:1.6;">Take a stock you know well from your portfolio. Run a structured Perplexity prompt. Verify 3 citations.</div>
+      </div>
+      <div class="card" style="text-align:center;padding:24px 16px;">
+        <div style="font-size:clamp(36px,4vw,56px);font-weight:900;color:var(--accent);margin-bottom:10px;">3</div>
+        <div style="font-weight:700;font-size:clamp(13px,1.1vw,16px);margin-bottom:10px;">Set up a Scheduled Task</div>
+        <div style="font-size:clamp(11px,0.9vw,14px);color:var(--muted);line-height:1.6;">Pick 3–5 holdings, set up a daily news scan. Takes under 10 minutes.</div>
+      </div>
+    </div>
+    <aside class="notes"><p><strong>Duration: ~2 min</strong></p><p>"Don't leave today and have nothing change by tomorrow. Any one of these three takes under 10 minutes."</p></aside>
+  </div>
+</section>
+
+<!-- SLIDE 27: CLOSING — matches title dark AI theme -->
+<section data-background-color="#0a1a14" style="text-align:center;overflow:hidden;">
+  <!-- Same floating orbs as title for visual bookend -->
+  <div class="title-orb" style="top:-15%;right:-5%;width:45%;height:45%;background:radial-gradient(circle,rgba(25,130,74,0.3) 0%,transparent 70%);animation:float2 10s ease-in-out infinite;"></div>
+  <div class="title-orb" style="bottom:-20%;left:-8%;width:50%;height:50%;background:radial-gradient(circle,rgba(25,130,74,0.2) 0%,transparent 70%);animation:float1 8s ease-in-out infinite;"></div>
+  <div class="title-grid"></div>
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:clamp(10px,0.85vw,13px);text-transform:uppercase;letter-spacing:0.18em;color:rgba(25,130,74,0.8);font-weight:700;margin-bottom:24px;">One line to take away</div>
+    <h1 style="font-size:clamp(28px,3.2vw,46px);line-height:1.2;max-width:78%;margin:0 auto 28px;color:white;">
+      Your data is AI's fuel —<br>and you <span style="color:#4ade80;">already have it</span>
+    </h1>
+    <div style="height:3px;background:linear-gradient(90deg,transparent,#19824a,transparent);margin:0 auto 28px;animation:pulse-line 3s ease-in-out infinite;"></div>
+    <div style="max-width:55%;color:rgba(255,255,255,0.6);font-size:clamp(14px,1.2vw,18px);line-height:1.7;margin:0 auto 32px;">
+      AI won't replace investors with good judgement.<br>It will amplify the gap between those who have it and those who don't.
+    </div>
+    <div style="font-size:clamp(12px,1vw,15px);color:rgba(255,255,255,0.4);">
+      Mu Chen · Canopy Cloud · mu@canopy.cloud
+    </div>
+  </div>
+  <aside class="notes">
+    <p><strong>Duration: keep this slide up during Q&amp;A</strong></p>
+    <p>"Don't change this slide during Q&amp;A. Let the line sit there."</p>
+  </aside>
+</section>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    width: 1280,
+    height: 720,
+    margin: 0,
+    transition: 'fade',
+    transitionSpeed: 'fast',
+    showNotes: false,
+    center: true,
+    controlsLayout: 'bottom-right',
+    progress: true,
+  });
+</script>
+</body>
+</html>
