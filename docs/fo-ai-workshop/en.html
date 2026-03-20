@@ -143,6 +143,75 @@
       background-size: 40px 40px;
       pointer-events: none;
     }
+
+    /* === MOBILE ADAPTATION === */
+    @media screen and (max-width: 768px) {
+      /* Slide body: tighter padding */
+      .slide-body { padding: 20px 18px !important; }
+
+      /* Stack ALL grid layouts to single column */
+      .slide-body [style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+      }
+      /* Also stack grids outside slide-body (synthesis etc.) */
+      [style*="grid-template-columns: 1fr 0.1fr 1fr"],
+      [style*="grid-template-columns:1fr 0.1fr 1fr"],
+      [style*="grid-template-columns: 1fr 0.08fr 1fr"],
+      [style*="grid-template-columns:1fr 0.08fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Hide grid arrow separators on mobile */
+      .slide-body [style*="grid-template-columns"] > [style*="font-size:28px"],
+      .slide-body [style*="grid-template-columns"] > [style*="font-size:20px"],
+      .slide-body [style*="grid-template-columns"] > [style*="font-size:32px"] {
+        display: none !important;
+      }
+
+      /* Horizontal flex layouts → stack */
+      .slide-body > div > [style*="display:flex"][style*="gap:40px"],
+      .slide-body > div > [style*="display:flex"][style*="gap:32px"] {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+      }
+
+      /* L4 timeline: wrap instead of horizontal scroll */
+      [style*="display:flex"][style*="align-items:center"][style*="gap:8px"][style*="justify-content:center"] {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+      }
+      [style*="display:flex"][style*="align-items:center"][style*="gap:8px"] > [style*="font-size:20px"] {
+        display: none !important;
+      }
+      [style*="display:flex"][style*="align-items:center"][style*="gap:8px"] > [style*="border-radius:10px"] {
+        flex: 1 1 45% !important;
+        max-width: none !important;
+      }
+
+      /* Tables: horizontal scroll */
+      .reveal table { display: block; overflow-x: auto; white-space: nowrap; }
+      .reveal table th, .reveal table td { min-width: 100px; }
+
+      /* Cards: tighter */
+      .card { padding: 14px 16px !important; border-radius: 10px !important; }
+
+      /* Footer notes: no absolute positioning */
+      .footer-note { position: static !important; margin-top: 12px !important; text-align: center; }
+
+      /* Divider slides */
+      .reveal .slides > section.divider h2 { max-width: 95% !important; }
+
+      /* Title/closing orbs: simplify for performance */
+      .title-orb { filter: blur(40px) !important; }
+
+      /* Hide speaker notes */
+      aside.notes { display: none !important; }
+
+      /* Separator lines in the middle of layouts */
+      [style*="width:1px"][style*="background:rgba"] { display: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -1085,17 +1154,21 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
+  const isMobile = window.innerWidth <= 768;
   Reveal.initialize({
     hash: true,
     width: 1280,
     height: 720,
-    margin: 0,
-    transition: 'fade',
+    margin: isMobile ? 0.04 : 0,
+    transition: isMobile ? 'none' : 'fade',
     transitionSpeed: 'fast',
     showNotes: false,
     center: true,
     controlsLayout: 'bottom-right',
     progress: true,
+    minScale: 0.15,
+    maxScale: 2.0,
+    ...(isMobile ? { view: 'scroll', scrollProgress: true } : {}),
   });
 </script>
 </body>
