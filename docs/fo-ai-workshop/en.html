@@ -148,8 +148,14 @@
     /* Targets iPhone 17 / 17 Pro Max in WeChat WebView */
     @media screen and (max-width: 480px) {
 
-      /* --- Strip Reveal.js layout engine --- */
-      .reveal { overflow: auto !important; height: auto !important; min-height: 100dvh; }
+      /* CRITICAL: unlock scroll — Reveal.js locks html/body overflow */
+      html, html.reveal-full-page, body {
+        overflow: auto !important;
+        overflow-y: auto !important;
+        height: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      .reveal { overflow: visible !important; height: auto !important; min-height: 100dvh; position: static !important; }
       .reveal .slides {
         position: static !important;
         transform: none !important;
@@ -159,6 +165,7 @@
         overflow: visible !important;
         perspective: none !important;
         pointer-events: auto !important;
+        display: block !important;
       }
       .reveal .slides > section {
         position: static !important;
@@ -202,16 +209,23 @@
 
       /* --- Layout: stack everything --- */
       .slide-body { padding: 0 !important; }
-      [style*="grid-template-columns"] {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 10px !important;
-      }
+      [style*="grid-template-columns"] { display: flex !important; flex-direction: column !important; gap: 10px !important; }
       [style*="display:flex"][style*="gap:40px"],
       [style*="display:flex"][style*="gap:32px"],
-      [style*="display:flex"][style*="gap:24px"] {
+      [style*="display:flex"][style*="gap:24px"],
+      [style*="display:flex"][style*="gap:20px"],
+      [style*="display:flex"][style*="gap:16px"],
+      [style*="display:flex"][style*="gap:12px"] {
         flex-direction: column !important;
         gap: 12px !important;
+        align-items: stretch !important;
+      }
+      .big-num { text-align: left !important; font-size: 42px !important; }
+      .big-label { text-align: left !important; }
+      [style*="font-size:clamp(32px"] { display: none !important; }
+      [style*="border-left:2px solid"] {
+        border-left: none !important; padding-left: 0 !important;
+        border-top: 1px solid var(--line) !important; padding-top: 12px !important; margin-top: 4px !important;
       }
 
       /* Hide arrow/separator elements between cards */
