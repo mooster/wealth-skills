@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>44天，12个Agent，100亿Token</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0e27;
+      --bg-surface: #111538;
+      --ink: #ededed;
+      --muted: #8b8fa3;
+      --dim: #5a5e73;
+      --border: rgba(255,255,255,0.08);
+      --accent: #667eea;
+      --accent2: #764ba2;
+      --cyan: #17d4c3;
+      --orange: #ff9f43;
+      --green: #00e676;
+      --red: #ff5252;
+      --pink: #ff6b9d;
+      --glass-bg: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.08);
+      --glass-blur: 16px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .reveal {
+      font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+      color: var(--ink);
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Space Grotesk', 'Noto Sans SC', system-ui, sans-serif;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .reveal h2 {
+      font-size: clamp(24px, 2.4vw, 36px);
+      line-height: 1.4;
+      text-align: left;
+    }
+    .reveal section {
+      padding: 48px 64px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .reveal .slides {
+      overflow: hidden;
+    }
+
+    /* Aurora background blobs */
+    .reveal .slides {
+      background: var(--bg);
+    }
+    .aurora {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .aurora .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.25;
+      animation: float 25s ease-in-out infinite alternate;
+    }
+    .aurora .blob-1 { background: #667eea; width: 500px; height: 500px; top: -15%; left: -5%; }
+    .aurora .blob-2 { background: #764ba2; width: 400px; height: 400px; bottom: -10%; right: -5%; animation-delay: -12s; }
+    .aurora .blob-3 { background: #17d4c3; width: 350px; height: 350px; top: 40%; right: 20%; opacity: 0.12; animation-delay: -7s; }
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, -25px) scale(1.08); }
+    }
+
+    /* Glass card */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-cyan {
+      background: linear-gradient(135deg, var(--cyan), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-orange {
+      background: linear-gradient(135deg, var(--orange), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-green {
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Eyebrow */
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    /* Stat */
+    .stat {
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 700;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* Workflow */
+    .workflow {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+    }
+    .wf-step {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      backdrop-filter: blur(8px);
+      min-width: 100px;
+    }
+    .wf-step small {
+      display: block;
+      font-weight: 400;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .wf-step.active {
+      background: rgba(102,126,234,0.15);
+      border-color: rgba(102,126,234,0.3);
+    }
+    .wf-step.result {
+      background: rgba(0,230,118,0.1);
+      border-color: rgba(0,230,118,0.3);
+      color: var(--green);
+    }
+    .wf-arrow {
+      color: var(--dim);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Grid */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; }
+
+    /* VS comparison */
+    .vs-card {
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .vs-card.before {
+      background: rgba(255,82,82,0.08);
+      border: 1px solid rgba(255,82,82,0.2);
+    }
+    .vs-card.after {
+      background: rgba(0,230,118,0.08);
+      border: 1px solid rgba(0,230,118,0.2);
+    }
+
+    /* News items */
+    .news-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-icon {
+      font-size: 20px;
+      width: 32px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .news-text {
+      font-size: 15px;
+      line-height: 1.6;
+      text-align: left;
+    }
+    .news-text strong { color: #fff; }
+    .news-text span { color: var(--muted); }
+
+    /* Org layer */
+    .org-layer {
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      backdrop-filter: blur(8px);
+    }
+    .layer-label {
+      font-weight: 700;
+      font-size: 15px;
+      min-width: 100px;
+    }
+    .layer-desc {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Takeaway cards */
+    .takeaway {
+      border-radius: 16px;
+      padding: 28px 24px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(12px);
+    }
+    .takeaway-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1;
+      opacity: 0.12;
+      color: #fff;
+    }
+    .takeaway-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+    .takeaway-body {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .takeaway-pill {
+      margin-top: auto;
+      padding-top: 16px;
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Section divider — force vertical center even with center:false */
+    .reveal section.divider {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+      text-align: center;
+      height: 100%;
+      min-height: 100%;
+      padding: 0 !important;
+    }
+    .reveal section.divider h2 {
+      text-align: center;
+      font-size: clamp(32px, 3.5vw, 52px);
+    }
+
+    /* Key message */
+    .key-msg {
+      font-size: clamp(16px, 1.4vw, 22px);
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* Subtle horizontal line */
+    .sep { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="aurora">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ==================== SLIDE 01: TITLE ==================== -->
+      <section data-background-color="#0a0e27" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100%;">
+        <div style="font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-size:clamp(44px,5.5vw,80px);font-weight:700;line-height:1.15;letter-spacing:-0.03em;">
+          <span class="gradient-text">44 天</span>
+          <span style="color:var(--dim);">，</span>
+          <span class="gradient-orange">12 个 Agent</span>
+          <span style="color:var(--dim);">，</span>
+          <span class="gradient-cyan">100 亿 Token</span>
+        </div>
+        <p style="color:var(--muted);font-size:clamp(18px,1.8vw,28px);margin-top:24px;font-weight:400;">创业者在 AI 时代的变与不变</p>
+        <p style="color:var(--dim);font-size:14px;margin-top:48px;font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;">陈沐 Mu Chen · Canopy CEO · 2026.04</p>
+        <aside class="notes">
+          <p><strong>30s</strong> — 简单自我介绍，不展开。"今天 20 分钟，聊聊过去 44 天我做的一个实验。"</p>
+        </aside>
+      </section>
+
+      <!-- ==================== SLIDE 02: BACKGROUND ==================== -->
+      <section data-background-color="#0a0e27">
+        <div class="eyebrow">Background</div>
+        <h2>我把 AI 嵌入了公司运营的每个环节</h2>
+        <div class="grid-4" style="margin-top:32px;">
+          <div class="glass stat">
+            <div class="stat-number gradient-text">3</div>
+            <div class="stat-label">台机器<br><span style="font-size:11px;color:var(--dim);">MacBook · Mac Mini · Cloud</span></div>
+          </div>
+          <div class="glass stat">
+            <div class="stat-number gradient-orange">12</div>
+            <div class="stat-label">个 AI Agent<br><span style="font-size:11px;color:var(--dim);">7 × 24 运行</span></div>
+          </div>
+          <div class="glass stat">
+            <div class="stat-number gradient-cyan">100亿<span style="font-size:0.5em;opacity:0.6;">+</span></div>
+            <div class="stat-label">Token 消耗<br><span style="font-size:11px;color:var(--dim);">API 等价 ~$19K</span></div>
+          </div>
+          <div class="glass stat">
+            <div class="stat-number gradient-green">1,683</div>
+            <div class="stat-label">个 Session<br><span style="font-size:11px;color:var(--dim);">日均 ~38 个</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:32px;flex-wrap:wrap;">
+          <span class="pill" style="background:rgba(102,126,234,0.15);color:var(--accent);">销售增长</span>
+          <span class="pill" style="background:rgba(23,212,195,0.15);color:var(--cyan);">行业调研</span>
+          <span class="pill" style="background:rgba(255,159,67,0.15);color:var(--orange);">投资人关系</span>
+          <span class="pill" style="background:rgba(0,230,118,0.15);color:var(--green);">招聘</span>
+          <span class="pill" style="background:rgba(255,107,157,0.15);color:var(--pink);">产品研发</span>
+        </div>
+        <p style="color:var(--dim);font-size:12px;text-align:center;margin-top:24px;font-family:'JetBrains Mono',monospace;">Canopy · 60+ 家族办公室 · $120B+ AUR · 清华五道口客座讲师</p>
+        <aside class="notes">
+          <p><strong>1.5 min</strong> — 快速过数字，建立 credibility。"这不是 demo，是我过去 44 天的日常。" 提一句 Canopy 背景但不展开。</p>
+          <p><strong>Transition:</strong> "在讲我自己之前，先看看行业正在发生什么。"</p>
+        </aside>
+      </section>
+
+      <!-- ==================== SLIDE 03: INDUSTRY ==================== -->
+      <section data-background-color="#0a0e27">
+        <div class="eyebrow">March 2026</div>
+        <h2>AI 行业正在发生什么</h2>
+        <div class="glass" style="margin-top:20px;padding:8px 24px;">
+          <div class="news-item">
+            <div class="news-icon">⚔️</div>
+            <div class="news-text"><strong>三巨头首次并立</strong> <span>— GPT-5.4 / Claude Opus 4.6 / Gemini 3.1 Pro 同时在场</span></div>
+          </div>
+          <div class="news-item">
+            <div class="news-icon">🏢</div>
+            <div class="news-text"><strong>Oracle 裁 2-3 万人，Block 裁 4,000 人</strong> <span>— "这些岗位已被 AI 替代"</span></div>
+          </div>
+          <div class="news-item">
+            <div class="news-icon">🔌</div>
+            <div class="news-text"><strong>MCP 协议月下载 9,700 万次</strong> <span>— AI 的 USB-C，事实标准</span></div>
+          </div>
+          <div class="news-item">
+            <div class="news-icon">🏛️</div>
+            <div class="news-text"><strong>一人公司进国家政策</strong> <span>— 北京 · 深圳 · 苏州出补贴和算力</span></div>
+          </div>
+          <div class="news-item">
+            <div class="news-icon">🇨🇳</div>
+            <div class="news-text"><strong>中国大模型周调用 4.12 万亿 Token</strong> <span>— 首超美国 2.94 万亿</span></div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p><strong>2 min</strong> — 快速过，不深入。制造紧迫感："这些事正在同时发生。"</p>
+          <p><strong>Transition:</strong> "在这个背景下，我做了什么？"</p>
+        </aside>
+      </section>
+
+      <!-- ==================== DIVIDER: 变了什么 ==================== -->
+      <section class="divider" data-background-gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+        <h2>变了什么</h2>
+      </section>
+
+      <!-- ==================== SLIDE 04: SALES ==================== -->
+      <section data-background-color="#0a0e27">
+        <div class="eyebrow">Scene 01 · 销售增长</div>
+        <h2>8,221 个联系人 → 307 家精准目标</h2>
+        <div class="workflow" style="margin-top:24px;">
+          <div class="wf-step">HubSpot<small>8,221 联系人</small></div>
+          <span class="wf-arrow">→</span>
+          <div class="wf-step">三层验证<small>语法·MX·SMTP</small></div>
+          <span class="wf-arrow">→</span>
+          <div class="wf-step active">AI 评分<small>双引擎打分</small></div>
+          <span class="wf-arrow">→</span>
+          <div class="wf-step result">307 家<small>A:157 · B:150</small></div>
+        </div>
+        <div class="grid-2" style="margin-top:32px;">
+          <div class="vs-card before">
+            <div style="font-size:12px;color:var(--red);font-weight:600;margin-bottom:8px;">传统方式</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,56px);font-weight:700;color:var(--red);">$15,000</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:8px;">ZoomInfo 年费 + SDR 团队两周</div>
+          </div>
+          <div class="vs-card after">
+            <div style="font-size:12px;color:var(--green);font-weight:600;margin-bottom:8px;">AI 方式</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,56px);font-weight:700;color:var(--green);">$60<span style="font-size:0.4em;opacity:0.6;">/月</span></div>
+            <div style="font-size:12px;color:var(--muted);margin-top:8px;">Apollo + Brave + AI 评分引擎</div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p><strong>3 min</strong> — 不是 Demo，是跑了一个月的生产流程。三层验证不是花活——脏数据浪费后面所有 AI 评分的钱。</p>
+          <p><strong>Transition:</strong> "销售是获客，获客之后还要做内容。"</p>
+        </aside>
+      </section>
+
+      <!-- ==================== SLIDE 05: CONTENT ==================== -->
+      <section data-background-color="#0a0e27">
+        <div class="eyebrow">Scene 02 · 内容生产</div>
+        <h2>第一篇文章花了一周，第三篇只用了一天</h2>
+        <div class="workflow" style="margin-top:24px;">
+          <div class="wf-step">选题调研<small>AI 热点分析</small></div>
+          <span class="wf-arrow">→</span>
+          <div class="wf-step">Claude 写英文<small>Opus 深度推理</small></div>
+          <span class="wf-arrow">→</span>
+          <div class="wf-step active">10 个 AI 评审<small>多角色批评</small></div>
+          <span class="wf-arrow">→</span>
+          <div class="wf-step">Kimi 写中文<small>原生，不是翻译</small></div>
+          <span class="wf-arrow">→</span>
+          <div class="wf-step result">一键发布<small>微信·Sub·LinkedIn</small></div>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:48px;justify-content:center;margin-top:40px;">
+          <div class="stat">
+            <div style="font-size:12px;color:var(--dim);margin-bottom:6px;font-family:'JetBrains Mono',monospace;">Article 01</div>
+            <div class="stat-number" style="color:var(--red);font-size:clamp(40px,5vw,64px);">7 天</div>
+          </div>
+          <div style="font-size:28px;color:var(--dim);">→</div>
+          <div class="stat">
+            <div style="font-size:12px;color:var(--dim);margin-bottom:6px;font-family:'JetBrains Mono',monospace;">Article 02</div>
+            <div class="stat-number" style="color:var(--orange);font-size:clamp(40px,5vw,64px);">3 天</div>
+          </div>
+          <div style="font-size:28px;color:var(--dim);">→</div>
+          <div class="stat">
+            <div style="font-size:12px;color:var(--dim);margin-bottom:6px;font-family:'JetBrains Mono',monospace;">Article 03</div>
+            <div class="stat-number" style="color:var(--green);font-size:clamp(40px,5vw,64px);">1 天</div>
+          </div>
+        </div>
+        <p class="key-msg gradient-text" style="margin-top:28px;">"AI 不是帮我写得更好，是让我能写了"</p>
+        <aside class="notes">
+          <p><strong>3 min</strong> — 10 个 AI 评审员是亮点：5 个 Haiku 跑不同角色（投资人、CIO、运营、初学者、怀疑者），自动打分。Kimi 写中文是理解英文后重新表达，不是翻译。</p>
+          <p><strong>Transition:</strong> "内容之外，AI 帮我做了一件以前 CEO 做不了的事。"</p>
+        </aside>
+      </section>
+
+      <!-- ==================== SLIDE 06: PRODUCT AUDIT ==================== -->
+      <section data-background-color="#0a0e27">
+        <div class="eyebrow">Scene 03 · 产品研发</div>
+        <h2>一个下午审完 660GB 数据库，发现 14 个 Issue</h2>
+        <div class="workflow" style="margin-top:24px;">
+          <div class="wf-step">Claude Code<small>连接代码库</small></div>
+          <span class="wf-arrow">→</span>
+          <div class="wf-step">扫描引擎<small>660GB PG</small></div>
+          <span class="wf-arrow">→</span>
+          <div class="wf-step active">自动审计<small>16 银行连接器</small></div>
+          <span class="wf-arrow">→</span>
+          <div class="wf-step result">14 个 Issue<small>含 40+ merge 问题</small></div>
+        </div>
+        <div class="grid-2" style="margin-top:32px;">
+          <div class="vs-card before">
+            <div style="font-size:12px;color:var(--red);font-weight:600;margin-bottom:8px;">传统方式</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:clamp(20px,2.2vw,32px);font-weight:700;color:var(--red);">2-3 个工程师 × 几天</div>
+          </div>
+          <div class="vs-card after">
+            <div style="font-size:12px;color:var(--green);font-weight:600;margin-bottom:8px;">AI 方式</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:clamp(20px,2.2vw,32px);font-weight:700;color:var(--green);">1 个 CEO × 1 个下午</div>
+          </div>
+        </div>
+        <p class="key-msg gradient-cyan" style="margin-top:28px;">"AI 不替代工程师，但让 CEO 能看懂工程"</p>
+        <aside class="notes">
+          <p><strong>3 min</strong> — 冲击力：以前 CEO 看代码质量只能靠问 CTO。现在自己跑审计，带着具体问题去对话。不是替代，是让 CEO 有能力参与技术决策。</p>
+          <p><strong>Transition:</strong> "讲了这么多变化，那什么没变？"</p>
+        </aside>
+      </section>
+
+      <!-- ==================== DIVIDER: 没变什么 ==================== -->
+      <section class="divider" data-background-color="#0a0e27">
+        <h2 style="opacity:0.15;font-size:clamp(60px,8vw,120px);position:absolute;">不变</h2>
+        <h2 style="position:relative;">没变什么</h2>
+      </section>
+
+      <!-- ==================== SLIDE 07: UNCHANGED ==================== -->
+      <section data-background-color="#0a0e27">
+        <div class="eyebrow">Core Functions</div>
+        <h2>CEO 的三件事没变：决策、找人、管理</h2>
+        <div class="grid-3" style="margin-top:28px;">
+          <div class="glass" style="text-align:left;">
+            <div style="font-size:32px;margin-bottom:16px;">🎯</div>
+            <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">决策</div>
+            <div style="font-size:13px;color:var(--muted);line-height:1.7;">融不融资、裁不裁人、进不进新市场<br><br><span style="color:var(--accent);">没有哪个 Agent 能替你拍板</span></div>
+          </div>
+          <div class="glass" style="text-align:left;">
+            <div style="font-size:32px;margin-bottom:16px;">🤝</div>
+            <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">找人</div>
+            <div style="font-size:13px;color:var(--muted);line-height:1.7;">AI 能写 JD、筛简历、做背调<br><br><span style="color:var(--accent);">Culture fit 只有人能判断</span></div>
+          </div>
+          <div class="glass" style="text-align:left;">
+            <div style="font-size:32px;margin-bottom:16px;">🏗️</div>
+            <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">管理</div>
+            <div style="font-size:13px;color:var(--muted);line-height:1.7;">再多数据也替代不了关系上下文<br><br><span style="color:var(--accent);">家庭动态、未说出口的顾虑</span></div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p><strong>2 min</strong> — 故意降速。前面三个场景节奏快，这里让大家停下来想。AI 扩大覆盖面，但判断力不可外包。</p>
+          <p><strong>Transition:</strong> "但这三件事的做法，已经不一样了。"</p>
+        </aside>
+      </section>
+
+      <!-- ==================== SLIDE 08: CHANGED HOW ==================== -->
+      <section data-background-color="#0a0e27">
+        <div class="eyebrow">Changed How, Not What</div>
+        <h2>核心没变，但方式和速度变了</h2>
+        <div style="margin-top:28px;display:flex;flex-direction:column;gap:16px;">
+          <div class="glass" style="display:flex;align-items:center;gap:20px;padding:20px 24px;">
+            <div style="width:4px;height:40px;border-radius:2px;background:var(--accent);flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:700;font-size:15px;color:#fff;">决策更快了</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:4px;">信息密度提高 → 从"等报告"到"实时掌握" · 投资人 brief 一个下午迭代 4 版</div>
+            </div>
+          </div>
+          <div class="glass" style="display:flex;align-items:center;gap:20px;padding:20px 24px;">
+            <div style="width:4px;height:40px;border-radius:2px;background:var(--orange);flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:700;font-size:15px;color:#fff;">找人范围更广了</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:4px;">AI 秒出中英双语 JD + 薪酬基准 · 候选人池从"认识的人"扩大到全市场</div>
+            </div>
+          </div>
+          <div class="glass" style="display:flex;align-items:center;gap:20px;padding:20px 24px;">
+            <div style="width:4px;height:40px;border-radius:2px;background:var(--cyan);flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:700;font-size:15px;color:#fff;">管理多了一类对象</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:4px;">除了管人，还要管 AI Agent — 配置、监控、纠错、升级</div>
+            </div>
+          </div>
+        </div>
+        <div class="glass" style="margin-top:24px;text-align:center;padding:16px;">
+          <span style="font-style:italic;font-size:15px;color:var(--muted);">"QBR 准备从 3-4 小时变成 30 分钟。省下的时间不是休息，是做更多判断。"</span>
+        </div>
+        <aside class="notes">
+          <p><strong>2 min</strong> — QBR 例子：以前翻 HubSpot、查工单、整理数据。现在 MCP 自动拉取，30 分钟出 brief。但"这个客户是不是要流失"还是靠直觉。</p>
+          <p><strong>Transition:</strong> "如果这些变化持续，未来的公司长什么样？"</p>
+        </aside>
+      </section>
+
+      <!-- ==================== DIVIDER: FUTURE ==================== -->
+      <section class="divider" data-background-gradient="linear-gradient(135deg, #764ba2 0%, #17d4c3 100%)">
+        <h2>AI Native 组织长什么样</h2>
+      </section>
+
+      <!-- ==================== SLIDE 09: AI NATIVE ORG ==================== -->
+      <section data-background-color="#0a0e27">
+        <div class="eyebrow">The Living System</div>
+        <h2>不是三层架构，是一个活的系统</h2>
+        <div style="display:flex;gap:32px;margin-top:20px;align-items:center;">
+          <!-- Left: layers -->
+          <div style="flex:1;">
+            <div class="org-layer" style="background:rgba(102,126,234,0.1);border:1px solid rgba(102,126,234,0.25);">
+              <div style="font-size:22px;">🧠</div>
+              <div class="layer-label" style="color:var(--accent);">决策层</div>
+              <div class="layer-desc">方向 · 判断 · 信任 · 关系</div>
+            </div>
+            <div style="text-align:center;color:var(--dim);font-size:16px;margin:3px 0;">↕</div>
+            <div class="org-layer" style="background:rgba(255,159,67,0.1);border:1px solid rgba(255,159,67,0.25);">
+              <div style="font-size:22px;">🤖</div>
+              <div class="layer-label" style="color:var(--orange);">Agent 层</div>
+              <div class="layer-desc">执行 · 监控 · 生产 · 分析</div>
+            </div>
+            <div style="text-align:center;color:var(--dim);font-size:16px;margin:3px 0;">↕</div>
+            <div class="org-layer" style="background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);">
+              <div style="font-size:22px;">🔧</div>
+              <div class="layer-label" style="color:var(--green);">基础设施层</div>
+              <div class="layer-desc">数据 · API · 记忆 · 骨架</div>
+            </div>
+          </div>
+          <!-- Right: flywheel -->
+          <div style="flex:1;display:flex;justify-content:center;align-items:center;">
+            <div style="position:relative;width:260px;height:260px;">
+              <div style="position:absolute;inset:0;border:2px solid var(--border);border-radius:50%;"></div>
+              <div style="position:absolute;inset:20px;border:1px dashed var(--border);border-radius:50%;"></div>
+              <!-- Nodes -->
+              <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:rgba(102,126,234,0.2);border:1px solid rgba(102,126,234,0.4);color:var(--accent);border-radius:10px;padding:6px 14px;font-size:12px;font-weight:600;text-align:center;backdrop-filter:blur(8px);">人做决策</div>
+              <div style="position:absolute;top:50%;right:-12px;transform:translateY(-50%);background:rgba(255,159,67,0.2);border:1px solid rgba(255,159,67,0.4);color:var(--orange);border-radius:10px;padding:6px 14px;font-size:12px;font-weight:600;text-align:center;backdrop-filter:blur(8px);">Agent 执行</div>
+              <div style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);background:rgba(0,230,118,0.2);border:1px solid rgba(0,230,118,0.4);color:var(--green);border-radius:10px;padding:6px 14px;font-size:12px;font-weight:600;text-align:center;backdrop-filter:blur(8px);">数据沉淀</div>
+              <div style="position:absolute;top:50%;left:-12px;transform:translateY(-50%);background:rgba(118,75,162,0.2);border:1px solid rgba(118,75,162,0.4);color:var(--accent2);border-radius:10px;padding:6px 14px;font-size:12px;font-weight:600;text-align:center;backdrop-filter:blur(8px);">系统进化</div>
+              <!-- Arrows -->
+              <div style="position:absolute;top:32px;right:24px;color:var(--dim);font-size:16px;">↘</div>
+              <div style="position:absolute;bottom:32px;right:24px;color:var(--dim);font-size:16px;">↙</div>
+              <div style="position:absolute;bottom:32px;left:24px;color:var(--dim);font-size:16px;">↖</div>
+              <div style="position:absolute;top:32px;left:24px;color:var(--dim);font-size:16px;">↗</div>
+              <!-- Center -->
+              <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:var(--dim);font-weight:500;text-align:center;line-height:1.5;">每转一圈<br><span style="color:var(--accent);">更聪明</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="key-msg" style="margin-top:20px;"><span class="gradient-text">"不是人用 AI，是人和 AI 组成一个不断进化的系统"</span></p>
+        <aside class="notes">
+          <p><strong>2 min</strong> — 左边是结构，右边是动态。传统公司是"人+工具"两层，AI Native 是三层+飞轮。Agent 层不替代人，替代的是"人当螺丝钉"的工作。真正的壁垒不是有多少 Agent，是飞轮转了多少圈。</p>
+          <p><strong>Transition:</strong> "基于这些经历，三个判断。"</p>
+        </aside>
+      </section>
+
+      <!-- ==================== DIVIDER: TAKEAWAYS ==================== -->
+      <section class="divider" data-background-color="#0a0e27">
+        <h2 style="opacity:0.1;font-size:clamp(80px,10vw,150px);position:absolute;font-family:'Space Grotesk',sans-serif;">3</h2>
+        <h2 style="position:relative;">给创业者的三个判断</h2>
+      </section>
+
+      <!-- ==================== SLIDE 10: TAKEAWAYS ==================== -->
+      <section data-background-color="#0a0e27">
+        <div class="grid-3" style="height:80%;align-items:stretch;">
+          <div class="takeaway" style="background:rgba(102,126,234,0.06);border:1px solid rgba(102,126,234,0.15);">
+            <div class="takeaway-num">01</div>
+            <div class="takeaway-title">模型是 20%<br>骨架是 80%</div>
+            <div class="takeaway-body">别纠结 GPT 还是 Claude。先把数据、流程、验证链搭好。模型会迭代，骨架是护城河。</div>
+            <div class="takeaway-pill">
+              <span class="pill" style="background:rgba(102,126,234,0.2);color:var(--accent);font-family:'JetBrains Mono',monospace;">The moat is the skeleton</span>
+            </div>
+          </div>
+          <div class="takeaway" style="background:rgba(255,159,67,0.06);border:1px solid rgba(255,159,67,0.15);">
+            <div class="takeaway-num">02</div>
+            <div class="takeaway-title">一人公司是假命题<br>一人+AI 有团队覆盖面</div>
+            <div class="takeaway-body">AI 让一个人有团队的覆盖范围，但判断力只能靠人。不是替代团队，是扩大作战半径。</div>
+            <div class="takeaway-pill">
+              <span class="pill" style="background:rgba(255,159,67,0.2);color:var(--orange);font-family:'JetBrains Mono',monospace;">Coverage ≠ Replacement</span>
+            </div>
+          </div>
+          <div class="takeaway" style="background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.15);">
+            <div class="takeaway-num">03</div>
+            <div class="takeaway-title">前两周是纯成本<br>第三周开始复利</div>
+            <div class="takeaway-body">70% 时间修基础设施，30% 在产出。别因为前两周没产出就放弃。回报从第三周指数增长。</div>
+            <div class="takeaway-pill">
+              <span class="pill" style="background:rgba(0,230,118,0.2);color:var(--green);font-family:'JetBrains Mono',monospace;">Week 3 compounds</span>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p><strong>3 min</strong> — 每个 30 秒展开 + 一个例子。01: 换了 3 次模型，骨架没变。02: 12 个 agent 但还需要核心团队。03: 前两周 70% 在 debug 配置。</p>
+        </aside>
+      </section>
+
+      <!-- ==================== SLIDE 11: CLOSING ==================== -->
+      <section data-background-color="#0a0e27" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100%;">
+        <h2 style="text-align:center;font-size:clamp(28px,3.2vw,48px);max-width:80%;line-height:1.6;font-weight:700;">
+          当智能变便宜了<br>
+          <span class="gradient-text" style="font-size:1.15em;">方向、上下文、判断力、信任</span><br>
+          变贵了
+        </h2>
+        <p style="color:var(--muted);margin-top:28px;font-size:clamp(15px,1.3vw,20px);max-width:60%;">这四样东西，恰好是创业者最该花时间的地方。</p>
+        <p style="color:var(--dim);margin-top:56px;font-size:13px;font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;">
+          陈沐 · Canopy · amongstfamilies.substack.com
+        </p>
+        <aside class="notes">
+          <p><strong>1 min</strong> — 停在这页，不说谢谢。让金句留在屏幕上。如果有人问"怎么开始"，指 Substack 30 Days 系列。</p>
+        </aside>
+      </section>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      width: 1280,
+      height: 720,
+      margin: 0.12,
+      transition: 'fade',
+      transitionSpeed: 'fast',
+      showNotes: false,
+      center: false,
+      backgroundTransition: 'fade',
+    });
+  </script>
+</body>
+</html>
