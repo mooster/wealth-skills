@@ -480,10 +480,11 @@
         </aside>
       </section>
       <script>
-      Reveal.on('slidechanged', function(event) {
-        if (event.currentSlide.querySelector('#chart-roles') && !window._chartRolesInit) {
-          window._chartRolesInit = true;
-          const ctx = document.getElementById('chart-roles');
+      function initChartRoles() {
+        if (window._chartRolesInit) return;
+        const ctx = document.getElementById('chart-roles');
+        if (!ctx || !ctx.offsetParent) return;
+        window._chartRolesInit = true;
           new Chart(ctx, {
             type: 'bar',
             data: {
@@ -533,7 +534,12 @@
               }
             }
           });
-        }
+      }
+      Reveal.on('slidechanged', function(event) {
+        if (event.currentSlide.querySelector('#chart-roles')) initChartRoles();
+      });
+      Reveal.on('ready', function(event) {
+        if (event.currentSlide.querySelector('#chart-roles')) initChartRoles();
       });
       </script>
 
