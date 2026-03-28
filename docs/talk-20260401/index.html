@@ -6,6 +6,7 @@
   <title>44天，12个Agent，100亿Token</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -455,41 +456,86 @@
       <section data-background-color="#0a0e27">
         <div class="eyebrow">变化一 · 效率增长</div>
         <h2>传统方式需要多少？</h2>
-        <div class="grid-2" style="margin-top:24px;align-items:stretch;">
-          <div class="glass" style="padding:24px;">
-            <div style="font-size:14px;font-weight:600;color:var(--muted);margin-bottom:16px;">需要 12 个工种</div>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <span class="pill" style="background:rgba(102,126,234,0.15);color:var(--accent);">全栈开发</span>
-              <span class="pill" style="background:rgba(102,126,234,0.15);color:var(--accent);">后端开发</span>
-              <span class="pill" style="background:rgba(102,126,234,0.15);color:var(--accent);">前端开发</span>
-              <span class="pill" style="background:rgba(255,159,67,0.15);color:var(--orange);">UI/UX 设计</span>
-              <span class="pill" style="background:rgba(255,159,67,0.15);color:var(--orange);">教学设计</span>
-              <span class="pill" style="background:rgba(0,230,118,0.15);color:var(--green);">数据工程</span>
-              <span class="pill" style="background:rgba(0,230,118,0.15);color:var(--green);">数据分析</span>
-              <span class="pill" style="background:rgba(0,230,118,0.15);color:var(--green);">DevOps</span>
-              <span class="pill" style="background:rgba(255,107,157,0.15);color:var(--pink);">技术写作</span>
-              <span class="pill" style="background:rgba(255,107,157,0.15);color:var(--pink);">翻译</span>
-              <span class="pill" style="background:rgba(118,75,162,0.15);color:var(--accent2);">战略顾问</span>
-              <span class="pill" style="background:rgba(118,75,162,0.15);color:var(--accent2);">量化开发</span>
-            </div>
+        <div style="display:flex;gap:32px;margin-top:16px;align-items:stretch;">
+          <!-- Left: Chart -->
+          <div style="flex:1.2;position:relative;">
+            <canvas id="chart-roles" style="max-height:340px;"></canvas>
           </div>
-          <div style="display:flex;flex-direction:column;gap:16px;">
-            <div class="vs-card before" style="flex:1;">
+          <!-- Right: Comparison -->
+          <div style="flex:0.8;display:flex;flex-direction:column;gap:16px;">
+            <div class="vs-card before" style="flex:1;display:flex;flex-direction:column;justify-content:center;">
               <div style="font-size:12px;color:var(--red);font-weight:600;margin-bottom:8px;">传统方式</div>
-              <div style="font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3vw,40px);font-weight:700;color:var(--red);">3-5 人 × 3-4 个月</div>
-              <div style="font-size:13px;color:var(--muted);margin-top:8px;">$180K - 280K</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:clamp(22px,2.5vw,36px);font-weight:700;color:var(--red);">3-5 人 × 3-4 个月</div>
+              <div style="font-size:14px;color:var(--muted);margin-top:8px;">$180K - 280K</div>
             </div>
-            <div class="vs-card after" style="flex:1;">
+            <div class="vs-card after" style="flex:1;display:flex;flex-direction:column;justify-content:center;">
               <div style="font-size:12px;color:var(--green);font-weight:600;margin-bottom:8px;">AI 方式</div>
-              <div style="font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3vw,40px);font-weight:700;color:var(--green);">1 人 × 44 天</div>
-              <div style="font-size:13px;color:var(--muted);margin-top:8px;">~$300/月</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:clamp(22px,2.5vw,36px);font-weight:700;color:var(--green);">1 人 × 44 天</div>
+              <div style="font-size:14px;color:var(--muted);margin-top:8px;">~$300/月</div>
             </div>
           </div>
         </div>
         <aside class="notes">
-          <p><strong>1 min</strong> — 左边展示工种多样性，右边展示成本对比。重点不是省钱，是速度和覆盖面。"不是我比这些专业的人做得好，是我一个人能同时推进 25 条线。"</p>
+          <p><strong>1 min</strong> — 左边图表展示 12 个工种的工时分布，右边是总成本对比。"不是我比专业的人做得好，是我一个人能同时推 25 条线。"</p>
         </aside>
       </section>
+      <script>
+      Reveal.on('slidechanged', function(event) {
+        if (event.currentSlide.querySelector('#chart-roles') && !window._chartRolesInit) {
+          window._chartRolesInit = true;
+          const ctx = document.getElementById('chart-roles');
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: ['全栈开发', '后端开发', '前端开发', 'UI/UX', 'DevOps', '数据工程', '数据分析', '技术写作', '翻译', '教学设计', '战略顾问', '量化开发'],
+              datasets: [{
+                label: '预估工时（周）',
+                data: [14, 16, 10, 5, 6, 8, 8, 8, 6, 6, 7, 3],
+                backgroundColor: [
+                  'rgba(102,126,234,0.7)', 'rgba(102,126,234,0.6)', 'rgba(102,126,234,0.5)',
+                  'rgba(255,159,67,0.7)', 'rgba(255,159,67,0.6)',
+                  'rgba(0,230,118,0.7)', 'rgba(0,230,118,0.6)',
+                  'rgba(255,107,157,0.7)', 'rgba(255,107,157,0.6)',
+                  'rgba(255,159,67,0.5)',
+                  'rgba(118,75,162,0.7)', 'rgba(118,75,162,0.6)'
+                ],
+                borderColor: [
+                  'rgba(102,126,234,1)', 'rgba(102,126,234,1)', 'rgba(102,126,234,1)',
+                  'rgba(255,159,67,1)', 'rgba(255,159,67,1)',
+                  'rgba(0,230,118,1)', 'rgba(0,230,118,1)',
+                  'rgba(255,107,157,1)', 'rgba(255,107,157,1)',
+                  'rgba(255,159,67,1)',
+                  'rgba(118,75,162,1)', 'rgba(118,75,162,1)'
+                ],
+                borderWidth: 1,
+                borderRadius: 6,
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: { label: (c) => c.raw + ' 周' }
+                }
+              },
+              scales: {
+                x: {
+                  grid: { color: 'rgba(255,255,255,0.05)' },
+                  ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 11 } },
+                  title: { display: true, text: '预估工时（周）', color: 'rgba(255,255,255,0.4)', font: { size: 11 } }
+                },
+                y: {
+                  grid: { display: false },
+                  ticks: { color: 'rgba(255,255,255,0.7)', font: { size: 11, family: "'Noto Sans SC', sans-serif" } }
+                }
+              }
+            }
+          });
+        }
+      });
+      </script>
 
       <!-- ==================== SLIDE 05: 认知拓展 ==================== -->
       <section data-background-color="#0a0e27">
