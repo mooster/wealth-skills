@@ -479,69 +479,7 @@
           <p><strong>1 min</strong> — 左边图表展示 12 个工种的工时分布，右边是总成本对比。"不是我比专业的人做得好，是我一个人能同时推 25 条线。"</p>
         </aside>
       </section>
-      <script>
-      function initChartRoles() {
-        if (window._chartRolesInit) return;
-        const ctx = document.getElementById('chart-roles');
-        if (!ctx || !ctx.offsetParent) return;
-        window._chartRolesInit = true;
-          new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: ['全栈开发', '后端开发', '前端开发', 'UI/UX', 'DevOps', '数据工程', '数据分析', '技术写作', '翻译', '教学设计', '战略顾问', '量化开发'],
-              datasets: [{
-                label: '预估工时（周）',
-                data: [14, 16, 10, 5, 6, 8, 8, 8, 6, 6, 7, 3],
-                backgroundColor: [
-                  'rgba(102,126,234,0.7)', 'rgba(102,126,234,0.6)', 'rgba(102,126,234,0.5)',
-                  'rgba(255,159,67,0.7)', 'rgba(255,159,67,0.6)',
-                  'rgba(0,230,118,0.7)', 'rgba(0,230,118,0.6)',
-                  'rgba(255,107,157,0.7)', 'rgba(255,107,157,0.6)',
-                  'rgba(255,159,67,0.5)',
-                  'rgba(118,75,162,0.7)', 'rgba(118,75,162,0.6)'
-                ],
-                borderColor: [
-                  'rgba(102,126,234,1)', 'rgba(102,126,234,1)', 'rgba(102,126,234,1)',
-                  'rgba(255,159,67,1)', 'rgba(255,159,67,1)',
-                  'rgba(0,230,118,1)', 'rgba(0,230,118,1)',
-                  'rgba(255,107,157,1)', 'rgba(255,107,157,1)',
-                  'rgba(255,159,67,1)',
-                  'rgba(118,75,162,1)', 'rgba(118,75,162,1)'
-                ],
-                borderWidth: 1,
-                borderRadius: 6,
-              }]
-            },
-            options: {
-              indexAxis: 'y',
-              maintainAspectRatio: false,
-              plugins: {
-                legend: { display: false },
-                tooltip: {
-                  callbacks: { label: (c) => c.raw + ' 周' }
-                }
-              },
-              scales: {
-                x: {
-                  grid: { color: 'rgba(255,255,255,0.05)' },
-                  ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 11 } },
-                  title: { display: true, text: '预估工时（周）', color: 'rgba(255,255,255,0.4)', font: { size: 11 } }
-                },
-                y: {
-                  grid: { display: false },
-                  ticks: { color: 'rgba(255,255,255,0.7)', font: { size: 11, family: "'Noto Sans SC', sans-serif" } }
-                }
-              }
-            }
-          });
-      }
-      Reveal.on('slidechanged', function(event) {
-        if (event.currentSlide.querySelector('#chart-roles')) initChartRoles();
-      });
-      Reveal.on('ready', function(event) {
-        if (event.currentSlide.querySelector('#chart-roles')) initChartRoles();
-      });
-      </script>
+      <!-- chart init moved after Reveal.initialize() -->
 
       <!-- ==================== SLIDE 05: 认知拓展 ==================== -->
       <section data-background-color="#0a0e27">
@@ -820,6 +758,66 @@
       showNotes: false,
       center: false,
       backgroundTransition: 'fade',
+    });
+
+    function initChartRoles() {
+      if (window._chartRolesInit) return;
+      var ctx = document.getElementById('chart-roles');
+      if (!ctx) return;
+      window._chartRolesInit = true;
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['全栈开发','后端开发','前端开发','UI/UX','DevOps','数据工程','数据分析','技术写作','翻译','教学设计','战略顾问','量化开发'],
+          datasets: [{
+            label: '预估工时（周）',
+            data: [14,16,10,5,6,8,8,8,6,6,7,3],
+            backgroundColor: [
+              'rgba(102,126,234,0.7)','rgba(102,126,234,0.6)','rgba(102,126,234,0.5)',
+              'rgba(255,159,67,0.7)','rgba(255,159,67,0.6)',
+              'rgba(0,230,118,0.7)','rgba(0,230,118,0.6)',
+              'rgba(255,107,157,0.7)','rgba(255,107,157,0.6)',
+              'rgba(255,159,67,0.5)',
+              'rgba(118,75,162,0.7)','rgba(118,75,162,0.6)'
+            ],
+            borderColor: [
+              'rgba(102,126,234,1)','rgba(102,126,234,1)','rgba(102,126,234,1)',
+              'rgba(255,159,67,1)','rgba(255,159,67,1)',
+              'rgba(0,230,118,1)','rgba(0,230,118,1)',
+              'rgba(255,107,157,1)','rgba(255,107,157,1)',
+              'rgba(255,159,67,1)',
+              'rgba(118,75,162,1)','rgba(118,75,162,1)'
+            ],
+            borderWidth: 1,
+            borderRadius: 6,
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: function(c) { return c.raw + ' 周'; } } }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255,255,255,0.05)' },
+              ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 11 } },
+              title: { display: true, text: '预估工时（周）', color: 'rgba(255,255,255,0.4)', font: { size: 11 } }
+            },
+            y: {
+              grid: { display: false },
+              ticks: { color: 'rgba(255,255,255,0.7)', font: { size: 11, family: "'Noto Sans SC', sans-serif" } }
+            }
+          }
+        }
+      });
+    }
+    Reveal.on('slidechanged', function(event) {
+      if (event.currentSlide.querySelector('#chart-roles')) initChartRoles();
+    });
+    Reveal.on('ready', function(event) {
+      if (event.currentSlide.querySelector('#chart-roles')) initChartRoles();
     });
   </script>
 </body>
