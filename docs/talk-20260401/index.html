@@ -5,28 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>44天，12个Agent，100亿Token</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0a0e27;
-      --bg-surface: #111538;
-      --ink: #ededed;
-      --muted: #8b8fa3;
-      --dim: #5a5e73;
-      --border: rgba(255,255,255,0.08);
-      --accent: #667eea;
-      --accent2: #764ba2;
-      --cyan: #17d4c3;
-      --orange: #ff9f43;
-      --green: #00e676;
-      --red: #ff5252;
-      --pink: #ff6b9d;
-      --glass-bg: rgba(255,255,255,0.04);
-      --glass-border: rgba(255,255,255,0.08);
+      --bg: #ffffff;
+      --bg-surface: #f5f6f8;
+      --ink: #1a1a2e;
+      --muted: #6b7280;
+      --dim: #9ca3af;
+      --border: rgba(0,0,0,0.08);
+      --accent: #4f46e5;
+      --accent2: #7c3aed;
+      --cyan: #0891b2;
+      --orange: #ea580c;
+      --green: #059669;
+      --red: #dc2626;
+      --pink: #db2777;
+      --glass-bg: rgba(0,0,0,0.03);
+      --glass-border: rgba(0,0,0,0.08);
       --glass-blur: 16px;
-      --shadow: 0 8px 32px rgba(0,0,0,0.4);
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
     }
 
     .reveal {
@@ -35,7 +35,7 @@
     }
     .reveal h1, .reveal h2, .reveal h3 {
       font-family: 'Space Grotesk', 'Noto Sans SC', system-ui, sans-serif;
-      color: #fff;
+      color: var(--ink);
       font-weight: 700;
       letter-spacing: -0.02em;
     }
@@ -57,6 +57,9 @@
     .reveal .slides {
       background: var(--bg);
     }
+    .reveal section[data-background-color] {
+      /* override all dark backgrounds */
+    }
     .aurora {
       position: fixed;
       width: 100%;
@@ -70,7 +73,7 @@
       position: absolute;
       border-radius: 50%;
       filter: blur(100px);
-      opacity: 0.25;
+      opacity: 0.08;
       animation: float 25s ease-in-out infinite alternate;
     }
     .aurora .blob-1 { background: #667eea; width: 500px; height: 500px; top: -15%; left: -5%; }
@@ -228,7 +231,7 @@
       line-height: 1.6;
       text-align: left;
     }
-    .news-text strong { color: #fff; }
+    .news-text strong { color: var(--ink); }
     .news-text span { color: var(--muted); }
 
     /* Org layer */
@@ -266,12 +269,12 @@
       font-weight: 700;
       line-height: 1;
       opacity: 0.12;
-      color: #fff;
+      color: var(--ink);
     }
     .takeaway-title {
       font-size: 17px;
       font-weight: 700;
-      color: #fff;
+      color: var(--ink);
       margin: 8px 0;
       line-height: 1.5;
     }
@@ -330,7 +333,8 @@
     <div class="slides">
 
       <!-- ==================== SLIDE 01: TITLE ==================== -->
-      <section data-background-color="#0a0e27" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100%;">
+      <section data-background-color="#ffffff" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100%;">
+        <img src="canopy-logo.png" alt="Canopy" style="height:40px;margin-bottom:32px;opacity:0.85;">
         <div style="font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-size:clamp(44px,5.5vw,80px);font-weight:700;line-height:1.15;letter-spacing:-0.03em;">
           <span class="gradient-text">44 天</span>
           <span style="color:var(--dim);">，</span>
@@ -346,7 +350,7 @@
       </section>
 
       <!-- ==================== SLIDE 02: BACKGROUND ==================== -->
-      <section data-background-color="#0a0e27">
+      <section data-background-color="#ffffff">
         <div class="eyebrow">Background</div>
         <h2>我把 AI 嵌入了公司运营的每个环节</h2>
         <div class="grid-4" style="margin-top:32px;">
@@ -382,28 +386,28 @@
       </section>
 
       <!-- ==================== SLIDE 03: FRAMEWORK ==================== -->
-      <section data-background-color="#0a0e27">
+      <section data-background-color="#ffffff">
         <div class="eyebrow">我怎么理解 AI</div>
         <h2>一条推导链</h2>
         <div style="margin-top:24px;display:flex;flex-direction:column;gap:12px;max-width:90%;margin-left:auto;margin-right:auto;">
           <div class="glass" style="padding:16px 24px;display:flex;align-items:center;gap:16px;">
             <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--accent);min-width:32px;">01</div>
-            <div><strong style="color:#fff;">AI 是一种特定类型的智能</strong><span style="color:var(--muted);font-size:13px;margin-left:8px;">— 能套用规则，正在学习发明规则，但没有自己的目标</span></div>
+            <div><strong style="color:var(--ink);">AI 是一种特定类型的智能</strong><span style="color:var(--muted);font-size:13px;margin-left:8px;">— 能套用规则，正在学习发明规则，但没有自己的目标</span></div>
           </div>
           <div style="text-align:center;color:var(--dim);font-size:18px;">↓</div>
           <div class="glass" style="padding:16px 24px;display:flex;align-items:center;gap:16px;">
             <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--orange);min-width:32px;">02</div>
-            <div><strong style="color:#fff;">这种智能变得极其便宜</strong><span style="color:var(--muted);font-size:13px;margin-left:8px;">— 分析、编码、生成在降价；方向、信任、Context在升值</span></div>
+            <div><strong style="color:var(--ink);">这种智能变得极其便宜</strong><span style="color:var(--muted);font-size:13px;margin-left:8px;">— 分析、编码、生成在降价；方向、信任、Context在升值</span></div>
           </div>
           <div style="text-align:center;color:var(--dim);font-size:18px;">↓</div>
           <div class="glass" style="padding:16px 24px;display:flex;align-items:center;gap:16px;">
             <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--green);min-width:32px;">03</div>
-            <div><strong style="color:#fff;">有用的结果 = 模型 x Context x 方向</strong><span style="color:var(--muted);font-size:13px;margin-left:8px;">— 三个缺一不可，模型是最便宜的那个</span></div>
+            <div><strong style="color:var(--ink);">有用的结果 = 模型 x Context x 方向</strong><span style="color:var(--muted);font-size:13px;margin-left:8px;">— 三个缺一不可，模型是最便宜的那个</span></div>
           </div>
           <div style="text-align:center;color:var(--dim);font-size:18px;">↓</div>
           <div class="glass" style="padding:16px 24px;display:flex;align-items:center;gap:16px;">
             <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--cyan);min-width:32px;">04</div>
-            <div><strong style="color:#fff;">我们现在在"骑马拉特斯拉"</strong><span style="color:var(--muted);font-size:13px;margin-left:8px;">— AI 跑在为人类设计的老基础设施上，所有 form factor 都是过渡态</span></div>
+            <div><strong style="color:var(--ink);">我们现在在"骑马拉特斯拉"</strong><span style="color:var(--muted);font-size:13px;margin-left:8px;">— AI 跑在为人类设计的老基础设施上，所有 form factor 都是过渡态</span></div>
           </div>
         </div>
         <aside class="notes">
@@ -413,38 +417,38 @@
       </section>
 
       <!-- ==================== DIVIDER: 变了什么 ==================== -->
-      <section class="divider" data-background-gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+      <section class="divider" data-background-gradient="linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)">
         <h2>变了什么</h2>
       </section>
 
       <!-- ==================== SLIDE 04: 效率增长 - 项目列表 ==================== -->
-      <section data-background-color="#0a0e27">
+      <section data-background-color="#ffffff">
         <div class="eyebrow">变化一 · 效率增长</div>
         <h2>44 天做了 24 个项目</h2>
         <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:8px;">
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">Wealth Teaser</div><div style="color:var(--cyan);font-size:10px;">teaser.wealthskills.ai</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">Revival Dashboard</div><div style="color:var(--cyan);font-size:10px;">revival.wealthskills.ai</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">CEO Cockpit</div><div style="color:var(--muted);font-size:10px;">7 轮交互原型</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">Canopy Agents</div><div style="color:var(--muted);font-size:10px;">Python ADK + React</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">OpenClaw</div><div style="color:var(--muted);font-size:10px;">12 Agent 编排</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">Lead Gen</div><div style="color:var(--muted);font-size:10px;">8221→307 评分</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">Scopeclaw</div><div style="color:var(--muted);font-size:10px;">售前 Scoping</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">Qualification Skill</div><div style="color:var(--muted);font-size:10px;">客户资质评分</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">Outreach Skill</div><div style="color:var(--muted);font-size:10px;">外拓自动化</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">Wealth Teaser</div><div style="color:var(--cyan);font-size:10px;">teaser.wealthskills.ai</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">Revival Dashboard</div><div style="color:var(--cyan);font-size:10px;">revival.wealthskills.ai</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">CEO Cockpit</div><div style="color:var(--muted);font-size:10px;">7 轮交互原型</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">Canopy Agents</div><div style="color:var(--muted);font-size:10px;">Python ADK + React</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">OpenClaw</div><div style="color:var(--muted);font-size:10px;">12 Agent 编排</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">Lead Gen</div><div style="color:var(--muted);font-size:10px;">8221→307 评分</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">Scopeclaw</div><div style="color:var(--muted);font-size:10px;">售前 Scoping</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">Qualification Skill</div><div style="color:var(--muted);font-size:10px;">客户资质评分</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">Outreach Skill</div><div style="color:var(--muted);font-size:10px;">外拓自动化</div></div>
 
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">产品知识库</div><div style="color:var(--muted);font-size:10px;">14 章中英双版</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">Board Deck</div><div style="color:var(--muted);font-size:10px;">Q1 投资人材料</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">8 篇双语文章</div><div style="color:var(--muted);font-size:10px;">Substack + 微信</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">07 行业调研</div><div style="color:var(--muted);font-size:10px;">AI+财富管理全景</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">微信发布流水线</div><div style="color:var(--muted);font-size:10px;">API 一键推送</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">讲课教材 × 2</div><div style="color:var(--muted);font-size:10px;">本套 + 南丰 Workshop</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">招聘工具链</div><div style="color:var(--muted);font-size:10px;">JD · 候选人 · 背调</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">HubSpot Agent</div><div style="color:var(--muted);font-size:10px;">失单分析</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">代码审计</div><div style="color:var(--muted);font-size:10px;">660GB · 14 Issues</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">AI 策略文档</div><div style="color:var(--muted);font-size:10px;">架构 · 定位 · 市场</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">Task Tracker</div><div style="color:var(--muted);font-size:10px;">跨机器任务看板</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">信息分析</div><div style="color:var(--muted);font-size:10px;">决策支持 · 持续</div></div>
-          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:#fff;">生活龙虾</div><div style="color:var(--muted);font-size:10px;"> </div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">产品知识库</div><div style="color:var(--muted);font-size:10px;">14 章中英双版</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">Board Deck</div><div style="color:var(--muted);font-size:10px;">Q1 投资人材料</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">8 篇双语文章</div><div style="color:var(--muted);font-size:10px;">Substack + 微信</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">07 行业调研</div><div style="color:var(--muted);font-size:10px;">AI+财富管理全景</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">微信发布流水线</div><div style="color:var(--muted);font-size:10px;">API 一键推送</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">讲课教材 × 2</div><div style="color:var(--muted);font-size:10px;">本套 + 南丰 Workshop</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">招聘工具链</div><div style="color:var(--muted);font-size:10px;">JD · 候选人 · 背调</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">HubSpot Agent</div><div style="color:var(--muted);font-size:10px;">失单分析</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">代码审计</div><div style="color:var(--muted);font-size:10px;">660GB · 14 Issues</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">AI 策略文档</div><div style="color:var(--muted);font-size:10px;">架构 · 定位 · 市场</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">Task Tracker</div><div style="color:var(--muted);font-size:10px;">跨机器任务看板</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">信息分析</div><div style="color:var(--muted);font-size:10px;">决策支持 · 持续</div></div>
+          <div class="glass" style="padding:8px 10px;font-size:11px;text-align:center;"><div style="font-weight:700;color:var(--ink);">生活龙虾</div><div style="color:var(--muted);font-size:10px;"> </div></div>
         </div>
         <aside class="notes">
           <p><strong>2 min</strong> — 不逐个讲，让大家自己扫。强调数量的冲击力。挑 2-3 个展开。</p>
@@ -452,7 +456,7 @@
       </section>
 
       <!-- ==================== SLIDE 04B: 效率增长 - 传统对比 ==================== -->
-      <section data-background-color="#0a0e27">
+      <section data-background-color="#ffffff">
         <div class="eyebrow">变化一 · 效率增长</div>
         <h2>传统方式需要多少？</h2>
         <div style="display:flex;gap:32px;margin-top:16px;align-items:stretch;">
@@ -481,13 +485,13 @@
       <!-- chart init moved after Reveal.initialize() -->
 
       <!-- ==================== SLIDE 05: 认知拓展 ==================== -->
-      <section data-background-color="#0a0e27">
+      <section data-background-color="#ffffff">
         <div class="eyebrow">变化二 · 认知拓展</div>
         <h2>全世界、全历史的知识 + 公司 N 年的数据，都在你手边</h2>
         <div class="grid-2" style="margin-top:32px;">
           <div class="glass" style="text-align:left;padding:32px;">
             <div style="font-size:24px;margin-bottom:16px;">🌍</div>
-            <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;">外部知识</div>
+            <div style="font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px;">外部知识</div>
             <div style="font-size:13px;color:var(--muted);line-height:1.8;">
               模型里有全世界的知识<br>
               搜索引擎实时接入<br>
@@ -497,7 +501,7 @@
           </div>
           <div class="glass" style="text-align:left;padding:32px;">
             <div style="font-size:24px;margin-bottom:16px;">🏢</div>
-            <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;">内部数据</div>
+            <div style="font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px;">内部数据</div>
             <div style="font-size:13px;color:var(--muted);line-height:1.8;">
               HubSpot · Notion · Slack · GitHub<br>
               公司 N 年的客户记录、代码、文档<br>
@@ -513,28 +517,28 @@
       </section>
 
       <!-- ==================== SLIDE 06: 工作方式 ==================== -->
-      <section data-background-color="#0a0e27">
+      <section data-background-color="#ffffff">
         <div class="eyebrow">变化三 · 工作方式</div>
         <h2>60-70% 的时间在和 AI 工作，心理机制也变了</h2>
         <div style="margin-top:24px;display:flex;flex-direction:column;gap:16px;">
           <div class="glass" style="display:flex;align-items:center;gap:20px;padding:20px 24px;">
             <div style="width:4px;height:48px;border-radius:2px;background:var(--accent);flex-shrink:0;"></div>
             <div>
-              <div style="font-weight:700;font-size:15px;color:#fff;">元思考时间大幅增加</div>
+              <div style="font-weight:700;font-size:15px;color:var(--ink);">元思考时间大幅增加</div>
               <div style="font-size:13px;color:var(--muted);margin-top:4px;">不再执行细节，而是在想"该做什么"和"怎么让 AI 做好"——计划、拆解、验证</div>
             </div>
           </div>
           <div class="glass" style="display:flex;align-items:center;gap:20px;padding:20px 24px;">
             <div style="width:4px;height:48px;border-radius:2px;background:var(--orange);flex-shrink:0;"></div>
             <div>
-              <div style="font-weight:700;font-size:15px;color:#fff;">贪婪和上瘾</div>
+              <div style="font-weight:700;font-size:15px;color:var(--ink);">贪婪和上瘾</div>
               <div style="font-size:13px;color:var(--muted);margin-top:4px;">AI 的非确定性输出触发多巴胺回路——像老虎机一样，每次结果都不一样，停不下来</div>
             </div>
           </div>
           <div class="glass" style="display:flex;align-items:center;gap:20px;padding:20px 24px;">
             <div style="width:4px;height:48px;border-radius:2px;background:var(--red);flex-shrink:0;"></div>
             <div>
-              <div style="font-weight:700;font-size:15px;color:#fff;">对人的预期被机器拉高</div>
+              <div style="font-weight:700;font-size:15px;color:var(--ink);">对人的预期被机器拉高</div>
               <div style="font-size:13px;color:var(--muted);margin-top:4px;">习惯了 AI 的速度和服从后，会不自觉把同样的预期投射到团队成员身上</div>
             </div>
           </div>
@@ -546,29 +550,29 @@
       </section>
 
       <!-- ==================== DIVIDER: 没变什么 ==================== -->
-      <section class="divider" data-background-color="#0a0e27">
+      <section class="divider" data-background-color="#ffffff">
         <h2 style="opacity:0.15;font-size:clamp(60px,8vw,120px);position:absolute;">不变</h2>
         <h2 style="position:relative;">没变什么</h2>
       </section>
 
       <!-- ==================== SLIDE 07: UNCHANGED ==================== -->
-      <section data-background-color="#0a0e27">
+      <section data-background-color="#ffffff">
         <div class="eyebrow">Core Functions</div>
         <h2>CEO 的三件事没变：决策、找人、管理</h2>
         <div class="grid-3" style="margin-top:28px;">
           <div class="glass" style="text-align:left;">
             <div style="font-size:32px;margin-bottom:16px;">🎯</div>
-            <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">决策</div>
+            <div style="font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px;">决策</div>
             <div style="font-size:13px;color:var(--muted);line-height:1.7;">融不融资、裁不裁人、进不进新市场<br><br><span style="color:var(--accent);">没有哪个 Agent 能替你拍板</span></div>
           </div>
           <div class="glass" style="text-align:left;">
             <div style="font-size:32px;margin-bottom:16px;">🤝</div>
-            <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">找人</div>
+            <div style="font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px;">找人</div>
             <div style="font-size:13px;color:var(--muted);line-height:1.7;">AI 能写 JD、筛简历、做背调<br><br><span style="color:var(--accent);">Culture fit 只有人能判断</span></div>
           </div>
           <div class="glass" style="text-align:left;">
             <div style="font-size:32px;margin-bottom:16px;">🏗️</div>
-            <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">管理</div>
+            <div style="font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px;">管理</div>
             <div style="font-size:13px;color:var(--muted);line-height:1.7;">再多数据也替代不了关系Context<br><br><span style="color:var(--accent);">家庭动态、未说出口的顾虑</span></div>
           </div>
         </div>
@@ -579,28 +583,28 @@
       </section>
 
       <!-- ==================== SLIDE 08: CHANGED HOW ==================== -->
-      <section data-background-color="#0a0e27">
+      <section data-background-color="#ffffff">
         <div class="eyebrow">Changed How, Not What</div>
         <h2>核心没变，但方式和速度变了</h2>
         <div style="margin-top:28px;display:flex;flex-direction:column;gap:16px;">
           <div class="glass" style="display:flex;align-items:center;gap:20px;padding:20px 24px;">
             <div style="width:4px;height:40px;border-radius:2px;background:var(--accent);flex-shrink:0;"></div>
             <div>
-              <div style="font-weight:700;font-size:15px;color:#fff;">决策更快了</div>
+              <div style="font-weight:700;font-size:15px;color:var(--ink);">决策更快了</div>
               <div style="font-size:13px;color:var(--muted);margin-top:4px;">信息密度提高 → 从"等报告"到"实时掌握" · 投资人 brief 一个下午迭代 4 版</div>
             </div>
           </div>
           <div class="glass" style="display:flex;align-items:center;gap:20px;padding:20px 24px;">
             <div style="width:4px;height:40px;border-radius:2px;background:var(--orange);flex-shrink:0;"></div>
             <div>
-              <div style="font-weight:700;font-size:15px;color:#fff;">找人范围更广了</div>
+              <div style="font-weight:700;font-size:15px;color:var(--ink);">找人范围更广了</div>
               <div style="font-size:13px;color:var(--muted);margin-top:4px;">AI 秒出中英双语 JD + 薪酬基准 · 候选人池从"认识的人"扩大到全市场</div>
             </div>
           </div>
           <div class="glass" style="display:flex;align-items:center;gap:20px;padding:20px 24px;">
             <div style="width:4px;height:40px;border-radius:2px;background:var(--cyan);flex-shrink:0;"></div>
             <div>
-              <div style="font-weight:700;font-size:15px;color:#fff;">管理多了一类对象</div>
+              <div style="font-weight:700;font-size:15px;color:var(--ink);">管理多了一类对象</div>
               <div style="font-size:13px;color:var(--muted);margin-top:4px;">除了管人，还要管 AI Agent — 配置、监控、纠错、升级</div>
             </div>
           </div>
@@ -620,7 +624,7 @@
       </section>
 
       <!-- ==================== SLIDE 09: AI NATIVE ORG ==================== -->
-      <section data-background-color="#0a0e27">
+      <section data-background-color="#ffffff">
         <div class="eyebrow">The Living System</div>
         <h2>AI Native 组织：不是三层架构，是一个活的系统</h2>
         <div style="display:flex;gap:32px;margin-top:16px;align-items:center;">
@@ -669,13 +673,13 @@
       </section>
 
       <!-- ==================== DIVIDER: TAKEAWAYS ==================== -->
-      <section class="divider" data-background-color="#0a0e27">
+      <section class="divider" data-background-color="#ffffff">
         <h2 style="opacity:0.1;font-size:clamp(80px,10vw,150px);position:absolute;font-family:'Space Grotesk',sans-serif;">3</h2>
         <h2 style="position:relative;">给创业者的三个判断</h2>
       </section>
 
       <!-- ==================== SLIDE 10: TAKEAWAYS ==================== -->
-      <section data-background-color="#0a0e27">
+      <section data-background-color="#ffffff">
         <div class="grid-3" style="height:80%;align-items:stretch;">
           <div class="takeaway" style="background:rgba(102,126,234,0.06);border:1px solid rgba(102,126,234,0.15);">
             <div class="takeaway-num">01</div>
@@ -708,7 +712,7 @@
       </section>
 
       <!-- ==================== SLIDE 11: CLOSING + QR ==================== -->
-      <section data-background-color="#0a0e27" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100%;width:100%;">
+      <section data-background-color="#ffffff" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100%;width:100%;">
         <h2 style="text-align:center;font-size:clamp(26px,3vw,44px);width:100%;line-height:1.6;font-weight:700;">
           当智能变便宜了<br>
           <span class="gradient-text" style="font-size:1.15em;">方向、Context、判断力、信任</span><br>
@@ -792,13 +796,13 @@
           },
           scales: {
             x: {
-              grid: { color: 'rgba(255,255,255,0.05)' },
-              ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 11 } },
-              title: { display: true, text: '预估工时（周）', color: 'rgba(255,255,255,0.4)', font: { size: 11 } }
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              ticks: { color: 'rgba(0,0,0,0.5)', font: { size: 11 } },
+              title: { display: true, text: '预估工时（周）', color: 'rgba(0,0,0,0.4)', font: { size: 11 } }
             },
             y: {
               grid: { display: false },
-              ticks: { color: 'rgba(255,255,255,0.7)', font: { size: 11, family: "'Noto Sans SC', sans-serif" } }
+              ticks: { color: 'rgba(0,0,0,0.7)', font: { size: 11, family: "'Noto Sans SC', sans-serif" } }
             }
           }
         }
