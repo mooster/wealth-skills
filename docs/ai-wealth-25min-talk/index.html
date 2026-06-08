@@ -1613,15 +1613,27 @@
 
     .return-board {
       display: grid;
-      grid-template-columns: 0.72fr 1.28fr;
-      gap: 36px;
-      align-items: center;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: stretch;
       min-height: 590px;
     }
 
+    .return-copy {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 480px;
+      gap: 48px;
+      align-items: end;
+    }
+
     .return-board h2 {
-      max-width: 560px;
-      font-size: clamp(42px, 4.2vw, 62px);
+      max-width: 920px;
+      font-size: clamp(40px, 3.7vw, 52px);
+    }
+
+    .return-copy .lead {
+      margin-bottom: 2px;
+      max-width: 480px;
     }
 
     .return-panel {
@@ -1715,20 +1727,20 @@
     .return-panel.focus {
       display: grid;
       align-content: center;
-      min-height: 492px;
-      padding: 36px;
+      min-height: 350px;
+      padding: 30px 40px;
     }
 
     .return-hero {
       display: grid;
-      grid-template-columns: 0.72fr 1.28fr;
-      gap: 36px;
+      grid-template-columns: 0.52fr minmax(600px, 1fr);
+      gap: 48px;
       align-items: center;
     }
 
     .return-number {
       color: #f4fcf8;
-      font-size: 108px;
+      font-size: 96px;
       line-height: 0.88;
       font-weight: 760;
       letter-spacing: 0.01em;
@@ -1746,29 +1758,46 @@
 
     .return-plain-bars {
       display: grid;
-      gap: 18px;
+      gap: 24px;
+      min-width: 600px;
     }
 
     .return-plain-row {
       display: grid;
-      grid-template-columns: 116px 1fr 84px;
-      gap: 18px;
+      grid-template-columns: 160px minmax(360px, 1fr) 112px;
+      gap: 22px;
       align-items: center;
       color: rgba(244,252,248,0.78);
       font-size: 24px;
       line-height: 1.1;
     }
 
+    .return-plain-row span {
+      color: rgba(244,252,248,0.82);
+      font-weight: 650;
+    }
+
+    .return-plain-row strong {
+      color: #f4fcf8;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 760;
+      font-variant-numeric: tabular-nums;
+    }
+
     .return-track {
-      height: 48px;
-      border-radius: 12px;
-      background: rgba(244,252,248,0.08);
+      height: 30px;
+      border-radius: 999px;
+      background: rgba(244,252,248,0.14);
+      border: 1px solid rgba(244,252,248,0.16);
       overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
     }
 
     .return-fill {
       height: 100%;
-      border-radius: 12px;
+      min-width: 26px;
+      border-radius: 999px;
       background: linear-gradient(90deg, rgba(79,200,168,0.92), rgba(160,238,215,0.92));
     }
 
@@ -1777,8 +1806,8 @@
     }
 
     .return-summary {
-      margin-top: 34px;
-      padding-top: 24px;
+      margin-top: 28px;
+      padding-top: 20px;
       border-top: 1px solid rgba(244,252,248,0.14);
       color: rgba(244,252,248,0.78);
       font-size: 24px;
@@ -2887,21 +2916,23 @@
       <section class="dark-slide" data-background-color="#07100d">
         <div class="topline" style="color:rgba(244,252,248,.45);"><span>field data</span><span>return dispersion</span></div>
         <div class="return-board">
-          <div>
+          <div class="return-copy">
+            <div>
             <div class="eyebrow">财富管理的结果问题</div>
-            <h2>很多财富不是没赚钱，是连市场 Beta 都没拿满</h2>
-            <p class="lead">在一个 219 个 UHNW 多托管账户样本里，约 37% 的账户低于 5%，70% 跑输同期 S&P 500。</p>
+            <h2>很多钱不是输在判断，而是没拿满市场该给的钱</h2>
+            </div>
+            <p class="lead">我们看过 219 个 UHNW 多托管账户：约 37% 年化低于 5%，70% 没跑过同期 S&P 500。</p>
           </div>
           <div class="return-panel focus">
             <div class="return-hero">
               <div class="return-number">36.5%<span>低于 5%</span></div>
               <div class="return-plain-bars">
-                <div class="return-plain-row"><span>&lt;5%</span><div class="return-track"><div class="return-fill bad" style="width:36.5%;"></div></div><strong>36.5%</strong></div>
-                <div class="return-plain-row"><span>&lt;S&P</span><div class="return-track"><div class="return-fill bad" style="width:70%;"></div></div><strong>70%</strong></div>
+                <div class="return-plain-row"><span>低于 5%</span><div class="return-track"><div class="return-fill bad" style="width:36.5%;"></div></div><strong>36.5%</strong></div>
+                <div class="return-plain-row"><span>跑输 S&P</span><div class="return-track"><div class="return-fill bad" style="width:70%;"></div></div><strong>70%</strong></div>
                 <div class="return-plain-row"><span>亏损</span><div class="return-track"><div class="return-fill bad" style="width:14%;"></div></div><strong>14%</strong></div>
               </div>
             </div>
-            <div class="return-summary">这不是要求每年战胜市场，而是说明碎片化会让现金、费用、配置和执行一起漏。</div>
+            <div class="return-summary">不是每年都要跑赢市场。真正的问题是：账户一碎，现金、费用、配置和执行都会漏。</div>
           </div>
         </div>
         <aside class="notes"><p>1 min。这里补一个真实感更强的数据页：匿名 219 个 UHNW 多托管账户，2025 年 1 月到 2026 年 2 月，13 个月价格回报口径；S&P 500 同期约 15.5%。这个样本不代表所有财富家庭，也不是投资建议，重点是很多损耗不是选股能力问题，而是 coverage 和执行系统的问题。</p></aside>
