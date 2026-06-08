@@ -1,0 +1,3309 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 如何进入财富管理 · Canopy Field Notes</title>
+  <meta name="description" content="Mu Chen, Canopy CEO. 25-minute field notes on AI for wealth management.">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&amp;family=Noto+Sans+SC:wght@400;500;700;900&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #121713;
+      --muted: #667067;
+      --dim: #8a9289;
+      --soft: #f5f2eb;
+      --paper: #fffdfa;
+      --dark: #07100d;
+      --dark-2: #0b1712;
+      --line: rgba(18, 23, 19, 0.13);
+      --line-dark: rgba(227, 247, 239, 0.14);
+      --accent: #4fc8a8;
+      --accent-deep: #0f6f58;
+      --amber: #b8956b;
+      --shadow: 0 28px 80px rgba(23, 37, 28, 0.11);
+    }
+
+    * { box-sizing: border-box; }
+    body { background: var(--dark); }
+
+    .reveal {
+      color: var(--ink);
+      font-family: "Geist", "Noto Sans SC", system-ui, sans-serif;
+      background: var(--dark);
+    }
+
+    .reveal .slides { counter-reset: slide; }
+
+    .reveal section {
+      position: relative;
+      overflow: hidden;
+      min-height: 720px;
+      padding: 54px 72px 46px;
+      text-align: left;
+      background:
+        linear-gradient(115deg, rgba(79, 200, 168, 0.09), transparent 38%),
+        linear-gradient(180deg, rgba(255, 253, 250, 0.96), rgba(245, 242, 235, 0.98));
+      counter-increment: slide;
+    }
+
+    .reveal section > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .reveal section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(18, 23, 19, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(18, 23, 19, 0.038) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0.08));
+    }
+
+    .reveal section::after {
+      content: none;
+      position: absolute;
+      right: 72px;
+      bottom: 34px;
+      color: rgba(18, 23, 19, 0.26);
+      font: 700 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3,
+    .reveal p {
+      margin: 0;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3 {
+      color: var(--ink);
+      font-family: "Geist", "Noto Sans SC", system-ui, sans-serif;
+      letter-spacing: 0.012em;
+      text-wrap: balance;
+    }
+
+    .reveal h1 {
+      max-width: 760px;
+      font-size: clamp(56px, 5.4vw, 78px);
+      line-height: 1.02;
+      font-weight: 760;
+    }
+
+    .reveal h2 {
+      max-width: 1040px;
+      font-size: clamp(38px, 3.8vw, 58px);
+      line-height: 1.08;
+      font-weight: 730;
+    }
+
+    .reveal h3 {
+      color: var(--ink);
+      font-size: 23px;
+      line-height: 1.15;
+      font-weight: 700;
+    }
+
+    .reveal p,
+    .reveal li {
+      color: var(--muted);
+      font-size: clamp(17px, 1.45vw, 22px);
+      line-height: 1.45;
+    }
+
+    .mono {
+      color: var(--accent-deep);
+      font: 700 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      width: fit-content;
+      margin-bottom: 20px;
+      color: var(--accent-deep);
+      font: 700 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--accent);
+      transform: rotate(45deg);
+    }
+
+    .topline + .eyebrow {
+      margin-top: 0;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: clamp(20px, 1.9vw, 28px);
+      text-wrap: pretty;
+    }
+
+    .topline {
+      position: absolute;
+      top: 34px;
+      left: 72px;
+      right: 72px;
+      z-index: 4;
+      display: flex;
+      justify-content: space-between;
+      color: rgba(18, 23, 19, 0.42);
+      font: 700 10px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      display: none;
+    }
+
+    .brand {
+      position: absolute;
+      top: 42px;
+      left: 72px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(244, 252, 248, 0.88);
+      font-size: 22px;
+      font-weight: 760;
+    }
+
+    .brand img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    .reveal section.hero {
+      padding: 0;
+      background: var(--dark);
+      color: #f4fcf8;
+    }
+
+    .reveal section.hero > .hero-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.72;
+      filter: saturate(0.82) contrast(1.04);
+      transform-origin: 66% 50%;
+      animation: heroDrift 22s ease-in-out infinite alternate;
+    }
+
+    .reveal section.hero::before {
+      z-index: 1;
+      background:
+        linear-gradient(90deg, rgba(7,16,13,0.96), rgba(7,16,13,0.9) 38%, rgba(7,16,13,0.35) 76%, rgba(7,16,13,0.76)),
+        linear-gradient(rgba(244, 252, 248, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 252, 248, 0.04) 1px, transparent 1px);
+      background-size: auto, 80px 80px, 80px 80px;
+      mask-image: none;
+    }
+
+    .reveal section.hero::after,
+    .reveal section.thanks::after { content: none !important; }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      min-height: 720px;
+      display: grid;
+      grid-template-columns: 52% 48%;
+      align-items: center;
+      padding: 96px 72px 64px;
+    }
+
+    .hero h1 {
+      color: #f4fcf8;
+      font-size: clamp(56px, 5.1vw, 74px);
+      max-width: 690px;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero .lead {
+      max-width: 540px;
+      color: rgba(244, 252, 248, 0.74);
+      font-size: 23px;
+    }
+
+    .hero .eyebrow {
+      margin-top: 28px;
+      color: rgba(244, 252, 248, 0.72);
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 14px;
+      margin-top: 34px;
+      color: rgba(244, 252, 248, 0.58);
+      font: 700 10px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-meta span {
+      border-top: 1px solid rgba(244, 252, 248, 0.18);
+      padding-top: 11px;
+    }
+
+    .hero-ui {
+      position: absolute;
+      z-index: 4;
+      width: 330px;
+      padding: 16px 18px;
+      border: 1px solid rgba(244, 252, 248, 0.2);
+      border-radius: 9px;
+      background: rgba(244, 252, 248, 0.07);
+      box-shadow: inset 0 1px 0 rgba(244, 252, 248, 0.12), 0 24px 72px rgba(7, 16, 13, 0.34);
+      backdrop-filter: blur(18px);
+      color: rgba(244, 252, 248, 0.78);
+      font: 700 10px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-ui strong {
+      display: block;
+      margin-top: 10px;
+      color: #f4fcf8;
+      font: 760 17px/1.15 "Geist", "Noto Sans SC", system-ui, sans-serif;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .hero-ui::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: -1px;
+      width: 72px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-ui.a { top: 132px; right: 68px; }
+    .hero-ui.b { right: 82px; bottom: 56px; width: 370px; }
+
+    .hero-motion-map {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.78;
+    }
+
+    .hero-node {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 10px rgba(79,200,168,0.08), 0 0 28px rgba(79,200,168,0.64);
+      animation: nodePulse 3.8s ease-in-out infinite;
+    }
+
+    .hero-node:nth-child(1) { left: 62%; top: 31%; animation-delay: 0s; }
+    .hero-node:nth-child(2) { left: 72%; top: 23%; animation-delay: .55s; }
+    .hero-node:nth-child(3) { left: 82%; top: 42%; animation-delay: 1.1s; }
+    .hero-node:nth-child(4) { left: 70%; top: 57%; animation-delay: 1.65s; }
+    .hero-node:nth-child(5) { left: 88%; top: 68%; animation-delay: 2.2s; }
+
+    .hero-line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(79,200,168,0.72), transparent);
+      transform-origin: left center;
+      animation: lineScan 5.6s ease-in-out infinite;
+    }
+
+    .hero-line.a { left: 62%; top: 32%; width: 172px; transform: rotate(-13deg); }
+    .hero-line.b { left: 72%; top: 25%; width: 174px; transform: rotate(36deg); animation-delay: 1s; }
+    .hero-line.c { left: 70%; top: 58%; width: 160px; transform: rotate(-31deg); animation-delay: 1.8s; }
+    .hero-line.d { left: 76%; top: 58%; width: 158px; transform: rotate(18deg); animation-delay: 2.5s; }
+
+    .hero-action-feed {
+      position: absolute;
+      right: 72px;
+      top: 306px;
+      width: 332px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .hero-action-feed span {
+      display: grid;
+      grid-template-columns: 58px 1fr 52px;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid rgba(244,252,248,0.12);
+      border-radius: 9px;
+      background: rgba(7,16,13,0.44);
+      color: rgba(244,252,248,0.62);
+      font: 800 9px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+      animation: feedWake 6s ease-in-out infinite;
+    }
+
+    .hero-action-feed span:nth-child(2) { animation-delay: 1.2s; }
+    .hero-action-feed span:nth-child(3) { animation-delay: 2.4s; }
+    .hero-action-feed b { color: var(--accent); font-weight: 900; }
+    .hero-action-feed em { color: rgba(244,252,248,0.84); font-style: normal; }
+
+    @keyframes heroDrift {
+      from { transform: scale(1.02) translate3d(0,0,0); }
+      to { transform: scale(1.09) translate3d(-22px, 8px, 0); }
+    }
+
+    @keyframes nodePulse {
+      0%, 100% { transform: scale(0.84); opacity: 0.48; }
+      45% { transform: scale(1.18); opacity: 1; }
+    }
+
+    @keyframes lineScan {
+      0%, 100% { opacity: 0.12; clip-path: inset(0 100% 0 0); }
+      45%, 60% { opacity: 0.76; clip-path: inset(0 0 0 0); }
+    }
+
+    @keyframes feedWake {
+      0%, 100% { opacity: 0.34; transform: translateX(8px); }
+      35%, 65% { opacity: 0.92; transform: translateX(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal section.hero > .hero-photo,
+      .hero-node,
+      .hero-line,
+      .hero-action-feed span {
+        animation: none !important;
+      }
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+      gap: 54px;
+      align-items: center;
+      min-height: 600px;
+    }
+
+    .split.alt { grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); }
+
+    .metric-wall h2 {
+      max-width: 1040px;
+      font-size: clamp(38px, 3.8vw, 54px);
+    }
+
+    .metric-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .metric-card {
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+    }
+
+    .big {
+      color: var(--accent-deep);
+      font-size: 58px;
+      line-height: 0.95;
+      font-weight: 860;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 18px;
+    }
+
+    .metric-card .big {
+      color: var(--ink);
+      font-size: 60px;
+      margin-bottom: 14px;
+    }
+
+    .metric-card p {
+      font-size: 17px;
+      line-height: 1.34;
+    }
+
+    .quiet-panel {
+      position: relative;
+      background: rgba(255, 253, 250, 0.84);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 26px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .quiet-panel.dark {
+      background: var(--dark-2);
+      border-color: var(--line-dark);
+      box-shadow: 0 28px 90px rgba(7, 16, 13, 0.24);
+    }
+
+    .quiet-panel.dark p,
+    .quiet-panel.dark li { color: rgba(244, 252, 248, 0.7); }
+    .quiet-panel.dark .panel-title { color: #f4fcf8; }
+
+    .panel-title {
+      color: var(--ink);
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: 0.008em;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .command {
+      overflow: hidden;
+      background: #0b1411;
+      border: 1px solid rgba(244, 252, 248, 0.12);
+      border-radius: 18px;
+      box-shadow: 0 28px 90px rgba(7, 16, 13, 0.28);
+    }
+
+    .command-head {
+      display: flex;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-bottom: 1px solid rgba(244, 252, 248, 0.1);
+      color: rgba(244, 252, 248, 0.48);
+      font: 700 10px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .command-row {
+      display: grid;
+      grid-template-columns: 98px 1fr 84px;
+      gap: 18px;
+      align-items: center;
+      padding: 18px 22px;
+      border-bottom: 1px solid rgba(244, 252, 248, 0.08);
+      color: rgba(244, 252, 248, 0.78);
+      font: 600 14px/1.35 "JetBrains Mono", monospace;
+    }
+
+    .command-row:last-child { border-bottom: 0; }
+
+    .status {
+      justify-self: end;
+      color: var(--accent);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .work-map {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+      grid-auto-rows: minmax(126px, auto);
+      margin-top: 30px;
+    }
+
+    .work-map .lane {
+      min-height: 0;
+      padding: 22px;
+      border-radius: 10px;
+      background: rgba(255, 253, 250, 0.66);
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 70px rgba(23, 37, 28, 0.08);
+    }
+
+    .work-map .lane:nth-child(1) { grid-row: span 2; }
+    .work-map .lane:nth-child(4) {
+      grid-column: 1 / 3;
+      display: grid;
+      grid-template-columns: 0.34fr 1fr;
+      align-items: center;
+      min-height: 118px;
+    }
+
+    .counterparty-net {
+      position: relative;
+      min-height: 468px;
+      margin-top: 26px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 48%, rgba(79,200,168,0.16), transparent 28%),
+        rgba(255,253,250,0.72);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .net-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .net-lines line {
+      stroke: rgba(15,111,88,0.26);
+      stroke-width: 2;
+    }
+
+    .net-center,
+    .net-node,
+    .net-caption {
+      position: absolute;
+      z-index: 2;
+      border: 1px solid rgba(15,111,88,0.18);
+      background: rgba(255,253,250,0.92);
+      box-shadow: 0 18px 48px rgba(23,37,28,0.08);
+    }
+
+    .net-center {
+      left: 50%;
+      top: 50%;
+      width: 228px;
+      height: 128px;
+      transform: translate(-50%, -50%);
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: var(--dark-2);
+      color: #f4fcf8;
+      border-color: rgba(79,200,168,0.46);
+    }
+
+    .net-center strong {
+      display: block;
+      color: var(--accent);
+      font-size: 54px;
+      line-height: 0.9;
+      font-weight: 760;
+      letter-spacing: 0.01em;
+    }
+
+    .net-center span {
+      display: block;
+      margin-top: 10px;
+      color: rgba(244,252,248,0.72);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .net-node {
+      width: 164px;
+      min-height: 66px;
+      display: grid;
+      align-content: center;
+      padding: 12px 16px;
+      border-radius: 14px;
+      color: var(--ink);
+      font-size: 20px;
+      font-weight: 690;
+      line-height: 1.14;
+      text-align: center;
+    }
+
+    .net-node small {
+      display: block;
+      margin-top: 6px;
+      color: var(--accent-deep);
+      font-size: 17px;
+      font-weight: 720;
+    }
+
+    .net-caption {
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      min-width: 760px;
+      padding: 12px 24px;
+      border-radius: 14px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.1;
+    }
+
+    .net-caption strong {
+      color: var(--ink);
+      font-size: 34px;
+      font-weight: 760;
+      margin-right: 10px;
+    }
+
+    .n1 { left: 94px; top: 64px; }
+    .n2 { left: 300px; top: 30px; }
+    .n3 { right: 300px; top: 30px; }
+    .n4 { right: 94px; top: 64px; }
+    .n5 { left: 88px; top: 212px; }
+    .n6 { right: 88px; top: 212px; }
+    .n7 { left: 300px; bottom: 92px; }
+    .n8 { right: 300px; bottom: 92px; }
+
+    .evidence {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0;
+      margin-top: 44px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .evidence > div {
+      min-height: 208px;
+      padding: 26px 20px;
+      border-right: 1px solid var(--line);
+    }
+
+    .evidence > div:last-child { border-right: 0; }
+
+    .evidence-number {
+      color: var(--accent-deep);
+      font: 700 11px/1 "JetBrains Mono", monospace;
+      margin-bottom: 54px;
+      text-transform: uppercase;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .stack-item {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 20px;
+      align-items: center;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .stack-item:first-child { border-top: 0; }
+
+    .cost-stack {
+      display: grid;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .cost-row {
+      display: grid;
+      grid-template-columns: 150px 1fr 88px;
+      gap: 14px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .bar {
+      position: relative;
+      height: 18px;
+      border-radius: 5px;
+      background: rgba(18, 23, 19, 0.08);
+      overflow: hidden;
+    }
+
+    .bar span {
+      position: absolute;
+      inset: 0 auto 0 0;
+      border-radius: 5px;
+      background: linear-gradient(90deg, var(--accent-deep), var(--accent));
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0;
+      margin-top: 48px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .time-node {
+      min-height: 230px;
+      padding: 28px 20px;
+      border-right: 1px solid var(--line);
+    }
+
+    .time-node:last-child { border-right: 0; }
+    .time-node strong {
+      display: block;
+      color: var(--accent-deep);
+      font: 800 13px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.06em;
+      margin-bottom: 74px;
+      text-transform: uppercase;
+    }
+
+    .formula {
+      display: grid;
+      grid-template-columns: 1fr 64px 1fr 64px 1fr 64px 1.05fr;
+      gap: 12px;
+      align-items: stretch;
+      margin-top: 44px;
+    }
+
+    .formula-card {
+      min-height: 220px;
+      padding: 22px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 250, 0.74);
+      box-shadow: var(--shadow);
+    }
+
+    .formula-card .big { font-size: 54px; margin-bottom: 18px; }
+    .formula-op {
+      display: grid;
+      place-items: center;
+      color: rgba(18,23,19,0.42);
+      font-size: 46px;
+      font-weight: 700;
+    }
+
+    .dark-slide .formula-op { color: rgba(244,252,248,0.34); }
+
+    .formula-card.result {
+      background: var(--dark-2);
+      border-color: rgba(79,200,168,0.36);
+    }
+
+    .formula-card.result .panel-title,
+    .formula-card.result .big { color: #f4fcf8; }
+    .formula-card.result p { color: rgba(244,252,248,0.72); }
+
+    .scene {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 36px;
+      align-items: center;
+      min-height: 584px;
+    }
+
+    .scene-img {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      background: #e8e7df;
+    }
+
+    .scene-img.system-portrait {
+      max-height: 508px;
+      object-fit: contain;
+      background: rgba(255,253,250,0.74);
+    }
+
+    .system-img {
+      display: block;
+      width: 72%;
+      max-height: 506px;
+      object-fit: contain;
+      margin: 26px auto 0;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      background: var(--paper);
+    }
+
+    .diagram {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 42px;
+      align-items: center;
+    }
+
+    .diagram-node {
+      min-height: 148px;
+      display: grid;
+      align-content: center;
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,253,250,0.72);
+    }
+
+    .diagram-node.dark {
+      background: var(--dark-2);
+      border-color: rgba(79,200,168,0.34);
+    }
+
+    .diagram-node.dark h3 { color: #f4fcf8; }
+    .diagram-node.dark p { color: rgba(244,252,248,0.7); }
+
+    .arrow {
+      color: rgba(18,23,19,0.34);
+      font-size: 34px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .reveal section.dark-slide {
+      background:
+        radial-gradient(circle at 83% 18%, rgba(79, 200, 168, 0.24), transparent 27%),
+        radial-gradient(circle at 8% 100%, rgba(244, 252, 248, 0.08), transparent 36%),
+        linear-gradient(135deg, rgba(79, 200, 168, 0.13), transparent 42%),
+        linear-gradient(180deg, #0b1712, #07100d);
+      color: #f4fcf8;
+    }
+
+    .dark-slide::before {
+      background-image:
+        linear-gradient(rgba(244, 252, 248, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 252, 248, 0.045) 1px, transparent 1px);
+    }
+
+    .dark-slide::after { color: rgba(244, 252, 248, 0.28); }
+    .dark-slide h2,
+    .dark-slide .quote { color: #f4fcf8; }
+    .dark-slide .lead { color: rgba(244, 252, 248, 0.68); }
+
+    .reveal .quote {
+      max-width: 980px;
+      color: var(--ink);
+      font-size: clamp(42px, 4.3vw, 66px);
+      line-height: 1.08;
+      font-weight: 830;
+      text-wrap: balance;
+    }
+
+    .reveal section.dark-slide .quote { color: #f4fcf8; }
+
+    .callout {
+      margin-top: 30px;
+      padding: 18px 22px;
+      border-left: 4px solid var(--accent);
+      background: rgba(79, 200, 168, 0.08);
+      color: var(--ink);
+      font-size: 22px;
+      line-height: 1.35;
+      font-weight: 650;
+    }
+
+    .cost-snapshot {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .cost-box {
+      min-height: 156px;
+      padding: 22px;
+      border-radius: 14px;
+      background: rgba(255, 253, 250, 0.76);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .cost-box.dark {
+      grid-column: 1 / 3;
+      background: var(--dark-2);
+      border-color: rgba(79, 200, 168, 0.36);
+    }
+
+    .cost-label {
+      color: var(--dim);
+      font: 700 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .cost-value {
+      margin-top: 16px;
+      color: var(--ink);
+      font-size: 56px;
+      line-height: 0.95;
+      font-weight: 880;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cost-box.dark .cost-value { color: #f4fcf8; }
+    .cost-box.dark p { color: rgba(244,252,248,0.7); }
+
+    .cost-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .cost-chips span {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(79, 200, 168, 0.1);
+      color: rgba(244,252,248,0.78);
+      font: 700 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.02em;
+    }
+
+    .data-day {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(244,252,248,0.12);
+    }
+
+    .data-day div {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: center;
+      color: rgba(244,252,248,0.76);
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .data-day b {
+      color: var(--accent);
+      font: 800 12px/1 "JetBrains Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .leak-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 36px;
+    }
+
+    .leak-card {
+      min-height: 250px;
+      display: grid;
+      align-content: space-between;
+      padding: 22px;
+      border-radius: 14px;
+      background: rgba(255,253,250,0.78);
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 60px rgba(23,37,28,0.08);
+    }
+
+    .leak-card .tag {
+      color: var(--accent-deep);
+      font: 800 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .leak-card .big {
+      margin: 28px 0 14px;
+      color: var(--ink);
+      font-size: 50px;
+    }
+
+    .leak-card p { font-size: 16px; line-height: 1.34; }
+
+    .reveal section.future-scene {
+      background:
+        radial-gradient(circle at 78% 20%, rgba(79, 200, 168, 0.24), transparent 28%),
+        radial-gradient(circle at 14% 86%, rgba(184, 149, 107, 0.14), transparent 30%),
+        linear-gradient(135deg, #0b1712, #07100d 68%);
+      color: #f4fcf8;
+    }
+
+    .future-scene::before {
+      background-image:
+        linear-gradient(rgba(244, 252, 248, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 252, 248, 0.04) 1px, transparent 1px);
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.75), rgba(0,0,0,0.12));
+    }
+
+    .future-scene::after,
+    .future-scene .topline { color: rgba(244,252,248,0.28); }
+    .operator-scene .topline { right: auto; width: 280px; }
+    .operator-scene .topline span:last-child { display: none; }
+    .future-scene h2,
+    .future-scene h3,
+    .future-scene .panel-title { color: #f4fcf8; }
+    .future-scene p,
+    .future-scene .lead { color: rgba(244,252,248,0.7); }
+    .future-scene .eyebrow { color: rgba(79,200,168,0.92); }
+
+    .scene-frame {
+      position: relative;
+      width: 100%;
+    }
+
+    .scene-frame .scene-img {
+      display: block;
+      border-color: rgba(244,252,248,0.15);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.36);
+    }
+
+    .scene-frame.cash-frame .scene-img {
+      height: 458px;
+      max-height: 458px;
+      object-fit: contain;
+      background: rgba(255,253,250,0.62);
+    }
+
+    .cash-simple {
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(255,253,250,0.86);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .cash-total {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 24px 28px;
+      border-radius: 18px;
+      background: var(--dark-2);
+      color: #f4fcf8;
+    }
+
+    .cash-total strong {
+      color: #f4fcf8;
+      font-size: 44px;
+      line-height: 1;
+      font-weight: 720;
+      letter-spacing: 0.01em;
+    }
+
+    .cash-total span {
+      color: var(--accent);
+      font-size: 54px;
+      line-height: 0.9;
+      font-weight: 760;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cash-parts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .cash-part {
+      min-height: 82px;
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(236,241,234,0.8);
+      border: 1px solid rgba(18,23,19,0.08);
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.16;
+    }
+
+    .cash-part strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ink);
+      font-size: 22px;
+      line-height: 1.06;
+      font-weight: 700;
+    }
+
+    .cash-part.idle {
+      background: rgba(184,149,107,0.18);
+      border-color: rgba(184,149,107,0.34);
+    }
+
+    .cash-drag {
+      margin-top: 18px;
+      padding: 20px 24px;
+      border-radius: 16px;
+      background: rgba(79,200,168,0.1);
+      border: 1px solid rgba(15,111,88,0.18);
+      color: var(--ink);
+      font-size: 26px;
+      line-height: 1.18;
+      font-weight: 700;
+    }
+
+    .cash-drag span {
+      color: var(--accent-deep);
+      font-size: 38px;
+      font-weight: 760;
+    }
+
+    .future-badge {
+      position: absolute;
+      left: 22px;
+      bottom: 22px;
+      min-width: 142px;
+      padding: 16px 18px;
+      border-radius: 12px;
+      background: rgba(7,16,13,0.78);
+      border: 1px solid rgba(79,200,168,0.42);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.34);
+    }
+
+    .future-badge.secondary {
+      left: auto;
+      right: 22px;
+      bottom: auto;
+      top: 22px;
+    }
+
+    .future-badge strong {
+      display: block;
+      color: var(--accent);
+      font-size: 54px;
+      line-height: 0.9;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .future-badge span {
+      display: block;
+      margin-top: 10px;
+      color: rgba(244,252,248,0.72);
+      font: 800 10px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .question-panel {
+      padding: 28px;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255,253,250,0.92), rgba(245,242,235,0.9));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .question-bubble {
+      padding: 22px 24px;
+      border-radius: 18px 18px 18px 4px;
+      background: var(--dark-2);
+      color: #f4fcf8 !important;
+      font-size: 26px !important;
+      line-height: 1.32 !important;
+      font-weight: 650;
+    }
+
+    .answer-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .answer-strip div {
+      min-height: 132px;
+      padding: 18px;
+      border-radius: 12px;
+      background: rgba(79,200,168,0.08);
+      border: 1px solid rgba(15,111,88,0.16);
+    }
+
+    .answer-strip .mono { display: block; margin-bottom: 18px; }
+    .answer-strip p { font-size: 15px; line-height: 1.32; color: var(--muted); }
+
+    .runtime-board {
+      min-height: 500px;
+      padding: 24px;
+      border-radius: 22px;
+      border: 1px solid rgba(244,252,248,0.14);
+      background:
+        linear-gradient(rgba(244,252,248,0.048) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244,252,248,0.042) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(13,26,21,0.98), rgba(7,16,13,0.98));
+      background-size: 48px 48px, 48px 48px, auto;
+      box-shadow: 0 34px 110px rgba(0,0,0,0.34);
+    }
+
+    .runtime-kpis {
+      display: grid;
+      grid-template-columns: 1fr 1fr 0.72fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .runtime-kpi {
+      min-height: 132px;
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(244,252,248,0.06);
+      border: 1px solid rgba(244,252,248,0.1);
+    }
+
+    .runtime-kpi strong {
+      display: block;
+      color: #f4fcf8;
+      font-size: 38px;
+      line-height: 0.95;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .runtime-kpi span {
+      display: block;
+      margin-top: 12px;
+      color: rgba(244,252,248,0.58);
+      font: 800 10px/1.25 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .runtime-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .runtime-list div {
+      display: grid;
+      grid-template-columns: 100px 1fr 86px;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(244,252,248,0.052);
+      border: 1px solid rgba(244,252,248,0.08);
+      color: rgba(244,252,248,0.68);
+      font-size: 16px;
+    }
+
+    .runtime-list b {
+      color: var(--accent);
+      font: 900 11px/1 "JetBrains Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .runtime-list em {
+      justify-self: end;
+      color: rgba(244,252,248,0.48);
+      font: 800 10px/1 "JetBrains Mono", monospace;
+      font-style: normal;
+      text-transform: uppercase;
+    }
+
+    .value-board {
+      min-height: 500px;
+      padding: 24px;
+      border-radius: 22px;
+      border: 1px solid rgba(244,252,248,0.14);
+      background:
+        linear-gradient(rgba(244,252,248,0.048) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244,252,248,0.042) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(13,26,21,0.98), rgba(7,16,13,0.98));
+      background-size: 48px 48px, 48px 48px, auto;
+      box-shadow: 0 34px 110px rgba(0,0,0,0.34);
+    }
+
+    .value-main {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      align-items: stretch;
+      margin-top: 14px;
+    }
+
+    .value-pill {
+      min-height: 112px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(244,252,248,0.06);
+      border: 1px solid rgba(244,252,248,0.1);
+    }
+
+    .value-pill.dark {
+      background: rgba(79,200,168,0.1);
+      border-color: rgba(79,200,168,0.42);
+    }
+
+    .value-pill strong {
+      display: block;
+      color: #f4fcf8;
+      font-size: 40px;
+      line-height: 0.94;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .value-pill.dark strong { font-size: 38px; }
+
+    .value-pill span {
+      display: block;
+      margin-top: 10px;
+      color: rgba(244,252,248,0.56);
+      font: 800 10px/1.2 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .value-equals {
+      display: grid;
+      place-items: center;
+      color: rgba(244,252,248,0.36);
+      min-height: 34px;
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .value-stack {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .value-stack div {
+      min-height: 108px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(244,252,248,0.052);
+      border: 1px solid rgba(244,252,248,0.08);
+    }
+
+    .value-stack b {
+      display: block;
+      color: #f4fcf8;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .value-stack span {
+      display: block;
+      margin-top: 10px;
+      color: rgba(244,252,248,0.58);
+      font-size: 13px;
+      line-height: 1.22;
+    }
+
+    .workbench-bars {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .workbench-row {
+      display: grid;
+      grid-template-columns: 122px 1fr 88px;
+      gap: 14px;
+      align-items: center;
+      color: rgba(244,252,248,0.78);
+      font-size: 18px;
+    }
+
+    .workbench-track {
+      height: 32px;
+      border-radius: 9px;
+      background: rgba(244,252,248,0.08);
+      overflow: hidden;
+    }
+
+    .workbench-fill {
+      height: 100%;
+      border-radius: 9px;
+      background: linear-gradient(90deg, rgba(79,200,168,0.94), rgba(160,238,215,0.88));
+    }
+
+    .workbench-costs {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .workbench-cost {
+      min-height: 104px;
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(244,252,248,0.06);
+      border: 1px solid rgba(244,252,248,0.1);
+    }
+
+    .workbench-cost.highlight {
+      background: rgba(79,200,168,0.1);
+      border-color: rgba(79,200,168,0.42);
+    }
+
+    .workbench-cost strong {
+      display: block;
+      color: #f4fcf8;
+      font-size: 36px;
+      line-height: 0.95;
+      font-weight: 760;
+      letter-spacing: 0.01em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .workbench-cost span {
+      display: block;
+      margin-top: 12px;
+      color: rgba(244,252,248,0.64);
+      font-size: 15px;
+      line-height: 1.18;
+    }
+
+    .ai-output-layout {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 34px;
+      align-items: stretch;
+      min-height: 586px;
+    }
+
+    .ai-output-main h2 {
+      max-width: 720px;
+      font-size: clamp(44px, 4.4vw, 66px);
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .project-pill {
+      min-height: 64px;
+      display: grid;
+      place-items: center;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,253,250,0.78);
+      border: 1px solid rgba(18,23,19,0.1);
+      box-shadow: 0 12px 34px rgba(23,37,28,0.055);
+      text-align: center;
+    }
+
+    .project-pill b {
+      display: block;
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.08;
+      font-weight: 720;
+      letter-spacing: 0.005em;
+    }
+
+    .project-pill span {
+      display: block;
+      margin-top: 5px;
+      color: rgba(45,56,50,0.58);
+      font-size: 14px;
+      line-height: 1.1;
+    }
+
+    .ai-compare-stack {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 14px;
+      min-height: 0;
+    }
+
+    .compare-card {
+      padding: 20px 24px;
+      border-radius: 18px;
+      text-align: center;
+      border: 1px solid rgba(18,23,19,0.1);
+      background: rgba(255,253,250,0.78);
+      box-shadow: 0 14px 38px rgba(23,37,28,0.055);
+    }
+
+    .compare-card.traditional {
+      background: rgba(255,245,245,0.86);
+      border-color: rgba(211,58,52,0.24);
+    }
+
+    .compare-card.ai {
+      background: rgba(236,248,243,0.92);
+      border-color: rgba(15,111,88,0.24);
+    }
+
+    .compare-card .label {
+      color: var(--accent-deep);
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 720;
+    }
+
+    .compare-card.traditional .label { color: #c83a36; }
+
+    .compare-card strong {
+      display: block;
+      margin-top: 14px;
+      color: var(--ink);
+      font-size: 44px;
+      line-height: 0.95;
+      font-weight: 760;
+      letter-spacing: 0.01em;
+    }
+
+    .compare-card span {
+      display: block;
+      margin-top: 12px;
+      color: rgba(45,56,50,0.62);
+      font-size: 22px;
+      line-height: 1.1;
+      font-weight: 650;
+    }
+
+    .effort-board {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,253,250,0.72);
+      border: 1px solid rgba(18,23,19,0.1);
+      box-shadow: 0 14px 38px rgba(23,37,28,0.055);
+    }
+
+    .effort-row {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 8px;
+      color: rgba(45,56,50,0.68);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .effort-row:last-child { margin-bottom: 0; }
+
+    .effort-track {
+      height: 15px;
+      border-radius: 999px;
+      background: rgba(18,23,19,0.08);
+      overflow: hidden;
+    }
+
+    .effort-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: #7970ec;
+    }
+
+    .effort-fill.green { background: #76af8e; }
+    .effort-fill.pink { background: #dc75a3; }
+    .effort-fill.orange { background: #ef9367; }
+    .effort-fill.dark { background: #343342; }
+
+    .return-board {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 36px;
+      align-items: center;
+      min-height: 590px;
+    }
+
+    .return-board h2 {
+      max-width: 560px;
+      font-size: clamp(42px, 4.2vw, 62px);
+    }
+
+    .return-panel {
+      min-height: 492px;
+      padding: 24px;
+      border-radius: 20px;
+      border: 1px solid rgba(79,200,168,0.32);
+      background:
+        linear-gradient(rgba(244,252,248,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244,252,248,0.045) 1px, transparent 1px),
+        linear-gradient(180deg, #0d1a15, #07100d);
+      background-size: 58px 58px, 58px 58px, auto;
+      box-shadow: 0 32px 90px rgba(7,16,13,0.34);
+    }
+
+    .return-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .return-kpi {
+      min-height: 124px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(244,252,248,0.06);
+      border: 1px solid rgba(244,252,248,0.1);
+    }
+
+    .return-kpi strong {
+      display: block;
+      color: #f4fcf8;
+      font-size: 36px;
+      line-height: 0.95;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .return-kpi span {
+      display: block;
+      margin-top: 12px;
+      color: rgba(244,252,248,0.58);
+      font: 800 9px/1.2 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .return-axis {
+      position: relative;
+      height: 190px;
+      margin-top: 34px;
+      border-bottom: 1px solid rgba(244,252,248,0.18);
+      border-left: 1px solid rgba(244,252,248,0.12);
+    }
+
+    .return-bar {
+      position: absolute;
+      bottom: 0;
+      width: 14%;
+      border-radius: 8px 8px 0 0;
+      background: linear-gradient(180deg, rgba(79,200,168,0.96), rgba(15,111,88,0.92));
+      box-shadow: 0 16px 36px rgba(0,0,0,0.22);
+    }
+
+    .return-bar.bad {
+      background: linear-gradient(180deg, rgba(184,149,107,0.95), rgba(132,99,59,0.96));
+    }
+
+    .return-bar b {
+      position: absolute;
+      left: 50%;
+      top: -30px;
+      transform: translateX(-50%);
+      color: #f4fcf8;
+      font: 900 18px/1 "Geist", "Noto Sans SC", system-ui, sans-serif;
+      white-space: nowrap;
+    }
+
+    .return-labels {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+      color: rgba(244,252,248,0.52);
+      font: 800 10px/1.2 "JetBrains Mono", monospace;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .return-panel.focus {
+      display: grid;
+      align-content: center;
+      min-height: 492px;
+      padding: 36px;
+    }
+
+    .return-hero {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .return-number {
+      color: #f4fcf8;
+      font-size: 108px;
+      line-height: 0.88;
+      font-weight: 760;
+      letter-spacing: 0.01em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .return-number span {
+      display: block;
+      margin-top: 18px;
+      color: rgba(244,252,248,0.78);
+      font-size: 30px;
+      line-height: 1.1;
+      font-weight: 650;
+    }
+
+    .return-plain-bars {
+      display: grid;
+      gap: 18px;
+    }
+
+    .return-plain-row {
+      display: grid;
+      grid-template-columns: 116px 1fr 84px;
+      gap: 18px;
+      align-items: center;
+      color: rgba(244,252,248,0.78);
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .return-track {
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(244,252,248,0.08);
+      overflow: hidden;
+    }
+
+    .return-fill {
+      height: 100%;
+      border-radius: 12px;
+      background: linear-gradient(90deg, rgba(79,200,168,0.92), rgba(160,238,215,0.92));
+    }
+
+    .return-fill.bad {
+      background: linear-gradient(90deg, rgba(184,149,107,0.94), rgba(227,190,139,0.94));
+    }
+
+    .return-summary {
+      margin-top: 34px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(244,252,248,0.14);
+      color: rgba(244,252,248,0.78);
+      font-size: 24px;
+      line-height: 1.28;
+    }
+
+    .parallel-board {
+      display: grid;
+      grid-template-columns: 0.95fr 1.1fr;
+      gap: 18px;
+      margin-top: 34px;
+      min-height: 388px;
+    }
+
+    .before-thread,
+    .after-system {
+      padding: 24px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,253,250,0.72);
+      box-shadow: var(--shadow);
+    }
+
+    .after-system {
+      background: var(--dark-2);
+      border-color: rgba(79,200,168,0.36);
+    }
+
+    .thread-line {
+      display: grid;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .thread-line span,
+    .agent-lane {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(18,23,19,0.12);
+      background: rgba(255,253,250,0.7);
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.26;
+    }
+
+    .thread-line span::before {
+      content: "→";
+      margin-right: 10px;
+      color: var(--accent-deep);
+      font-weight: 900;
+    }
+
+    .agent-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .agent-lane {
+      min-height: 92px;
+      border-color: rgba(244,252,248,0.1);
+      background: rgba(244,252,248,0.06);
+      color: rgba(244,252,248,0.66);
+    }
+
+    .agent-lane b {
+      display: block;
+      margin-bottom: 10px;
+      color: #f4fcf8;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .after-system .panel-title,
+    .after-system h3 { color: #f4fcf8; }
+    .after-system p { color: rgba(244,252,248,0.62); }
+
+    .org-slide h2 {
+      max-width: 1180px;
+      font-size: clamp(30px, 2.9vw, 42px);
+      line-height: 1.04;
+    }
+
+    .org-matrix {
+      margin-top: 20px;
+      display: grid;
+      grid-template-rows: 66px 82px 260px 42px;
+      gap: 10px;
+    }
+
+    .org-top {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .org-label-cell,
+    .org-role-cell,
+    .org-ai-cell,
+    .org-company-layer,
+    .org-ceo {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 250, 0.68);
+      backdrop-filter: blur(14px);
+    }
+
+    .org-ceo {
+      display: grid;
+      align-content: center;
+      padding: 11px 18px;
+      background: var(--dark-2);
+      border-color: rgba(79, 200, 168, 0.44);
+      box-shadow: 0 18px 54px rgba(7, 16, 13, 0.17);
+    }
+
+    .org-ceo .panel-title {
+      margin: 4px 0 0;
+      color: #f4fcf8;
+      font-size: 20px;
+      line-height: 1.05;
+    }
+
+    .org-ceo .mono { color: rgba(160, 238, 215, 0.72); }
+
+    .org-direction {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border: 1px solid rgba(15, 111, 88, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 253, 250, 0.52);
+    }
+
+    .org-direction span {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      border-right: 1px solid rgba(15, 111, 88, 0.16);
+      color: #314039;
+      font: 720 16px/1 "Geist", "Noto Sans SC", system-ui, sans-serif;
+    }
+
+    .org-direction span:last-child { border-right: 0; }
+
+    .org-company-layer {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      align-items: stretch;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(11, 23, 18, 0.98), rgba(12, 42, 34, 0.95)),
+        var(--dark-2);
+      border-color: rgba(79, 200, 168, 0.34);
+      box-shadow: 0 24px 70px rgba(7, 16, 13, 0.15);
+    }
+
+    .org-layer-title {
+      padding: 18px 22px;
+      border-right: 1px solid rgba(244, 252, 248, 0.13);
+    }
+
+    .org-layer-title .panel-title {
+      margin: 5px 0 0;
+      color: #f4fcf8;
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .org-layer-title .mono { color: rgba(160, 238, 215, 0.75); }
+
+    .org-layer-stack {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+    }
+
+    .org-layer-stack span {
+      display: grid;
+      align-content: center;
+      padding: 12px 18px;
+      border-right: 1px solid rgba(244, 252, 248, 0.12);
+      color: rgba(244, 252, 248, 0.66);
+      font: 700 12px/1.2 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .org-layer-stack span:last-child { border-right: 0; }
+
+    .org-function-grid {
+      display: grid;
+      grid-template-columns: 152px repeat(4, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 253, 250, 0.62);
+      box-shadow: 0 18px 60px rgba(23, 37, 28, 0.08);
+    }
+
+    .org-label-cell {
+      display: grid;
+      align-content: center;
+      padding: 14px 16px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: rgba(236, 241, 234, 0.72);
+    }
+
+    .org-label-cell:nth-child(6) { border-bottom: 0; }
+
+    .org-label-cell strong {
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.1;
+    }
+
+    .org-label-cell span {
+      margin-top: 8px;
+      color: rgba(15, 111, 88, 0.72);
+      font: 700 9px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .org-role-cell,
+    .org-ai-cell {
+      min-width: 0;
+      border: 0;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      padding: 13px 16px;
+      background: rgba(255, 253, 250, 0.76);
+    }
+
+    .org-role-cell:nth-child(5),
+    .org-ai-cell:nth-child(10) { border-right: 0; }
+
+    .org-ai-cell { border-bottom: 0; }
+
+    .org-role-cell .mono,
+    .org-ai-cell .mono {
+      color: var(--accent-deep);
+      font-size: 9px;
+      letter-spacing: 0.09em;
+    }
+
+    .org-role-cell h3,
+    .org-ai-cell h3 {
+      margin: 7px 0 8px;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.04;
+      font-weight: 820;
+    }
+
+    .org-role-cell p,
+    .org-ai-cell p {
+      color: #52635a;
+      font-size: 12px;
+      line-height: 1.22;
+    }
+
+    .org-footer {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 12px;
+    }
+
+    .org-footer div {
+      display: grid;
+      align-content: center;
+      padding: 0 18px;
+      border-top: 1px solid rgba(18, 23, 19, 0.14);
+      color: rgba(18, 23, 19, 0.48);
+      font: 700 9px/1.25 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .cost-redesign {
+      display: grid;
+      grid-template-columns: 0.68fr 1.32fr;
+      gap: 40px;
+      align-items: center;
+      min-height: 590px;
+    }
+
+    .cost-redesign h2 {
+      max-width: 590px;
+      font-size: clamp(40px, 3.9vw, 58px);
+    }
+
+    .cost-redesign .lead {
+      max-width: 500px;
+      font-size: 23px;
+    }
+
+    .small-proof {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .small-proof strong {
+      color: var(--ink);
+      font-size: 24px;
+      font-weight: 850;
+    }
+
+    .waterfall-board {
+      position: relative;
+      min-height: 494px;
+      padding: 24px 24px 22px;
+      border-radius: 18px;
+      border: 1px solid rgba(79, 200, 168, 0.32);
+      background:
+        linear-gradient(rgba(244,252,248,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244,252,248,0.045) 1px, transparent 1px),
+        linear-gradient(180deg, #0d1a15, #07100d);
+      background-size: 58px 58px, 58px 58px, auto;
+      box-shadow: 0 32px 90px rgba(7, 16, 13, 0.34);
+      overflow: hidden;
+    }
+
+    .waterfall-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .waterfall-head .cost-label { color: rgba(244,252,248,0.5); }
+    .waterfall-total {
+      color: #f4fcf8;
+      font: 900 44px/0.95 "Geist", "Noto Sans SC", system-ui, sans-serif;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .waterfall-total span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(244,252,248,0.48);
+      font: 800 10px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .waterfall-chart {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+      align-items: end;
+      height: 328px;
+      padding: 18px 8px 50px;
+      border-top: 1px solid rgba(244,252,248,0.1);
+      border-bottom: 1px solid rgba(244,252,248,0.16);
+    }
+
+    .waterfall-chart::before,
+    .waterfall-chart::after {
+      content: "";
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      border-top: 1px dashed rgba(244,252,248,0.12);
+    }
+
+    .waterfall-chart::before { top: 34%; }
+    .waterfall-chart::after { top: 62%; }
+
+    .wf-step {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      min-height: 260px;
+      min-width: 0;
+    }
+
+    .wf-bar {
+      align-self: end;
+      height: var(--h);
+      min-height: 34px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 10px;
+      border-radius: 8px 8px 3px 3px;
+      color: #f4fcf8;
+      background: linear-gradient(180deg, rgba(79,200,168,0.96), rgba(15,111,88,0.94));
+      box-shadow: 0 16px 36px rgba(0,0,0,0.24);
+      font: 900 22px/1 "Geist", "Noto Sans SC", system-ui, sans-serif;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wf-step.add .wf-bar {
+      background: linear-gradient(180deg, rgba(184,149,107,0.92), rgba(132,99,59,0.94));
+    }
+
+    .wf-step.final .wf-bar {
+      background: #f4fcf8;
+      color: var(--dark);
+      box-shadow: 0 18px 46px rgba(244,252,248,0.14);
+    }
+
+    .wf-name {
+      margin-top: 12px;
+      color: rgba(244,252,248,0.62);
+      font: 800 10px/1.2 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .waterfall-foot {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      margin-top: 18px;
+      color: rgba(244,252,248,0.62);
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .waterfall-foot b {
+      color: var(--accent);
+      font-weight: 850;
+    }
+
+    .operator-shell {
+      display: grid;
+      grid-template-columns: 0.4fr 0.6fr;
+      gap: 36px;
+      align-items: center;
+      min-height: 568px;
+      margin-top: 22px;
+    }
+
+    .operator-shell h2 {
+      max-width: 520px;
+      font-size: clamp(42px, 4.1vw, 62px);
+    }
+
+    .live-cockpit,
+    .deal-planner,
+    .memory-board {
+      border-radius: 22px;
+      border: 1px solid rgba(244,252,248,0.14);
+      background:
+        linear-gradient(rgba(244,252,248,0.048) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244,252,248,0.042) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(13,26,21,0.96), rgba(7,16,13,0.98));
+      background-size: 48px 48px, 48px 48px, auto;
+      box-shadow: 0 34px 110px rgba(0,0,0,0.38);
+      overflow: hidden;
+    }
+
+    .cockpit-top,
+    .deal-top,
+    .memory-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 22px;
+      border-bottom: 1px solid rgba(244,252,248,0.1);
+      color: rgba(244,252,248,0.52);
+      font: 800 10px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .cockpit-metrics {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr 1fr;
+      gap: 12px;
+      padding: 18px 22px 8px;
+    }
+
+    .cockpit-metric {
+      padding: 14px 14px 13px;
+      border-radius: 14px;
+      background: rgba(244,252,248,0.055);
+      border: 1px solid rgba(244,252,248,0.09);
+    }
+
+    .cockpit-metric strong {
+      display: block;
+      color: #f4fcf8;
+      font-size: 42px;
+      line-height: 0.95;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cockpit-metric span {
+      display: block;
+      margin-top: 9px;
+      color: rgba(244,252,248,0.5);
+      font: 800 10px/1.2 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .exception-list {
+      display: grid;
+      gap: 10px;
+      padding: 14px 22px 22px;
+    }
+
+    .exception-row {
+      display: grid;
+      grid-template-columns: 78px 1fr 92px;
+      gap: 14px;
+      align-items: center;
+      min-height: 62px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(244,252,248,0.055);
+      border: 1px solid rgba(244,252,248,0.08);
+      color: rgba(244,252,248,0.78);
+    }
+
+    .exception-row.urgent {
+      border-color: rgba(184,149,107,0.62);
+      background: rgba(184,149,107,0.11);
+    }
+
+    .exception-row .code {
+      color: var(--accent);
+      font: 900 13px/1 "JetBrains Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .exception-row b {
+      display: block;
+      margin-bottom: 5px;
+      color: #f4fcf8;
+      font-size: 18px;
+      line-height: 1.05;
+    }
+
+    .exception-row p {
+      color: rgba(244,252,248,0.54);
+      font-size: 14px;
+      line-height: 1.22;
+    }
+
+    .exception-row .eta {
+      justify-self: end;
+      padding: 8px 9px;
+      border-radius: 999px;
+      background: rgba(79,200,168,0.1);
+      color: rgba(244,252,248,0.72);
+      font: 800 10px/1 "JetBrains Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .deal-planner {
+      min-height: 494px;
+    }
+
+    .deal-summary {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      padding: 20px 22px 10px;
+    }
+
+    .deal-summary h3 {
+      color: #f4fcf8;
+      font-size: 27px;
+      line-height: 1.1;
+    }
+
+    .deal-summary p {
+      margin-top: 8px;
+      color: rgba(244,252,248,0.58);
+      font-size: 16px;
+      line-height: 1.34;
+    }
+
+    .deal-countdown {
+      justify-self: end;
+      align-self: start;
+      min-width: 146px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(184,149,107,0.12);
+      border: 1px solid rgba(184,149,107,0.44);
+      text-align: right;
+    }
+
+    .deal-countdown strong {
+      display: block;
+      color: #f4fcf8;
+      font-size: 43px;
+      line-height: 0.92;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .deal-countdown span {
+      color: rgba(244,252,248,0.55);
+      font: 800 10px/1 "JetBrains Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .route-board {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 14px 22px;
+    }
+
+    .route-card {
+      min-height: 192px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(244,252,248,0.055);
+      border: 1px solid rgba(244,252,248,0.1);
+    }
+
+    .route-card.best {
+      border-color: rgba(79,200,168,0.54);
+      background: rgba(79,200,168,0.09);
+    }
+
+    .route-card.blocked {
+      border-color: rgba(184,149,107,0.48);
+      background: rgba(184,149,107,0.08);
+    }
+
+    .route-card .route-label {
+      color: rgba(244,252,248,0.48);
+      font: 900 10px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .route-card strong {
+      display: block;
+      margin: 18px 0 10px;
+      color: #f4fcf8;
+      font-size: 36px;
+      line-height: 0.95;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .route-card p {
+      color: rgba(244,252,248,0.6);
+      font-size: 15px;
+      line-height: 1.28;
+    }
+
+    .route-status {
+      margin-top: 18px;
+      color: var(--accent);
+      font: 900 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .route-card.blocked .route-status { color: #d6b783; }
+
+    .critical-path {
+      margin: 2px 22px 22px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(244,252,248,0.1);
+      background: rgba(7,16,13,0.52);
+    }
+
+    .critical-path .mono {
+      color: rgba(244,252,248,0.46);
+    }
+
+    .path-steps {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .path-step {
+      min-height: 74px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(244,252,248,0.055);
+      border: 1px solid rgba(244,252,248,0.08);
+    }
+
+    .path-step b {
+      display: block;
+      color: #f4fcf8;
+      font-size: 15px;
+      line-height: 1.1;
+    }
+
+    .path-step span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(244,252,248,0.5);
+      font: 800 10px/1.15 "JetBrains Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .loop-system {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 36px;
+      align-items: center;
+      min-height: 590px;
+    }
+
+    .loop-system h2 {
+      max-width: 560px;
+      font-size: clamp(42px, 4.1vw, 60px);
+    }
+
+    .loop-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 22px;
+    }
+
+    .loop-card {
+      min-height: 120px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,253,250,0.72);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 48px rgba(23,37,28,0.08);
+    }
+
+    .loop-card.dark {
+      background: var(--dark-2);
+      border-color: rgba(79,200,168,0.36);
+    }
+
+    .loop-card .mono {
+      display: block;
+      margin-bottom: 16px;
+      color: var(--accent-deep);
+    }
+
+    .loop-card.dark .mono { color: var(--accent); }
+    .loop-card.dark h3 { color: #f4fcf8; }
+    .loop-card.dark p { color: rgba(244,252,248,0.62); }
+    .loop-card h3 { font-size: 21px; }
+    .loop-card p { margin-top: 8px; font-size: 15px; line-height: 1.28; }
+
+    .memory-board {
+      min-height: 492px;
+    }
+
+    .memory-board .loop-grid {
+      grid-template-columns: 1fr 1fr;
+      padding-bottom: 12px;
+    }
+
+    .memory-event-log {
+      margin: 0 22px 22px;
+      border-radius: 16px;
+      border: 1px solid rgba(244,252,248,0.1);
+      background: rgba(7,16,13,0.56);
+      overflow: hidden;
+    }
+
+    .memory-event {
+      display: grid;
+      grid-template-columns: 88px 1fr 84px;
+      gap: 12px;
+      align-items: center;
+      padding: 13px 16px;
+      border-bottom: 1px solid rgba(244,252,248,0.08);
+      color: rgba(244,252,248,0.66);
+      font-size: 14px;
+    }
+
+    .memory-event:last-child { border-bottom: 0; }
+    .memory-event b {
+      color: var(--accent);
+      font: 900 11px/1 "JetBrains Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .memory-event span:last-child {
+      justify-self: end;
+      color: rgba(244,252,248,0.46);
+      font: 800 10px/1 "JetBrains Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .thanks {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(79, 200, 168, 0.16), transparent 30%),
+        linear-gradient(180deg, rgba(255, 253, 250, 0.98), rgba(245, 242, 235, 0.98));
+    }
+
+    .thanks h2 {
+      text-align: center;
+      margin-bottom: 42px;
+    }
+
+    .qr-row {
+      display: flex;
+      justify-content: center;
+      gap: 54px;
+    }
+
+    .qr-card img {
+      width: 150px;
+      height: 150px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      background: #fff;
+    }
+
+    .qr-card p {
+      margin-top: 12px;
+      color: var(--dim);
+      font: 700 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="hero" data-background-color="#07100d">
+        <img class="hero-photo" src="03-assets/visuals/hero-ai-wealth-advisor-cockpit.png" alt="AI wealth advisor cockpit scene">
+        <div class="brand"><img src="assets/canopy-logo.png" alt="Canopy"><span>Canopy</span></div>
+        <div class="hero-content">
+          <div>
+            <div class="eyebrow">AI for Wealth Management</div>
+            <h1>2030 年<br><span>1 个顾问能管好 10 倍资产？</span></h1>
+            <p class="lead">答案不在“更会预测市场”，而在“每天都看住”。</p>
+            <div class="hero-meta"><span>25 min</span><span>field notes</span><span>Mu Chen</span></div>
+          </div>
+          <div></div>
+        </div>
+        <div class="hero-motion-map" aria-hidden="true">
+          <i class="hero-node"></i>
+          <i class="hero-node"></i>
+          <i class="hero-node"></i>
+          <i class="hero-node"></i>
+          <i class="hero-node"></i>
+          <i class="hero-line a"></i>
+          <i class="hero-line b"></i>
+          <i class="hero-line c"></i>
+          <i class="hero-line d"></i>
+          <div class="hero-action-feed">
+            <span><b>cash</b><em>$6.0M idle</em><b>review</b></span>
+            <span><b>deal</b><em>36h wire window</em><b>route</b></span>
+            <span><b>risk</b><em>31% sector drift</em><b>alert</b></span>
+          </div>
+        </div>
+        <div class="hero-ui a">today's question<strong>客户的钱，真的每天都有人看过一遍吗？</strong></div>
+        <div class="hero-ui b">core thesis<strong>AI 放大的第一件事，是财富顾问的持续覆盖面</strong></div>
+        <aside class="notes"><p>45s。开场直接用问题抓住听众：2030 年，一个顾问能不能管好十倍资产？我的答案不是他突然变成十个投资大师，而是每个客户每天都被系统看过一遍。</p></aside>
+      </section>
+
+      <section class="metric-wall">
+        <div class="topline"><span>why this perspective</span><span>canopy context</span></div>
+        <div class="eyebrow">Canopy 看到的问题</div>
+        <h2>真实财富现场：钱很多，事实很碎</h2>
+        <p class="lead">我们每天看到的不是一张资产负债表，而是银行、实体、文件、授权和人的交叉现场。</p>
+        <div class="metric-strip">
+          <div class="metric-card"><div class="big">60+</div><p>机构客户，覆盖家办、财富所有者和机构服务方。</p></div>
+          <div class="metric-card"><div class="big">1,600+</div><p>活跃用户，把它用在真实工作流里。</p></div>
+          <div class="metric-card"><div class="big">$120B+</div><p>assets under reporting，不是样板账户。</p></div>
+          <div class="metric-card"><div class="big">100+</div><p>数据源，来自银行、托管、基金和文件。</p></div>
+        </div>
+        <aside class="notes"><p>1 min。公司介绍只讲观察位置：Canopy 的工作不是只看一个账户，而是把真实财富里分散的账户、文件、实体和人拉到同一个工作现场。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>speaker lens</span><span>operator notes</span></div>
+        <div class="split">
+          <div>
+            <div class="eyebrow">我的视角</div>
+            <h2>今天我只讲一件事：AI 怎么进真实工作</h2>
+            <p class="lead">陈沐，Canopy CEO，清华五道口金融学院客座讲师；长期记录 AI 与财富管理实践。</p>
+          </div>
+          <div class="command">
+            <div class="command-head"><span>working surface</span><span>human owned</span></div>
+            <div class="command-row"><span>Writing</span><span>研究、文章、讲稿和观点复盘</span><span class="status">think</span></div>
+            <div class="command-row"><span>Data</span><span>表格、文件、截图、账户和报告检查</span><span class="status">read</span></div>
+            <div class="command-row"><span>Workflow</span><span>任务拆解、派发、验收和 handoff</span><span class="status">run</span></div>
+            <div class="command-row"><span>Judgment</span><span>方向、品味、风险和最终责任</span><span class="status">human</span></div>
+          </div>
+        </div>
+        <aside class="notes"><p>1 min。个人介绍要口语化：我不是来讲模型排行榜，也不是讲趋势词。我想讲的是 AI 怎么从聊天框进入一个财富团队的日常工作。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>ai usage</span><span>from chat to loop</span></div>
+        <div class="eyebrow">我自己的 AI 使用变化</div>
+        <h2>我自己用 AI 的变化：从问答案，到派任务</h2>
+        <div class="evidence">
+          <div><div class="evidence-number">01</div><div class="panel-title">问</div><p>写作、翻译、研究，先把脑子里的东西倒出来。</p></div>
+          <div><div class="evidence-number">02</div><div class="panel-title">读</div><p>读文件、抽数据、找来源，把事实拿回来。</p></div>
+          <div><div class="evidence-number">03</div><div class="panel-title">拆</div><p>把一个大问题拆成输入、输出和验收标准。</p></div>
+          <div><div class="evidence-number">04</div><div class="panel-title">跑</div><p>让多个 agent 同时推进，人最后验收。</p></div>
+          <div><div class="evidence-number">05</div><div class="panel-title">复盘</div><p>把错误、偏好和下一次改法留在系统里。</p></div>
+        </div>
+        <aside class="notes"><p>1.25 min。这里讲自己的 AI 使用变化：一开始是问问题，后来是让 AI 读、拆、跑、复盘。财富管理的变化也会沿着这个方向走。</p></aside>
+      </section>
+
+      <section class="dark-slide" data-background-color="#07100d">
+        <div class="topline" style="color:rgba(244,252,248,.45);"><span>actual scale</span><span>not a demo</span></div>
+        <div class="ai-output-layout">
+          <div class="ai-output-main">
+            <div class="eyebrow">真实使用结果</div>
+            <h2>44 天做了 24 个项目</h2>
+            <div class="project-grid">
+              <div class="project-pill"><b>Wealth Teaser</b><span>teaser.wealthskills.ai</span></div>
+              <div class="project-pill"><b>Revival Dashboard</b><span>revival.wealthskills.ai</span></div>
+              <div class="project-pill"><b>CEO Cockpit</b><span>7 轮交互原型</span></div>
+              <div class="project-pill"><b>Canopy Agents</b><span>ADK + React</span></div>
+              <div class="project-pill"><b>OpenClaw</b><span>12 Agent 编排</span></div>
+              <div class="project-pill"><b>Lead Gen</b><span>8221 -> 307 评分</span></div>
+              <div class="project-pill"><b>Scopeclaw</b><span>售前 scoping</span></div>
+              <div class="project-pill"><b>Qualification Skill</b><span>客户资质评分</span></div>
+              <div class="project-pill"><b>Outreach Skill</b><span>外拓自动化</span></div>
+              <div class="project-pill"><b>产品知识库</b><span>14 章中英双版</span></div>
+              <div class="project-pill"><b>Board Deck</b><span>Q1 投资人材料</span></div>
+              <div class="project-pill"><b>8 篇双语文章</b><span>Substack + 微信</span></div>
+              <div class="project-pill"><b>07 行业调研</b><span>AI + 财富管理全景</span></div>
+              <div class="project-pill"><b>微信发布流水线</b><span>API 一键推送</span></div>
+              <div class="project-pill"><b>讲课教材 ×2</b><span>本套 + 南丰 workshop</span></div>
+              <div class="project-pill"><b>招聘工具链</b><span>JD · 候选人 · 背调</span></div>
+              <div class="project-pill"><b>HubSpot Agent</b><span>失单分析</span></div>
+              <div class="project-pill"><b>代码审计</b><span>660GB · 14 issues</span></div>
+              <div class="project-pill"><b>AI 策略文档</b><span>架构 · 定位 · 市场</span></div>
+              <div class="project-pill"><b>Task Tracker</b><span>跨机器任务看板</span></div>
+              <div class="project-pill"><b>信息分析</b><span>决策支持 · 持续</span></div>
+              <div class="project-pill"><b>生活龙虾</b><span>个人事务 agent</span></div>
+              <div class="project-pill"><b>截图验证</b><span>渲染 · 对比 · 修图</span></div>
+              <div class="project-pill"><b>组织复盘</b><span>偏好 · 错误 · 记忆</span></div>
+            </div>
+          </div>
+          <div class="ai-compare-stack">
+            <div class="compare-card traditional">
+              <div class="label">传统方式</div>
+              <strong>3-5 人 × 3-4 个月</strong>
+              <span>$180K-$280K</span>
+            </div>
+            <div class="compare-card ai">
+              <div class="label">AI 方式</div>
+              <strong>1 人 × 44 天</strong>
+              <span>$300-400/月</span>
+            </div>
+            <div class="effort-board">
+              <div class="effort-row"><span>后端开发</span><div class="effort-track"><div class="effort-fill" style="width:96%;"></div></div></div>
+              <div class="effort-row"><span>全栈开发</span><div class="effort-track"><div class="effort-fill" style="width:84%;"></div></div></div>
+              <div class="effort-row"><span>前端开发</span><div class="effort-track"><div class="effort-fill" style="width:60%;"></div></div></div>
+              <div class="effort-row"><span>数据工程</span><div class="effort-track"><div class="effort-fill green" style="width:48%;"></div></div></div>
+              <div class="effort-row"><span>数据分析</span><div class="effort-track"><div class="effort-fill green" style="width:48%;"></div></div></div>
+              <div class="effort-row"><span>技术写作</span><div class="effort-track"><div class="effort-fill pink" style="width:48%;"></div></div></div>
+              <div class="effort-row"><span>翻译</span><div class="effort-track"><div class="effort-fill pink" style="width:36%;"></div></div></div>
+              <div class="effort-row"><span>策略顾问</span><div class="effort-track"><div class="effort-fill" style="width:42%;"></div></div></div>
+              <div class="effort-row"><span>教学设计</span><div class="effort-track"><div class="effort-fill orange" style="width:36%;"></div></div></div>
+              <div class="effort-row"><span>DevOps</span><div class="effort-track"><div class="effort-fill orange" style="width:36%;"></div></div></div>
+              <div class="effort-row"><span>UI/UX</span><div class="effort-track"><div class="effort-fill orange" style="width:30%;"></div></div></div>
+              <div class="effort-row"><span>实际时间</span><div class="effort-track"><div class="effort-fill dark" style="width:38%;"></div></div></div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes"><p>55s。这里讲真实使用结果：44 天不是做了几个 prompt，而是做了 24 个具体项目，横跨产品、增长、研究、内容、代码审计、招聘和组织管理。传统方式大概需要 3-5 人跑 3-4 个月，AI 方式是一个人把任务拆开、并行推进、最后验收。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>effect</span><span>serial to parallel</span></div>
+        <div class="eyebrow">AI 的实际效果</div>
+        <h2>AI 给我的变化，不是打字快一点，而是工作从串行变并行</h2>
+        <div class="parallel-board">
+          <div class="before-thread">
+            <div class="mono">before</div>
+            <div class="panel-title">一个人顺序推进</div>
+            <p>找资料、写初稿、查数据、做页面、检查渲染、再回头改。</p>
+            <div class="thread-line">
+              <span>信息先堆在脑子里</span>
+              <span>任务靠记忆切换</span>
+              <span>质量检查最后才发生</span>
+            </div>
+          </div>
+          <div class="after-system">
+            <div class="mono">after</div>
+            <div class="panel-title">人定方向，AI 分线执行</div>
+            <p>同一个任务被拆成多个可验收输出，人只保留判断、品味和责任。</p>
+            <div class="agent-grid">
+              <div class="agent-lane"><b>Research agent</b>找来源、列假设、补证据。</div>
+              <div class="agent-lane"><b>Data agent</b>抽数据、做口径、查异常。</div>
+              <div class="agent-lane"><b>Build agent</b>落文件、做页面、跑截图。</div>
+              <div class="agent-lane"><b>Review agent</b>找 bug、查缺口、写 handoff。</div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes"><p>55s。把效果讲得口语化：AI 不是让我每句话写得更快，而是让我把工作拆成几条线同时跑。真正值钱的是可派发、可验收、可复盘，这正好对应财富管理里的 coverage。</p></aside>
+      </section>
+
+      <section class="org-slide">
+        <div class="topline"><span>canopy ai org</span><span>human + ai workflows</span></div>
+        <div class="eyebrow">Canopy 的 AI 组织图</div>
+        <h2>Canopy 正在实现 AI 原生组织，目标是 2-3x 效率</h2>
+        <div class="org-matrix" aria-label="Anonymous human and AI organisation matrix">
+          <div class="org-top">
+            <div class="org-ceo">
+              <div class="mono">direction layer</div>
+              <div class="panel-title">CEO / Company Priorities</div>
+            </div>
+            <div class="org-direction">
+              <span>Direction</span>
+              <span>Resources</span>
+              <span>Accountability</span>
+            </div>
+          </div>
+          <div class="org-company-layer">
+            <div class="org-layer-title">
+              <div class="mono">company-wide ai layer</div>
+              <div class="panel-title">Shared AI Layer</div>
+            </div>
+            <div class="org-layer-stack">
+              <span>interfaces</span>
+              <span>runtimes</span>
+              <span>context</span>
+              <span>controls</span>
+            </div>
+          </div>
+          <div class="org-function-grid">
+            <div class="org-label-cell"><strong>Human role</strong><span>accountable owner</span></div>
+            <div class="org-role-cell">
+              <div class="mono">product engine</div>
+              <h3>Product + Engineering</h3>
+              <p>产品方向、架构取舍、工程质量、发布责任。</p>
+            </div>
+            <div class="org-role-cell">
+              <div class="mono">data engine</div>
+              <h3>Data</h3>
+              <p>数据口径、处理质量、异常判定、交付确认。</p>
+            </div>
+            <div class="org-role-cell">
+              <div class="mono">distribution</div>
+              <h3>Growth + CS</h3>
+              <p>市场叙事、pipeline、客户健康、交付节奏。</p>
+            </div>
+            <div class="org-role-cell">
+              <div class="mono">corporate</div>
+              <h3>Finance + People Ops</h3>
+              <p>财务控制、招聘入职、流程边界和公司运营。</p>
+            </div>
+            <div class="org-label-cell"><strong>AI org</strong><span>workflow capacity</span></div>
+            <div class="org-ai-cell">
+              <div class="mono">ai workflow</div>
+              <h3>Dev / product agents</h3>
+              <p>specs · coding/testing · release notes · feedback triage</p>
+            </div>
+            <div class="org-ai-cell">
+              <div class="mono">ai workflow</div>
+              <h3>Data agents</h3>
+              <p>extraction · QA · anomaly triage · evidence registers</p>
+            </div>
+            <div class="org-ai-cell">
+              <div class="mono">ai workflow</div>
+              <h3>GTM / delivery agents</h3>
+              <p>research · meeting prep · follow-up · client health</p>
+            </div>
+            <div class="org-ai-cell">
+              <div class="mono">ai workflow</div>
+              <h3>Ops agents</h3>
+              <p>hiring/onboarding · reconciliation · process tracker</p>
+            </div>
+          </div>
+          <div class="org-footer">
+            <div>anonymous internal org sketch · roles retained · names removed</div>
+            <div>each function = human accountable role + AI workflow layer</div>
+          </div>
+        </div>
+        <aside class="notes"><p>1.15 min。讲清楚：AI 原生组织不是先把人拿掉，而是在每个 function 下面多一层 AI workflow；人仍然负责方向、资源和责任。Canopy 的内部目标是把高频知识工作和运营工作效率提高 2-3 倍。</p></aside>
+      </section>
+
+      <section class="dark-slide" data-background-color="#07100d">
+        <div class="topline" style="color:rgba(244,252,248,.45);"><span>field data</span><span>return dispersion</span></div>
+        <div class="return-board">
+          <div>
+            <div class="eyebrow">财富管理的结果问题</div>
+            <h2>很多财富不是没赚钱，是连市场 Beta 都没拿满</h2>
+            <p class="lead">在一个 219 个 UHNW 多托管账户样本里，约 37% 的账户低于 5%，70% 跑输同期 S&P 500。</p>
+          </div>
+          <div class="return-panel focus">
+            <div class="return-hero">
+              <div class="return-number">36.5%<span>低于 5%</span></div>
+              <div class="return-plain-bars">
+                <div class="return-plain-row"><span>&lt;5%</span><div class="return-track"><div class="return-fill bad" style="width:36.5%;"></div></div><strong>36.5%</strong></div>
+                <div class="return-plain-row"><span>&lt;S&P</span><div class="return-track"><div class="return-fill bad" style="width:70%;"></div></div><strong>70%</strong></div>
+                <div class="return-plain-row"><span>亏损</span><div class="return-track"><div class="return-fill bad" style="width:14%;"></div></div><strong>14%</strong></div>
+              </div>
+            </div>
+            <div class="return-summary">这不是要求每年战胜市场，而是说明碎片化会让现金、费用、配置和执行一起漏。</div>
+          </div>
+        </div>
+        <aside class="notes"><p>1 min。这里补一个真实感更强的数据页：匿名 219 个 UHNW 多托管账户，2025 年 1 月到 2026 年 2 月，13 个月价格回报口径；S&P 500 同期约 15.5%。这个样本不代表所有财富家庭，也不是投资建议，重点是很多损耗不是选股能力问题，而是 coverage 和执行系统的问题。</p></aside>
+      </section>
+
+      <section class="dark-slide" data-background-color="#07100d">
+        <div class="topline" style="color:rgba(244,252,248,.45);"><span>status quo</span><span>the missing ledger</span></div>
+        <p class="quote">财富管理最贵的地方，往往是没人看全局。</p>
+        <p class="lead">每一层都有人负责，但很少有人把所有层放在同一张状态表里。</p>
+        <aside class="notes"><p>45s。进入 Part 1 核心：没有总账。用“没人看全局”替代抽象的技术问题。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>fragmentation</span><span>relationship-rich, coverage-poor</span></div>
+        <div class="eyebrow">现状一：没人看全局</div>
+        <h2>钱越多，越像一间没人统一记账的集团公司</h2>
+        <div class="counterparty-net">
+          <svg class="net-lines" viewBox="0 0 1180 468" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="590" y1="234" x2="176" y2="98"></line>
+            <line x1="590" y1="234" x2="382" y2="64"></line>
+            <line x1="590" y1="234" x2="798" y2="64"></line>
+            <line x1="590" y1="234" x2="1004" y2="98"></line>
+            <line x1="590" y1="234" x2="170" y2="246"></line>
+            <line x1="590" y1="234" x2="1010" y2="246"></line>
+            <line x1="590" y1="234" x2="382" y2="358"></line>
+            <line x1="590" y1="234" x2="798" y2="358"></line>
+          </svg>
+          <div class="net-center"><div><strong>$100M+</strong><span>一个家族</span></div></div>
+          <div class="net-node n1">托管行<small>x3-8</small></div>
+          <div class="net-node n2">私人银行</div>
+          <div class="net-node n3">基金经理</div>
+          <div class="net-node n4">税务顾问</div>
+          <div class="net-node n5">律师 / 信托</div>
+          <div class="net-node n6">保险 / 贷款</div>
+          <div class="net-node n7">家办运营</div>
+          <div class="net-node n8">外部管理人</div>
+          <div class="net-caption"><strong>12-30</strong> 个独立 counterparty，各自正确，合起来没人看全局。</div>
+        </div>
+        <aside class="notes"><p>1.2 min。这里讲行业结构，不责备单个顾问。复杂财富天然分工很多，但客户最终需要有人把这些分工重新拼成一个整体。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>cost stack</span><span>250-350bps</span></div>
+        <div class="cost-redesign">
+          <div>
+            <div class="eyebrow">现状二：成本不可见</div>
+            <h2>客户看到 1%，真实账单要逐层展开</h2>
+            <p class="lead">顾问费只是封面。系统真正要做的，是把每一层成本折回同一个 bps 账本。</p>
+            <div class="small-proof"><strong>73%</strong> 投资者不知道或低估总成本；<strong>14%</strong> 以为自己没有付费。</div>
+          </div>
+          <div class="waterfall-board">
+            <div class="waterfall-head">
+              <div>
+                <div class="cost-label">client cost reconstruction</div>
+                <p style="margin-top:10px;color:rgba(244,252,248,.58);font-size:17px;">把费用、价差、carry、税务和运营都折成 annual bps。</p>
+              </div>
+              <div class="waterfall-total">250-350<span>bps all-in cost</span></div>
+            </div>
+            <div class="waterfall-chart">
+              <div class="wf-step" style="--h:86px;">
+                <div class="wf-bar">90</div>
+                <div class="wf-name">advisor</div>
+              </div>
+              <div class="wf-step add" style="--h:70px;">
+                <div class="wf-bar">+70</div>
+                <div class="wf-name">fund fee</div>
+              </div>
+              <div class="wf-step add" style="--h:42px;">
+                <div class="wf-bar">+35</div>
+                <div class="wf-name">custody / FX</div>
+              </div>
+              <div class="wf-step add" style="--h:50px;">
+                <div class="wf-bar">+45</div>
+                <div class="wf-name">tax / legal</div>
+              </div>
+              <div class="wf-step add" style="--h:62px;">
+                <div class="wf-bar">+55</div>
+                <div class="wf-name">carry</div>
+              </div>
+              <div class="wf-step add" style="--h:50px;">
+                <div class="wf-bar">+45</div>
+                <div class="wf-name">FO ops</div>
+              </div>
+              <div class="wf-step final" style="--h:258px;">
+                <div class="wf-bar">300</div>
+                <div class="wf-name">real bill</div>
+              </div>
+            </div>
+            <div class="waterfall-foot"><span><b>关键不是每一层贵不贵，</b>而是客户有没有一张完整账单。</span><span class="mono" style="color:rgba(244,252,248,.46);">bps normalized</span></div>
+          </div>
+        </div>
+        <aside class="notes"><p>1.25 min。这页用“账单被展开”的感觉讲，不要讲成费用科普。重点是客户以为自己在看一层，系统打开后看到的是多层成本。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>why tech did not fix it</span><span>130 years</span></div>
+        <div class="eyebrow">现状三：技术只打掉过单点成本</div>
+        <h2>130 年来，技术一直在降成本，但多数只降了一层</h2>
+        <div class="timeline">
+          <div class="time-node"><strong>telegraph</strong><h3>信息更快</h3><p>但服务方仍各管一摊。</p></div>
+          <div class="time-node"><strong>internet</strong><h3>交易更便宜</h3><p>券商层被压缩。</p></div>
+          <div class="time-node"><strong>index funds</strong><h3>产品费下降</h3><p>基金层效率提高。</p></div>
+          <div class="time-node"><strong>robo advisor</strong><h3>大众投顾变薄</h3><p>复杂财富仍留在人工协调里。</p></div>
+          <div class="time-node"><strong>AI</strong><h3>第一次碰到信息层</h3><p>有机会同时连接数据、文件、任务和判断。</p></div>
+        </div>
+        <p class="lead">Philippon 的研究显示，金融中介单位成本长期约 2%。AI 特别之处在于，它第一次直接碰到跨层的信息、文件和任务。</p>
+        <aside class="notes"><p>1.1 min。把 AI 为什么不同讲清：交易更快、基金更便宜都很重要，但复杂财富的核心摩擦在跨层信息和执行。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>data gap</span><span>excel is still everywhere</span></div>
+        <div class="split alt">
+          <div>
+            <div class="eyebrow">现状四：数据仍然靠手拼</div>
+            <h2>很多家办的早晨，还在手工拼昨天的真相</h2>
+            <p class="lead">资产跨托管行、跨法域、跨实体、跨私募文件。季度报告太慢，Excel 太脆，邮件太散。</p>
+          </div>
+          <div class="quiet-panel dark">
+            <div class="metric-strip" style="grid-template-columns:1fr 1fr;margin-top:0;">
+              <div><div class="big" style="color:#f4fcf8;">57%</div><p>家族办公室仍严重依赖 Excel 做关键投资追踪。</p></div>
+              <div><div class="big" style="color:#f4fcf8;">25%</div><p>约四分之一使用财富聚合软件。</p></div>
+            </div>
+            <div class="data-day">
+              <div><b>bank</b><span>银行 portal 里有现金和贷款</span></div>
+              <div><b>pdf</b><span>PDF 里有 capital call 和 NAV</span></div>
+              <div><b>mail</b><span>邮件里有审批、估值和附件</span></div>
+              <div><b>xls</b><span>Excel 里有人手工拼出来的真相</span></div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes"><p>1.1 min。让听众看到一个家办早晨的画面：银行 portal、PDF、邮件、Excel。很多人不是不专业，是系统没有把事实稳定在线。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>coverage leakage</span><span>not just performance</span></div>
+        <div class="eyebrow">现状五：很多损失来自覆盖缺位</div>
+        <h2>很多损失不是输给市场，是输给“没人盯”</h2>
+        <div class="leak-grid">
+          <div class="leak-card"><div class="tag">cash</div><div><div class="big">24%</div><div class="panel-title">现金趴着</div></div><p>匿名样本里，输家账户约 24% 资金停在现金里。</p></div>
+          <div class="leak-card"><div class="tag">fee</div><div><div class="big">3x</div><div class="panel-title">成本被拆散</div></div><p>一层费用不吓人，多层加起来才是真实成本。</p></div>
+          <div class="leak-card"><div class="tag">call</div><div><div class="big">PDF</div><div class="panel-title">催缴没进台账</div></div><p>资金压力藏在邮件附件里，临近到期才冒出来。</p></div>
+          <div class="leak-card"><div class="tag">proof</div><div><div class="big">36h</div><div class="panel-title">证明来不及</div></div><p>账上有资产，但资产证明、质押和签字没提前跑。</p></div>
+          <div class="leak-card"><div class="tag">follow</div><div><div class="big">0</div><div class="panel-title">建议没人跟</div></div><p>会议上说过的调整，没有 owner、deadline 和验收。</p></div>
+        </div>
+        <aside class="notes"><p>1.4 min。这里讲 Anthropic 错失机会的故事：投资判断完成了，但最后一公里现金、实体、证明、授权没提前跑。用“没人盯”把几个小漏口串起来。</p></aside>
+      </section>
+
+      <section class="dark-slide" data-background-color="#07100d">
+        <div class="topline" style="color:rgba(244,252,248,.45);"><span>new value pool</span><span>coverage x leakage</span></div>
+        <p class="quote">AI for Wealth 的账，要从“少漏的钱”算。</p>
+        <div class="formula">
+          <div class="formula-card"><div class="big">10x</div><div class="panel-title">covered AUM</div><p>一个团队每天能看住的资产规模。</p></div>
+          <div class="formula-op">×</div>
+          <div class="formula-card"><div class="big">20-50</div><div class="panel-title">bps less leakage</div><p>现金、费用、延迟和漏执行少一点。</p></div>
+          <div class="formula-op">×</div>
+          <div class="formula-card"><div class="big">share</div><div class="panel-title">value capture</div><p>服务方只拿走改善的一小部分。</p></div>
+          <div class="formula-op">=</div>
+          <div class="formula-card result"><div class="big">new</div><div class="panel-title">wealth value pool</div><p>市场变大，来自服务能力变大。</p></div>
+        </div>
+        <aside class="notes"><p>1.25 min。非常清楚地区分：10x 是 coverage，20-50bps 是 leakage reduction。不要讲成收益承诺，讲成少漏、少拖、少错过。</p></aside>
+      </section>
+
+      <section class="future-scene operator-scene" data-background-color="#07100d">
+        <div class="topline"><span>10x coverage</span><span>rm cockpit</span></div>
+        <div class="operator-shell">
+          <div>
+            <div class="eyebrow">渐进场景一：RM 晨屏</div>
+            <h2>八点半，RM 只看到今天必须人介入的 15 件事</h2>
+            <p class="lead">500 个关系没有被遗忘，只是系统已经先看过一遍。</p>
+          </div>
+          <div class="live-cockpit">
+            <div class="cockpit-top"><span>advisor morning queue</span><span>08:30 synced</span></div>
+            <div class="cockpit-metrics">
+              <div class="cockpit-metric"><strong>500</strong><span>relationships scanned</span></div>
+              <div class="cockpit-metric"><strong>15</strong><span>human actions</span></div>
+              <div class="cockpit-metric"><strong>94%</strong><span>no intervention</span></div>
+            </div>
+            <div class="exception-list">
+              <div class="exception-row urgent">
+                <span class="code">T-36h</span>
+                <div><b>张总私募认购</b><p>保护人未确认，资金路径缺最后签字。</p></div>
+                <span class="eta">call now</span>
+              </div>
+              <div class="exception-row">
+                <span class="code">cash</span>
+                <div><b>李家 BVI 公司</b><p>500 万美元超过闲置阈值 12 天。</p></div>
+                <span class="eta">approve</span>
+              </div>
+              <div class="exception-row">
+                <span class="code">risk</span>
+                <div><b>半导体真实敞口</b><p>三只基金底层重叠，18% 漂到 31%。</p></div>
+                <span class="eta">review</span>
+              </div>
+              <div class="exception-row">
+                <span class="code">loan</span>
+                <div><b>艺术品贷款到期</b><p>续贷文件缺最新估值报告。</p></div>
+                <span class="eta">missing</span>
+              </div>
+              <div class="exception-row">
+                <span class="code">fee</span>
+                <div><b>降费建议未回读</b><p>上次会议后的银行回复还没进入系统。</p></div>
+                <span class="eta">follow</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes"><p>1.25 min。讲“今天没有推给人”不等于“客户被忘了”。未来最重要的变化是：客户每天都被系统看过一遍，只把需要人介入的事项交给 RM。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>20-50bps</span><span>cash identity</span></div>
+        <div class="scene">
+          <div>
+            <div class="eyebrow">渐进场景二：现金分层</div>
+            <h2>现金会先被问一句：你到底能不能动？</h2>
+            <p class="lead">战略现金、保证金、税款、capital call、生活支出、待投资金和真正闲置现金，不能再混成一个总数。</p>
+            <div class="callout">3% 真闲置现金，一年约少 12-15bps</div>
+          </div>
+          <div class="cash-simple">
+            <div class="cash-total"><strong>总现金不是答案</strong><span>$28M</span></div>
+            <div class="cash-parts">
+              <div class="cash-part"><strong>不能动</strong>抵押、保证金、税款</div>
+              <div class="cash-part"><strong>马上要用</strong>capital call、生活支出</div>
+              <div class="cash-part"><strong>可调动</strong>实体、币种、签字链</div>
+              <div class="cash-part"><strong>可投资</strong>短债、货基、隔夜</div>
+              <div class="cash-part"><strong>需审批</strong>授权人、银行截止时间</div>
+              <div class="cash-part idle"><strong>真正闲置</strong>过去 17 天没有用途</div>
+            </div>
+            <div class="cash-drag">真正闲置现金约 <span>3%</span> AUM，一年拖累 <span>12-15bps</span></div>
+          </div>
+        </div>
+        <aside class="notes"><p>1.15 min。用现金例子让 20-50bps 可信，不讲更会投资，讲少漏。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>operating layer</span><span>from facts to actions</span></div>
+        <div class="scene">
+          <div>
+            <div class="eyebrow">渐进场景三：可查询操作层</div>
+            <h2>2030 年的系统先回答：现在能不能行动？</h2>
+            <p class="lead">现金、实体、授权、签字、风险和文件，从分散信息变成同一张可执行状态表。</p>
+          </div>
+          <img class="scene-img system-portrait" src="03-assets/visuals/wealth-operating-layer-v2.png" alt="Wealth operating layer diagram connecting fragmented facts to AI operating layer and human judgment">
+        </div>
+        <aside class="notes"><p>1.3 min。强调不是把资产集中到一个平台，而是把分散资产的事实、权限、任务和审计放到同一个可查询状态里。</p></aside>
+      </section>
+
+      <section class="future-scene operator-scene" data-background-color="#07100d">
+        <div class="topline"><span>private deal</span><span>funding route</span></div>
+        <div class="operator-shell">
+          <div>
+            <div class="eyebrow">渐进场景四：交易前夜</div>
+            <h2>机会来了，系统先回答钱从哪来、多久能到</h2>
+            <p class="lead">人判断投不投；系统把现金、实体、授信、签字和交割窗口放在同一张路径图里。</p>
+          </div>
+          <div class="deal-planner">
+            <div class="deal-top"><span>allocation funding planner</span><span>deal room live</span></div>
+            <div class="deal-summary">
+              <div>
+                <h3>Anthropic late-stage allocation</h3>
+                <p>Need USD 8.0M. System checks liquidity, entity authority, credit line, concentration and capital-call calendar.</p>
+              </div>
+              <div class="deal-countdown"><strong>36h</strong><span>to wire deadline</span></div>
+            </div>
+            <div class="route-board">
+              <div class="route-card blocked">
+                <div class="route-label">route a / personal cash</div>
+                <strong>$3.2M</strong>
+                <p>现金可见，但不在正确实体；转出需要两级签字。</p>
+                <div class="route-status">blocked by entity</div>
+              </div>
+              <div class="route-card best">
+                <div class="route-label">route b / BVI + treasury</div>
+                <strong>$5.8M</strong>
+                <p>可动用，保留 90 天现金缓冲后仍满足政策。</p>
+                <div class="route-status">ready after approval</div>
+              </div>
+              <div class="route-card blocked">
+                <div class="route-label">route c / bank credit</div>
+                <strong>$8.0M</strong>
+                <p>资产证明、质押清单和授信审批预计 5-7 天。</p>
+                <div class="route-status">too late</div>
+              </div>
+            </div>
+            <div class="critical-path">
+              <span class="mono">critical path</span>
+              <div class="path-steps">
+                <div class="path-step"><b>确认额度</b><span>done</span></div>
+                <div class="path-step"><b>锁定实体</b><span>owner needed</span></div>
+                <div class="path-step"><b>保护人签字</b><span>open</span></div>
+                <div class="path-step"><b>换汇 / 调拨</b><span>8h ETA</span></div>
+                <div class="path-step"><b>回读入账</b><span>verify</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes"><p>1.4 min。把开头错失机会的故事闭环回来：问题不一定是没资产，而是路径没提前准备。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>family interface</span><span>natural language</span></div>
+        <div class="split">
+          <div>
+            <div class="eyebrow">渐进场景五：家族成员界面</div>
+            <h2>二代不会翻信托文件，他会直接问问题</h2>
+            <p class="lead">答案必须先过权限，再调出信托契约、保护人权限、贷款价值比和分配计划。</p>
+          </div>
+          <div class="question-panel">
+            <div class="panel-title">二代在 iPad 上问</div>
+            <p class="question-bubble">“我能不能用信托里的 Nvidia 股票抵押，投朋友公司 500 万美元？会不会影响妹妹明年的教育分配？”</p>
+            <div class="answer-strip">
+              <div><span class="mono">permission</span><p>允许质押，但需要保护人书面同意。</p></div>
+              <div><span class="mono">liquidity</span><p>最多可贷 480 万美元，仍有 20 万缺口。</p></div>
+              <div><span class="mono">risk</span><p>股价跌 30% 会触发追保，挤占教育分配。</p></div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes"><p>1.2 min。讲 AI 不替代家族会议和顾问判断，它只是让讨论前的事实、路径和风险清楚。</p></aside>
+      </section>
+
+      <section class="future-scene" data-background-color="#07100d">
+        <div class="topline"><span>mfo leverage</span><span>human + ai team</span></div>
+        <div class="scene">
+          <div>
+            <div class="eyebrow">渐进场景六：8 人 MFO</div>
+            <h2>8 个人的 MFO，也能有 50 人中后台的视野</h2>
+            <p class="lead">AI 做对账、读 capital call、追 NAV、查费用、扫集中度、归档证据；人做客户沟通、策略判断和谈判。</p>
+          </div>
+          <div class="scene-frame">
+            <img class="scene-img" src="03-assets/visuals/mfo-wall-screen-network.png" alt="Eight-person MFO with AI agent network on wall screen">
+            <div class="future-badge"><strong>8</strong><span>human team</span></div>
+            <div class="future-badge secondary"><strong>50</strong><span>person view</span></div>
+          </div>
+        </div>
+        <aside class="notes"><p>1.1 min。重点是人被放大，不是人被替代。</p></aside>
+      </section>
+
+      <section>
+        <div class="topline"><span>closed loop</span><span>not another dashboard</span></div>
+        <div class="loop-system">
+          <div>
+            <div class="eyebrow">从助手到闭环</div>
+            <h2>闭环的意思：做完了，系统真的知道</h2>
+            <p class="lead">不是多一个 dashboard，而是每个动作都有 owner、授权、执行证据和回读结果。</p>
+          </div>
+          <div class="memory-board">
+            <div class="memory-top"><span>wealth operating memory</span><span>action state</span></div>
+            <div class="loop-grid">
+              <div class="loop-card"><span class="mono">01 facts</span><h3>财富事实</h3><p>账户、实体、文件、授权、现金流。</p></div>
+              <div class="loop-card"><span class="mono">02 action pack</span><h3>行动包</h3><p>路径、风险、待签文件、待确认事项。</p></div>
+              <div class="loop-card dark"><span class="mono">03 approval</span><h3>人工审批</h3><p>客户、RM、CFO、律师、投委会。</p></div>
+              <div class="loop-card"><span class="mono">04 execute</span><h3>执行回读</h3><p>银行指令、交易、文件、会议决议。</p></div>
+            </div>
+            <div class="memory-event-log">
+              <div class="memory-event"><b>verified</b><span>money market switch booked, cash drag removed</span><span>09:42</span></div>
+              <div class="memory-event"><b>blocked</b><span>credit line route too slow without asset proof</span><span>T-36h</span></div>
+              <div class="memory-event"><b>learned</b><span>next deal requires proof pack before allocation signed</span><span>memory</span></div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes"><p>1.3 min。传统 CRM 记录发生了什么；闭环系统要回答执行有没有真的发生、结果有没有回读、为什么卡住，以及下一次怎样更早发生。</p></aside>
+      </section>
+
+      <section class="dark-slide" data-background-color="#07100d">
+        <div class="topline" style="color:rgba(244,252,248,.45);"><span>human role</span><span>trust remains scarce</span></div>
+        <p class="quote">AI 看得更多，人做更关键的判断。</p>
+        <p class="lead">未来财富管理会从 relationship-limited 走向 coverage-scaled；信任、授权和关键对话仍然由人完成。</p>
+        <aside class="notes"><p>1 min。收束：AI 不是让人消失，而是把人从信息搬运、催办和拼表里解放出来，让人回到判断、授权和信任。</p></aside>
+      </section>
+
+      <section class="thanks">
+        <div>
+          <h2>谢谢</h2>
+          <div class="qr-row">
+            <div class="qr-card"><img src="assets/qr-personal.jpg" alt="个人微信二维码"><p>个人微信</p></div>
+            <div class="qr-card"><img src="assets/qr-gongzhonghao.jpg" alt="公众号二维码"><p>公众号「沐的沙盒」</p></div>
+          </div>
+          <p class="lead" style="text-align:center;margin:28px auto 0;font-size:16px;">Mu Chen · Canopy · Amongst Families</p>
+        </div>
+        <aside class="notes"><p>留二维码页。按现场情况可删掉或只保留最后 20 秒。</p></aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      controls: false,
+      progress: false,
+      center: false,
+      width: 1280,
+      height: 720,
+      margin: 0,
+      minScale: 0.2,
+      maxScale: 1.8,
+      transition: "fade",
+      backgroundTransition: "fade",
+      slideNumber: false,
+      showNotes: false
+    });
+  </script>
+</body>
+</html>
