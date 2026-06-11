@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>全球财富管理市场观察 · Canopy</title>
+<style>
+/* ============ tokens ============ */
+:root{
+  --paper:#f7f9f4; --paper2:#fbfcf9; --ink:#091310; --ink-soft:#4b5b54;
+  --deep:#14543d; --signal:#4cb878; --cyan:#7db7bd; --amber:#c9a45f;
+  --hair:rgba(20,84,61,.13); --hair-soft:rgba(20,84,61,.07);
+  --serif:"Songti SC","STSong",Georgia,"Times New Roman",serif;
+  --sans:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"PingFang SC",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--hair-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hair-soft) 1px, transparent 1px);
+  background-size:26px 26px;
+  color:var(--ink); font-family:var(--sans); overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* paper grain */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.04;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+/* ambient canvas */
+#net{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ============ chrome ============ */
+.chrome-top{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+  padding:18px 28px;pointer-events:none}
+.brand{display:flex;align-items:center;gap:9px}
+.brand img{width:30px;height:auto;display:block}
+.brand b{font-family:var(--sans);font-size:19px;letter-spacing:-.02em;color:var(--ink)}
+.live{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-soft);display:flex;align-items:center;gap:8px}
+.live .dot{width:7px;height:7px;border-radius:50%;background:var(--signal)}
+@media (prefers-reduced-motion: no-preference){
+  .live .dot{animation:pulse 2.2s ease-out infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(76,184,120,.45)}70%{box-shadow:0 0 0 9px rgba(76,184,120,0)}100%{box-shadow:0 0 0 0 rgba(76,184,120,0)}}
+}
+.ticker{position:fixed;bottom:0;left:0;right:0;z-index:50;height:34px;display:flex;align-items:center;overflow:hidden;
+  border-top:1px solid var(--hair);background:rgba(247,249,244,.88);backdrop-filter:blur(8px)}
+.ticker .track{display:flex;gap:56px;white-space:nowrap;font-family:var(--mono);font-size:11px;color:var(--ink-soft);padding-left:28px}
+.ticker .track span b{color:var(--deep);font-weight:600}
+.ticker .track span i{color:var(--signal);font-style:normal}
+@media (prefers-reduced-motion: no-preference){
+  .ticker .track{animation:tick 56s linear infinite}
+  @keyframes tick{to{transform:translateX(-50%)}}
+}
+.rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:13px}
+.rail a{display:block;width:7px;height:7px;border-radius:50%;background:rgba(20,84,61,.22);transition:all .3s;position:relative}
+.rail a.on{background:var(--deep);transform:scale(1.45)}
+.rail a:hover::after{content:attr(data-l);position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--deep);background:var(--paper2);
+  border:1px solid var(--hair);border-radius:5px;padding:3px 8px;white-space:nowrap}
+.pageno{position:fixed;left:28px;bottom:48px;z-index:50;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:rgba(20,84,61,.45)}
+.hint{position:fixed;right:28px;bottom:48px;z-index:50;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:rgba(20,84,61,.4)}
+
+/* ============ deck ============ */
+.deck{position:relative;z-index:1;height:100svh;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none}
+.deck::-webkit-scrollbar{display:none}
+section{height:100svh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;
+  display:flex;flex-direction:column;justify-content:center;padding:72px 84px 64px}
+.frame{max-width:1320px;width:100%;margin:0 auto;position:relative}
+/* corner crosshairs */
+.frame::before,.frame::after{content:'+';position:absolute;font-family:var(--mono);font-size:13px;color:rgba(20,84,61,.3)}
+.frame::before{top:-22px;left:-22px}
+.frame::after{bottom:-22px;right:-22px}
+
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--signal);font-weight:700;margin-bottom:18px}
+.kicker em{font-style:normal;color:rgba(20,84,61,.5)}
+h1,h2{font-family:var(--serif);font-weight:700;color:var(--ink);letter-spacing:.01em}
+h1{font-size:clamp(44px,5.6vw,80px);line-height:1.14}
+h2{font-size:clamp(30px,3.4vw,48px);line-height:1.2;margin-bottom:14px}
+.sub{font-size:16px;color:var(--ink-soft);line-height:1.7}
+.foot{position:absolute;bottom:46px;left:84px;right:84px;font-family:var(--mono);font-size:10.5px;color:rgba(75,91,84,.65);letter-spacing:.02em}
+
+/* entrance choreography */
+@media (prefers-reduced-motion: no-preference){
+  [data-r]{opacity:0;transform:translateY(26px);filter:blur(7px);
+    transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1),filter .75s cubic-bezier(.16,1,.3,1);
+    transition-delay:calc(var(--i,0)*90ms)}
+  section.active [data-r]{opacity:1;transform:none;filter:blur(0)}
+}
+@media (prefers-reduced-motion: reduce){
+  [data-r]{opacity:1}
+}
+
+/* ============ cards ============ */
+.card{background:var(--paper2);border:1px solid var(--hair);border-radius:16px;padding:26px 28px}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:'tnum'}
+
+/* ============ S0 cover ============ */
+#s0 .term{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);line-height:2;min-height:104px;margin-bottom:26px}
+#s0 .term .ok{color:var(--signal);font-weight:700}
+#s0 .term .caret{display:inline-block;width:9px;height:1.1em;background:var(--signal);vertical-align:text-bottom;
+  animation:blink 1s steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+#s0 h1 .line{display:block;overflow:hidden}
+#s0 h1 .inner{display:inline-block}
+@media (prefers-reduced-motion: no-preference){
+  #s0 h1 .inner{opacity:0;transform:translateY(108%);filter:blur(8px);
+    transition:transform 1s cubic-bezier(.16,1,.3,1),opacity 1s,filter 1s}
+  #s0.booted h1 .line:nth-child(2) .inner{transition-delay:.14s}
+  #s0.booted h1 .inner{opacity:1;transform:none;filter:blur(0)}
+}
+@media (prefers-reduced-motion: reduce){ #s0 h1 .inner{opacity:1} }
+#s0 .meta{margin-top:26px;font-size:16px;color:var(--ink-soft)}
+#s0 .cards{position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:20px;width:268px}
+.sig{background:var(--paper2);border:1px solid var(--hair);border-radius:13px;padding:13px 17px;box-shadow:0 10px 34px rgba(9,19,16,.06)}
+.sig .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--signal);font-weight:700}
+.sig .v{font-family:var(--mono);font-size:14.5px;font-weight:700;color:var(--ink);margin:3px 0}
+.sig .c{font-family:var(--mono);font-size:10px;color:var(--deep)}
+.sig .c::before{content:'● ';color:var(--signal)}
+@media (prefers-reduced-motion: no-preference){
+  .sig{animation:bob 7s ease-in-out infinite}
+  .sig:nth-child(1){animation-delay:0s;transform:rotate(1.6deg)}
+  .sig:nth-child(2){animation-delay:-2s;transform:rotate(-1.4deg)}
+  .sig:nth-child(3){animation-delay:-4s;transform:rotate(1.1deg)}
+  .sig:nth-child(4){animation-delay:-5.4s;transform:rotate(-1.8deg)}
+  @keyframes bob{0%,100%{translate:0 0}50%{translate:0 -9px}}
+}
+#s0 .glow{position:absolute;z-index:-1;border-radius:50%;filter:blur(2px)}
+#s0 .glow.a{width:560px;height:440px;right:-140px;top:-180px;background:radial-gradient(closest-side,rgba(76,184,120,.16),transparent)}
+#s0 .glow.b{width:520px;height:430px;left:-180px;bottom:-190px;background:radial-gradient(closest-side,rgba(125,183,189,.14),transparent)}
+
+/* ============ S1 canopy ============ */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:30px 0 26px}
+.kpi{background:var(--paper2);border:1px solid var(--hair);border-radius:14px;padding:18px 20px}
+.kpi .v{font-family:var(--serif);font-size:clamp(26px,2.6vw,38px);font-weight:700;color:var(--deep)}
+.kpi .t{font-size:12.5px;color:var(--ink-soft);margin-top:4px}
+.biz{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.biz .card h3{font-size:16.5px;font-weight:700;margin-bottom:2px}
+.biz .card h3 i{font-style:normal;font-family:var(--mono);color:var(--signal);font-size:13px;margin-right:8px}
+.biz .card .en{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:rgba(75,91,84,.7);margin-bottom:14px}
+.biz .card li{list-style:none;font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:18px;position:relative;margin-bottom:8px}
+.biz .card li::before{content:'—';position:absolute;left:0;color:var(--signal);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--deep);background:rgba(76,184,120,.1);
+  border:1px solid rgba(76,184,120,.32);border-radius:999px;padding:4px 11px}
+/* glint border on first biz card */
+@property --ga{syntax:'<angle>';inherits:false;initial-value:0deg}
+.glint{position:relative;border:none!important;padding:1px;border-radius:16px;
+  background:conic-gradient(from var(--ga),var(--hair) 0 74%,var(--signal) 86%,var(--hair) 96%)}
+.glint>.in{background:var(--paper2);border-radius:15px;padding:25px 27px;height:100%}
+@media (prefers-reduced-motion: no-preference){
+  .glint{animation:ga 7s linear infinite}
+  @keyframes ga{to{--ga:360deg}}
+}
+
+/* ============ S2 value chain ============ */
+.stages{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;margin:26px 0 8px}
+.stage{background:var(--paper2);border:1px solid var(--hair);border-radius:12px;padding:13px 12px}
+.stage.on{border-color:rgba(76,184,120,.55);border-width:1.5px}
+.stage .n{font-size:12.5px;font-weight:700}
+.stage .p{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--deep);margin:5px 0 7px}
+.stage .bar{height:4px;border-radius:2px;background:rgba(20,84,61,.1);overflow:hidden}
+.stage .bar i{display:block;height:100%;border-radius:2px;background:var(--signal);width:0;transition:width 1.1s cubic-bezier(.16,1,.3,1)}
+section.active .stage .bar i{width:var(--w)}
+.stage .tag{font-family:var(--mono);font-size:9px;color:var(--signal);font-weight:700;margin-top:7px}
+.tris{display:grid;grid-template-columns:repeat(8,1fr);margin:2px 0}
+.tris i{justify-self:center;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:7px solid var(--signal);opacity:.8}
+.band{border:1.5px solid var(--signal);border-radius:14px;background:var(--paper2);text-align:center;padding:16px;margin-top:2px}
+.band b{font-family:var(--serif);font-size:19px;color:var(--deep);letter-spacing:.04em}
+.band p{font-size:12.5px;color:var(--ink-soft);margin-top:4px}
+@media (prefers-reduced-motion: no-preference){
+  .band{clip-path:inset(0 50% 0 50% round 14px);transition:clip-path 1s cubic-bezier(.77,0,.18,1) .5s}
+  section.active .band{clip-path:inset(0 0 0 0 round 14px)}
+}
+.vc-line{margin-top:20px;font-size:15.5px;color:var(--ink-soft)}
+
+/* ============ S3 vision ============ */
+.vision{display:grid;grid-template-columns:1.02fr 1fr;gap:40px;align-items:start;margin-top:8px}
+.org .lbl,.fo .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-soft);font-weight:700;margin-bottom:14px}
+.org .lbl b,.fo .lbl b{color:var(--signal)}
+.onode{border:1px solid var(--hair);background:var(--paper2);border-radius:11px;text-align:center;padding:9px 8px;font-size:12px}
+.onode b{display:block;font-size:12.5px}
+.onode small{color:var(--ink-soft);font-size:10px}
+.o-ceo{background:var(--deep);color:#f4f8f3;border-color:var(--deep);width:56%;margin:0 auto;font-weight:700;font-size:13px;padding:11px}
+.o-ai{background:rgba(76,184,120,.1);border-color:rgba(76,184,120,.4);color:var(--deep);font-weight:700;font-family:var(--mono);font-size:11.5px;padding:10px;margin:0 auto;width:96%}
+.o-row{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;width:96%;margin:0 auto}
+.o-agent{background:rgba(76,184,120,.07);border:1px dashed rgba(76,184,120,.45);border-radius:10px;font-family:var(--mono);font-size:9.5px;color:var(--deep);padding:8px 6px;text-align:center;line-height:1.5}
+.olink{display:flex;justify-content:center;margin:0 auto}
+.olink svg{display:block}
+.olink line{stroke:rgba(76,184,120,.6);stroke-width:1.5;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .7s ease}
+section.active .olink line{stroke-dashoffset:0}
+.org .note{font-size:12px;color:var(--ink-soft);margin-top:14px;line-height:1.7}
+.fo .pic{border-radius:14px;overflow:hidden;border:1px solid var(--hair);box-shadow:0 18px 50px rgba(9,19,16,.1)}
+.fo .pic img{width:100%;display:block}
+@media (prefers-reduced-motion: no-preference){
+  .fo .pic{clip-path:circle(0% at 50% 46%);transition:clip-path 1.2s cubic-bezier(.77,0,.18,1) .4s}
+  section.active .fo .pic{clip-path:circle(120% at 50% 46%)}
+}
+.fo .stats{display:flex;gap:34px;margin-top:18px;align-items:baseline}
+.fo .stats .v{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--deep)}
+.fo .stats .t{font-size:12.5px;color:var(--ink-soft)}
+.fo .mfo-line{font-size:13px;color:var(--ink-soft);margin-top:10px}
+
+/* ============ S4 reorder / S5 findings ============ */
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.quad .card h3{font-size:16.5px;margin-bottom:12px}
+.quad .card h3 i{font-style:normal;font-family:var(--mono);color:var(--signal);font-size:13px;margin-right:8px}
+.quad .card li{list-style:none;font-size:13.5px;color:var(--ink-soft);line-height:1.65;padding-left:18px;position:relative;margin-bottom:7px}
+.quad .card li::before{content:'—';position:absolute;left:0;color:var(--signal);font-weight:700}
+.quad .card li b{color:var(--deep);font-weight:700}
+
+/* ============ S6 allocation ============ */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:26px}
+.chart .lbl,.chart-lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--ink-soft);font-weight:700;margin-bottom:16px}
+.chart-lbl{margin-bottom:18px}
+.brow{display:grid;grid-template-columns:158px 1fr 52px;align-items:center;gap:12px;margin-bottom:11px}
+.brow .bn{font-size:12.5px;color:var(--ink);text-align:right}
+.brow .bt{height:17px;border-radius:4px;background:rgba(20,84,61,.07);overflow:hidden}
+.brow .bt i{display:block;height:100%;border-radius:4px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1)}
+section.active .brow .bt i{width:var(--w)}
+.brow .bv{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--deep)}
+
+/* ============ S7 alts ============ */
+.alts{display:grid;grid-template-columns:1fr 1.25fr;gap:56px;align-items:center;margin-top:18px}
+.donut-wrap{position:relative;width:300px;margin:0 auto}
+.donut-wrap svg{display:block;width:100%}
+.donut-wrap .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut-wrap .mid .v{font-family:var(--serif);font-size:54px;font-weight:700;color:var(--deep)}
+.donut-wrap .mid .t{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-soft)}
+.donut-wrap circle.seg{fill:none;stroke-width:30;stroke-dasharray:0 100;transition:stroke-dasharray 1.3s cubic-bezier(.16,1,.3,1)}
+.legend{display:flex;flex-direction:column;gap:7px;margin-top:20px;font-size:12px;color:var(--ink-soft)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:8px}
+.ov-row{display:grid;grid-template-columns:190px 1fr 52px;align-items:center;gap:14px;margin-bottom:18px}
+.ov-row .bn{font-size:13px;text-align:right;color:var(--ink)}
+.ov-row .bt{height:26px;border-radius:6px;background:rgba(20,84,61,.07);overflow:hidden}
+.ov-row .bt i{display:block;height:100%;border-radius:6px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1)}
+section.active .ov-row .bt i{width:var(--w)}
+.ov-row .bv{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--deep)}
+.alts .punch{font-size:15.5px;color:var(--deep);font-weight:700;margin-top:14px}
+
+/* ============ S8 closing ============ */
+#s8{text-align:center}
+#s8 h1{font-size:clamp(38px,4.6vw,64px)}
+#s8 .typed{font-family:var(--mono);font-size:13px;color:var(--ink-soft);margin-top:30px;min-height:22px}
+#s8 .typed .ok{color:var(--signal);font-weight:700}
+#s8 .links{margin-top:34px;font-family:var(--mono);font-size:13px;color:var(--deep);letter-spacing:.06em}
+
+@media (max-width:900px){
+  section{padding:64px 24px}
+  .kpis,.stages,.biz,.quad,.charts,.vision,.alts{grid-template-columns:1fr}
+  #s0 .cards{display:none}
+  .o-row{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<canvas id="net"></canvas>
+
+<!-- chrome -->
+<div class="chrome-top">
+  <div class="brand"><img src="assets/canopy-logo.png" alt=""><b>canopy</b></div>
+  <div class="live"><span class="dot"></span><span>LIVE · HONG KONG · <span id="clock">--:--</span></span></div>
+</div>
+<nav class="rail" id="rail"></nav>
+<div class="pageno"><span id="pgcur">01</span> / <span id="pgall">09</span></div>
+<div class="hint">←&nbsp;→ 翻页</div>
+<div class="ticker"><div class="track" id="track"></div></div>
+
+<main class="deck" id="deck">
+
+<!-- ============ S0 COVER ============ -->
+<section id="s0" data-l="COVER">
+  <div class="frame">
+    <div class="glow a"></div><div class="glow b"></div>
+    <div class="term" id="boot"></div>
+    <div class="kicker" data-r style="--i:0">2026.06.12 · 香港 · 蚂蚁集团 &amp; VC 交流</div>
+    <h1>
+      <span class="line"><span class="inner">全球财富管理市场观察</span></span>
+      <span class="line"><span class="inner">与跨境财富资产配置</span></span>
+    </h1>
+    <div class="meta" data-r style="--i:2">AI 原生的财富数据底座与工作流&ensp;·&ensp;Mu Chen · Canopy CEO</div>
+    <div class="cards">
+      <div class="sig" data-r style="--i:3"><div class="l">AGENT</div><div class="v">500 relationships scanned</div><div class="c">94% no intervention</div></div>
+      <div class="sig" data-r style="--i:4"><div class="l">CASH</div><div class="v">$6.0M idle</div><div class="c">route now</div></div>
+      <div class="sig" data-r style="--i:5"><div class="l">DEAL</div><div class="v">36h wire window</div><div class="c">review</div></div>
+      <div class="sig" data-r style="--i:6"><div class="l">RISK</div><div class="v">31% sector drift</div><div class="c">alert</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ S1 CANOPY ============ -->
+<section id="s1" data-l="CANOPY">
+  <div class="frame">
+    <div class="kicker" data-r style="--i:0">01 / CANOPY <em>· 跨境财富与资产配置服务</em></div>
+    <h2 data-r style="--i:1">Canopy：私人财富的 AI 基础设施</h2>
+    <div class="kpis">
+      <div class="kpi" data-r style="--i:2"><div class="v num" data-count="60" data-suffix="+">0</div><div class="t">机构客户</div></div>
+      <div class="kpi" data-r style="--i:3"><div class="v num" data-count="1600" data-suffix="+">0</div><div class="t">活跃用户</div></div>
+      <div class="kpi" data-r style="--i:4"><div class="v num" data-count="120" data-prefix="$" data-suffix="B+">0</div><div class="t">跟踪资产 AUR</div></div>
+      <div class="kpi" data-r style="--i:5"><div class="v num" data-count="110" data-suffix="+">0</div><div class="t">银行数据接口</div></div>
+      <div class="kpi" data-r style="--i:6"><div class="v num" data-count="9" data-suffix=" 年">0</div><div class="t">基础设施建设</div></div>
+    </div>
+    <div class="biz">
+      <div class="glint" data-r style="--i:7"><div class="in">
+        <h3><i>01</i>可信任的 AI 财富数据底座</h3><div class="en">TRUSTED DATA FOUNDATION</div>
+        <li>110+ 银行实时接口：接通 · 清洗 · 对账 · 计算</li>
+        <li>149 个金融计算指标；19 类 SWIFT 报文双栈解析</li>
+        <li>多托管行、多实体合并报表与绩效分析，$120B+ 资产在线跟踪</li>
+      </div></div>
+      <div class="card" data-r style="--i:8">
+        <h3><i>02</i>Agentic 财富工作流</h3><div class="en">AGENTIC WEALTH WORKFLOWS</div>
+        <div class="chips">
+          <span class="chip">组合问答</span><span class="chip">会议准备</span><span class="chip">费用审计</span>
+          <span class="chip">现金智能</span><span class="chip">私募市场情报</span><span class="chip">capital call 日历</span>
+          <span class="chip">NAV 追踪</span><span class="chip">合规监控 13O/13U</span><span class="chip">跨法域报告</span>
+          <span class="chip">总账自动化</span><span class="chip">再平衡模拟</span><span class="chip">KYC 评估</span>
+        </div>
+      </div>
+      <div class="card" data-r style="--i:9">
+        <h3><i>03</i>搭建 AI Native 家族办公室</h3><div class="en">AI NATIVE FAMILY OFFICE</div>
+        <li>诊断：AI 就绪度与数据基础评估</li>
+        <li>咨询 + 培训：组织、工作流与工具的落地路径</li>
+        <li>落地：把 Canopy 自己验证过的 AI 原生工作方式带进家办</li>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Canopy · 新加坡 · canopy.cloud</div>
+</section>
+
+<!-- ============ S2 VALUE CHAIN ============ -->
+<section id="s2" data-l="CHAIN">
+  <div class="frame">
+    <div class="kicker" data-r style="--i:0">02 / 我们在做什么</div>
+    <h2 data-r style="--i:1">数据底座之上，给财富管理全价值链做 AI 转型</h2>
+    <div class="sub" data-r style="--i:2">AI 正在重构财富管理的每个环节——各环节 AI 产能释放 20%–55%（BCG 估算）</div>
+    <div class="stages">
+      <div class="stage" data-r style="--i:3"><div class="n">客户获取</div><div class="p">20-25%</div><div class="bar"><i style="--w:41%"></i></div></div>
+      <div class="stage" data-r style="--i:4"><div class="n">开户与 KYC</div><div class="p">45-55%</div><div class="bar"><i style="--w:91%"></i></div></div>
+      <div class="stage" data-r style="--i:5"><div class="n">财富规划</div><div class="p">25-45%</div><div class="bar"><i style="--w:64%"></i></div></div>
+      <div class="stage on" data-r style="--i:6"><div class="n">组合管理</div><div class="p">25-40%</div><div class="bar"><i style="--w:59%"></i></div><div class="tag">● 已落地</div></div>
+      <div class="stage" data-r style="--i:7"><div class="n">投资研究</div><div class="p">25-40%</div><div class="bar"><i style="--w:59%"></i></div></div>
+      <div class="stage on" data-r style="--i:8"><div class="n">账户服务</div><div class="p">40-55%</div><div class="bar"><i style="--w:86%"></i></div><div class="tag">● 已落地</div></div>
+      <div class="stage" data-r style="--i:9"><div class="n">客户互动</div><div class="p">20-40%</div><div class="bar"><i style="--w:55%"></i></div></div>
+      <div class="stage on" data-r style="--i:10"><div class="n">中后台</div><div class="p">20-25%</div><div class="bar"><i style="--w:41%"></i></div><div class="tag">● 已落地</div></div>
+    </div>
+    <div class="tris" data-r style="--i:11"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="band">
+      <b>CANOPY 可信数据底座</b>
+      <p>110+ 银行实时接口 · 清洗 · 对账 · 149 个金融计算指标——每个环节的 AI 都站在同一套可信数据上</p>
+    </div>
+    <div class="vc-line" data-r style="--i:12">数据统一的机构才能快速规模化 AI；数据碎片化的机构，会一直困在试点阶段。</div>
+  </div>
+  <div class="foot">来源：BCG Global Wealth Report 2026 “The Great Reordering”（2026 年 5 月），Exhibit 10</div>
+</section>
+
+<!-- ============ S3 VISION ============ -->
+<section id="s3" data-l="2030">
+  <div class="frame">
+    <div class="kicker" data-r style="--i:0">03 / CANOPY IN 2025 → FO IN 2030</div>
+    <h2 data-r style="--i:1">2025 我们这样工作，2030 家办也会这样工作</h2>
+    <div class="vision">
+      <div class="org">
+        <div class="lbl" data-r style="--i:2"><b>CANOPY IN 2025</b> · AI 原生组织</div>
+        <div class="onode o-ceo" data-r style="--i:3">CEO · 方向 / 资源 / 责任</div>
+        <div class="olink"><svg width="2" height="18" viewBox="0 0 2 18"><line x1="1" y1="0" x2="1" y2="18" pathLength="1"/></svg></div>
+        <div class="onode o-ai" data-r style="--i:4">Shared AI Layer — interfaces · runtimes · context · controls</div>
+        <div class="olink"><svg width="2" height="16" viewBox="0 0 2 16"><line x1="1" y1="0" x2="1" y2="16" pathLength="1"/></svg></div>
+        <div class="o-row">
+          <div class="onode" data-r style="--i:5"><b>产品 + 工程</b><small>人类负责人</small></div>
+          <div class="onode" data-r style="--i:6"><b>数据</b><small>人类负责人</small></div>
+          <div class="onode" data-r style="--i:7"><b>增长 + CS</b><small>人类负责人</small></div>
+          <div class="onode" data-r style="--i:8"><b>财务 + 运营</b><small>人类负责人</small></div>
+        </div>
+        <div class="o-row" style="margin-top:9px">
+          <div class="o-agent" data-r style="--i:9">Dev agents<br>specs · 编码测试</div>
+          <div class="o-agent" data-r style="--i:10">Data agents<br>抽取 · QA</div>
+          <div class="o-agent" data-r style="--i:11">GTM agents<br>研究 · 跟进</div>
+          <div class="o-agent" data-r style="--i:12">Ops agents<br>对账 · 流程</div>
+        </div>
+        <div class="note" data-r style="--i:13">每个职能 = 人类负责人 + 一层 AI workflow<br>实测：44 天交付 24 个项目 · 内部目标效率 2-3x</div>
+      </div>
+      <div class="fo">
+        <div class="lbl" data-r style="--i:3"><b>FO IN 2030</b> · 把同样的实践带给家办</div>
+        <div class="pic"><img src="assets/mfo-2030.jpg" alt="8-person MFO with agent network"></div>
+        <div class="stats">
+          <div><span class="v num" data-count="10" data-suffix="x">0</span>&ensp;<span class="t">有效 AUM coverage</span></div>
+          <div><span class="v">+20-50<small style="font-size:18px">bps</small></span>&ensp;<span class="t">performance</span></div>
+        </div>
+        <div class="mfo-line" data-r style="--i:5">8 个人的 MFO，拥有 50 人中后台的视野——每个客户每天都被系统看过一遍</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">10x 为覆盖能力（coverage），20-50bps 为减少的损耗（leakage reduction），非收益承诺</div>
+</section>
+
+<!-- ============ S4 REORDER ============ -->
+<section id="s4" data-l="SHIFT">
+  <div class="frame">
+    <div class="kicker" data-r style="--i:0">04 / 市场观察</div>
+    <h2 data-r style="--i:1">财富管理的“大重排”：四个结构性变化</h2>
+    <div class="quad">
+      <div class="card" data-r style="--i:2">
+        <h3><i>01</i>财富增长重回高位</h3>
+        <li>2025 全球金融财富 <b>+10.7%</b> 至 <b>$333T</b>，2021 年以来最快</li>
+        <li>亚太（除中国）+9.2%，中国 +15%；未来五年全球约 7% 年增</li>
+      </div>
+      <div class="card" data-r style="--i:3">
+        <h3><i>02</i>向双枢纽集中</h3>
+        <li>香港首次超过瑞士，成为<b>全球第一大跨境 booking center（$2.9T）</b></li>
+        <li>新加坡第三（$2.1T），已聚集 2,000+ 单一家族办公室</li>
+        <li>Top 10 booking centers 拿走约九成新增跨境流量</li>
+      </div>
+      <div class="card" data-r style="--i:4">
+        <h3><i>03</i>接班潮开启</h3>
+        <li>亚洲 Top 20 家族企业：领导人中位年龄 <b>70 岁以上</b></li>
+        <li>新加坡/马来西亚/印尼 40-50% 大型企业仍由创始人掌舵</li>
+        <li>约七成家族仍处早期治理阶段——家办需求的结构性来源</li>
+      </div>
+      <div class="card" data-r style="--i:5">
+        <h3><i>04</i>AI 成为结构性冲击</h3>
+        <li>年初一个 AI 功能发布，抹掉上市财富管理机构 <b>$140B 市值</b></li>
+        <li>价值链各环节 AI 产能释放 20%-55%</li>
+        <li>数据统一者快速规模化；数据碎片化者困在试点</li>
+      </div>
+    </div>
+  </div>
+  <div class="foot">来源：BCG Global Wealth Report 2026 “The Great Reordering”（2026 年 5 月）</div>
+</section>
+
+<!-- ============ S5 FINDINGS ============ -->
+<section id="s5" data-l="DATA">
+  <div class="frame">
+    <div class="kicker" data-r style="--i:0">05 / CANOPY PORTFOLIO DATA · 亚洲家办投资偏好</div>
+    <h2 id="scramble" data-text="亚洲家办的钱，大部分不投亚洲">亚洲家办的钱，大部分不投亚洲</h2>
+    <div class="sub" data-r style="--i:1">美元资产为主 · 私募股权重仓 · 稳步转向另类</div>
+    <div class="quad">
+      <div class="card" data-r style="--i:2">
+        <h3><i>01</i>配置结构</h3>
+        <li>股票是第一大类资产</li>
+        <li>另类投资与固收规模相当</li>
+        <li>现金留得足，是刻意保持的流动性仓位</li>
+      </div>
+      <div class="card" data-r style="--i:3">
+        <h3><i>02</i>地域与币种</h3>
+        <li>近半资产配置在美国，美元占绝对主导</li>
+        <li>欧洲布局多为基金注册地（卢森堡/爱尔兰），实质敞口有限</li>
+        <li>投回亚洲的比例仅约五分之一</li>
+      </div>
+      <div class="card" data-r style="--i:4">
+        <h3><i>03</i>另类投资</h3>
+        <li>私募股权约占另类资产五分之四</li>
+        <li>高度个性化：多数基金单一家族持有，罕有共识标的</li>
+      </div>
+      <div class="card" data-r style="--i:5">
+        <h3><i>04</i>行为特征</h3>
+        <li>过去一年，另类占比近翻倍，美元资产持续攀升</li>
+        <li>调整逐月渐进，无急转弯，不追热点</li>
+      </div>
+    </div>
+  </div>
+  <div class="foot">数据来源：Canopy 平台脱敏聚合（60+ 机构客户；本分析样本覆盖 $80B+ 持仓）</div>
+</section>
+
+<!-- ============ S6 ALLOCATION ============ -->
+<section id="s6" data-l="ALLOC">
+  <div class="frame">
+    <div class="kicker" data-r style="--i:0">06 / 当前配置</div>
+    <h2 data-r style="--i:1">近半资产在美国，股票是第一大类</h2>
+    <div class="charts">
+      <div class="chart" data-r style="--i:2">
+        <div class="lbl">按资产类型 BY ASSET TYPE</div>
+        <div id="chart-asset"></div>
+      </div>
+      <div class="chart" data-r style="--i:3">
+        <div class="lbl">按投资区域 BY INVESTMENT REGION</div>
+        <div id="chart-region"></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">口径：gross positive assets，已剔除集中度异常持仓；Europe 为基金注册地口径（卢森堡/爱尔兰为主），非实际投资目的地</div>
+</section>
+
+<!-- ============ S7 ALTS ============ -->
+<section id="s7" data-l="ALTS">
+  <div class="frame">
+    <div class="kicker" data-r style="--i:0">07 / 另类投资</div>
+    <h2 data-r style="--i:1">另类投资由 PE 主导，且高度个性化</h2>
+    <div class="alts">
+      <div data-r style="--i:2">
+        <div class="donut-wrap">
+          <svg viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(20,84,61,.08)" stroke-width="30"/>
+            <g transform="rotate(-90 100 100)">
+              <circle class="seg" cx="100" cy="100" r="80" stroke="#4cb878" pathLength="100" data-seg="79.5" data-off="0"/>
+              <circle class="seg" cx="100" cy="100" r="80" stroke="#7db7bd" pathLength="100" data-seg="17.3" data-off="79.5"/>
+              <circle class="seg" cx="100" cy="100" r="80" stroke="#c9a45f" pathLength="100" data-seg="3.2" data-off="96.8"/>
+            </g>
+          </svg>
+          <div class="mid"><div class="v num" data-count="79" data-suffix="%">0</div><div class="t">PRIVATE EQUITY</div></div>
+        </div>
+        <div class="legend">
+          <span><i style="background:#4cb878"></i>Private Equity Funds&ensp;79.5%</span>
+          <span><i style="background:#7db7bd"></i>Hedge Funds&ensp;17.3%</span>
+          <span><i style="background:#c9a45f"></i>Other / Commodity&ensp;3.2%</span>
+        </div>
+      </div>
+      <div>
+        <div class="chart-lbl" data-r style="--i:3">持有重合度 CROSS-FAMILY OVERLAP</div>
+        <div class="ov-row" data-r style="--i:4"><div class="bn">仅单一家族持有</div><div class="bt"><i style="--w:94%;background:#14543d"></i></div><div class="bv">94%</div></div>
+        <div class="ov-row" data-r style="--i:5"><div class="bn">2+ 家族共同持有</div><div class="bt"><i style="--w:6%;background:#7db7bd"></i></div><div class="bv">6%</div></div>
+        <div class="ov-row" data-r style="--i:6"><div class="bn">10+ 家族共同持有</div><div class="bt"><i style="--w:1%;background:#aab5ae"></i></div><div class="bv">0%</div></div>
+        <div class="punch" data-r style="--i:7">约九成另类基金条目仅单一家族持有——几乎不存在“共识爆款基金”</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">按基金条目数统计；“单一家族持有”指该基金在平台可见范围内仅一个家族客户持有</div>
+</section>
+
+<!-- ============ S8 CLOSING ============ -->
+<section id="s8" data-l="END">
+  <div class="frame">
+    <div class="kicker" data-r style="--i:0">CANOPY · 2025 → 2030</div>
+    <h1 data-r style="--i:1">把同样的实践，带给每个家办。</h1>
+    <div class="typed" id="typed"></div>
+    <div class="links" data-r style="--i:3">canopy.cloud&ensp;·&ensp;mu@canopy.cloud</div>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+"use strict";
+const motionOK = matchMedia('(prefers-reduced-motion: no-preference)').matches;
+const deck = document.getElementById('deck');
+const sections = [...document.querySelectorAll('section')];
+const N = sections.length;
+document.getElementById('pgall').textContent = String(N).padStart(2,'0');
+
+/* ---------- charts data (rendered as bar rows) ---------- */
+const C = {signal:'#4cb878', cyan:'#7db7bd', amber:'#c9a45f', deep:'#14543d',
+  p:['#4cb878','#7db7bd','#c9a45f','#14543d','#a8c4b1','#5c8a74','#d9c79a','#aab5ae']};
+function bars(elId, data){
+  const root = document.getElementById(elId);
+  const max = Math.max(...data.map(d=>d[1]));
+  root.innerHTML = data.map((d,i)=>{
+    const col = d[2] || C.p[i % C.p.length];
+    return `<div class="brow"><div class="bn">${d[0]}</div><div class="bt"><i style="--w:${(d[1]/max*100).toFixed(1)}%;background:${col}"></i></div><div class="bv num" data-count="${d[1]}" data-suffix="%" data-dec="1">0</div></div>`;
+  }).join('');
+}
+bars('chart-asset', [
+  ['Equities',33.3],['Fixed Income',23.0],['Alternatives',22.4],['Cash & Equivalents',13.1],
+  ['Multi-Asset',4.6],['Structured',2.2],['Other',1.4,'#aab5ae']]);
+bars('chart-region', [
+  ['United States',48.6],['Europe / fund domiciles',21.6],['India',9.1],['Southeast Asia',5.9],
+  ['Greater China',4.1],['Local / cash',4.1,'#aab5ae'],['Japan / Korea',3.3],['Other',3.2,'#aab5ae']]);
+
+/* ---------- progress rail ---------- */
+const rail = document.getElementById('rail');
+sections.forEach((s,i)=>{
+  const a = document.createElement('a');
+  a.dataset.l = s.dataset.l || ('S'+i);
+  a.href = 'javascript:void 0';
+  a.addEventListener('click', ()=>go(i));
+  rail.appendChild(a);
+});
+const dots = [...rail.children];
+
+/* ---------- navigation ---------- */
+let cur = 0;
+function go(i){
+  cur = Math.max(0, Math.min(N-1, i));
+  sections[cur].scrollIntoView({behavior: motionOK ? 'smooth' : 'auto'});
+}
+addEventListener('keydown', e=>{
+  if(['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1);}
+  else if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1);}
+  else if(e.key==='Home'){e.preventDefault();go(0);}
+  else if(e.key==='End'){e.preventDefault();go(N-1);}
+});
+
+/* ---------- counters ---------- */
+function runCounters(scope){
+  scope.querySelectorAll('[data-count]').forEach(el=>{
+    const target = parseFloat(el.dataset.count), dec = +(el.dataset.dec||0);
+    const pre = el.dataset.prefix||'', suf = el.dataset.suffix||'';
+    if(!motionOK){ el.textContent = pre + target.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}) + suf; return; }
+    const t0 = performance.now(), dur = 1500;
+    function tick(t){
+      const p = Math.min((t-t0)/dur, 1), e = 1-Math.pow(1-p,4);
+      const v = target*e;
+      el.textContent = pre + v.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}) + suf;
+      if(p<1) requestAnimationFrame(tick);
+      else el.textContent = pre + target.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}) + suf;
+    }
+    requestAnimationFrame(tick);
+  });
+}
+
+/* ---------- donut ---------- */
+function runDonut(scope){
+  scope.querySelectorAll('circle.seg').forEach(c=>{
+    c.style.strokeDasharray = `${c.dataset.seg} ${100-c.dataset.seg}`;
+    c.style.strokeDashoffset = -c.dataset.off;
+  });
+}
+function resetDonut(scope){
+  scope.querySelectorAll('circle.seg').forEach(c=>{ c.style.strokeDasharray = '0 100'; });
+}
+
+/* ---------- text scramble (CJK-aware) ---------- */
+const GLYPHS = '资产配置数据财富家办银行美元亚洲全球信托基金组合риск0123456789％＄';
+function scramble(el){
+  if(!motionOK) return;
+  const final = el.dataset.text;
+  const q = [...final].map((ch,i)=>({ch, s: Math.floor(Math.random()*14), e: Math.floor(Math.random()*14)+14+i}));
+  let f = 0;
+  function frame(){
+    let out='', done=0;
+    for(const c of q){
+      if(f >= c.e){ out += c.ch; done++; }
+      else if(f >= c.s){ out += (Math.random()<.3 ? GLYPHS[Math.floor(Math.random()*GLYPHS.length)] : (c.tmp||(c.tmp=GLYPHS[Math.floor(Math.random()*GLYPHS.length)]))); }
+      else out += '　';
+    }
+    el.textContent = out;
+    f++;
+    if(done < q.length) requestAnimationFrame(frame);
+    else el.textContent = final;
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- boot terminal ---------- */
+const BOOT = [
+  ['canopy.os', ' — wealth operating system'],
+  ['scan', ' 500 relationships … <span class="ok">done</span>'],
+  ['triage', ' 474 quiet · 15 need a human <span class="ok">✓</span>'],
+  ['render', ' 全球财富管理市场观察 <span class="ok">▍ready</span>'],
+];
+let booted = false;
+function boot(){
+  if(booted) { document.getElementById('s0').classList.add('booted'); return; }
+  booted = true;
+  const el = document.getElementById('boot');
+  if(!motionOK){
+    el.innerHTML = BOOT.map(l=>`<div><span style="color:var(--deep);font-weight:700">${l[0]}</span>${l[1]}</div>`).join('');
+    document.getElementById('s0').classList.add('booted'); return;
+  }
+  let li = 0;
+  function nextLine(){
+    if(li >= BOOT.length){
+      setTimeout(()=>document.getElementById('s0').classList.add('booted'), 150);
+      return;
+    }
+    const [k, rest] = BOOT[li];
+    const row = document.createElement('div');
+    el.appendChild(row);
+    let ci = 0;
+    const head = `<span style="color:var(--deep);font-weight:700">${k}</span>`;
+    const iv = setInterval(()=>{
+      ci++;
+      row.innerHTML = head + '<span class="caret"></span>';
+      if(ci >= 3){
+        clearInterval(iv);
+        row.innerHTML = head + rest;
+        li++;
+        setTimeout(nextLine, 240 + Math.random()*260);
+      }
+    }, 90);
+  }
+  setTimeout(nextLine, 350);
+}
+
+/* ---------- closing typed line ---------- */
+let typedDone = false;
+function typeClose(){
+  if(typedDone) return; typedDone = true;
+  const el = document.getElementById('typed');
+  const msg = 'meeting notes drafted · follow-ups assigned ';
+  if(!motionOK){ el.innerHTML = msg + '<span class="ok">✓</span>'; return; }
+  let i = 0;
+  const iv = setInterval(()=>{
+    el.textContent = msg.slice(0, ++i);
+    if(i >= msg.length){ clearInterval(iv); el.innerHTML = msg + '<span class="ok">✓</span>'; }
+  }, 38);
+}
+
+/* ---------- section activation ---------- */
+const ran = new WeakSet();
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    const s = e.target;
+    if(e.isIntersecting){
+      s.classList.add('active');
+      cur = sections.indexOf(s);
+      dots.forEach((d,i)=>d.classList.toggle('on', i===cur));
+      document.getElementById('pgcur').textContent = String(cur+1).padStart(2,'0');
+      if(s.id==='s0') boot();
+      if(s.id==='s5'){ const h = document.getElementById('scramble'); if(!ran.has(h)){ran.add(h); scramble(h);} }
+      if(s.id==='s7') runDonut(s);
+      if(s.id==='s8') typeClose();
+      if(!ran.has(s)){ ran.add(s); runCounters(s); }
+    } else {
+      s.classList.remove('active');
+      if(s.id==='s7') resetDonut(s);
+    }
+  });
+},{root: deck, threshold: 0.55});
+sections.forEach(s=>io.observe(s));
+
+/* ---------- clock ---------- */
+function clock(){
+  const d = new Date();
+  document.getElementById('clock').textContent =
+    String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+clock(); setInterval(clock, 20000);
+
+/* ---------- ticker ---------- */
+const EVENTS = [
+  ['09:42','money-market switch booked','cash drag removed ✓'],
+  ['T-36h','wire window tracked','route B ready after approval'],
+  ['10:05','NAV updates received','3 funds pending'],
+  ['10:18','fee anomaly flagged','custodian FX +18bps'],
+  ['10:31','capital call matched','liquidity ok ✓'],
+  ['10:47','sector drift 31%','review queued'],
+  ['11:02','reconciliation clean','110+ bank feeds'],
+  ['11:15','client question answered in 30s','sources attached ✓'],
+  ['11:28','proof-of-assets pack prepared','ahead of deadline'],
+  ['11:40','idle cash $6.0M detected','sweep proposed'],
+];
+const track = document.getElementById('track');
+const half = EVENTS.map(e=>`<span><b>${e[0]}</b>&ensp;${e[1]}&ensp;·&ensp;<i>${e[2]}</i></span>`).join('');
+track.innerHTML = half + half;
+
+/* ---------- ambient canvas network ---------- */
+const cv = document.getElementById('net'), ctx = cv.getContext('2d');
+let W,H,pts=[],raf=null;
+function size(){
+  const dpr = Math.min(devicePixelRatio||1, 2);
+  W = innerWidth; H = innerHeight;
+  cv.width = W*dpr; cv.height = H*dpr;
+  cv.style.width = W+'px'; cv.style.height = H+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+function init(){
+  size();
+  const n = Math.min(90, Math.floor(W*H/22000));
+  pts = Array.from({length:n},()=>({
+    x:Math.random()*W, y:Math.random()*H,
+    vx:(Math.random()-.5)*.16, vy:(Math.random()-.5)*.16
+  }));
+}
+let last = performance.now();
+function draw(t){
+  const dt = Math.min(t-last, 50); last = t;
+  ctx.clearRect(0,0,W,H);
+  for(const p of pts){
+    p.x += p.vx*dt*.06; p.y += p.vy*dt*.06;
+    if(p.x<0||p.x>W) p.vx*=-1;
+    if(p.y<0||p.y>H) p.vy*=-1;
+  }
+  ctx.fillStyle = 'rgba(20,84,61,.18)';
+  for(const p of pts){ ctx.beginPath(); ctx.arc(p.x,p.y,1.4,0,7); ctx.fill(); }
+  const R2 = 130*130;
+  for(let i=0;i<pts.length;i++){
+    for(let j=i+1;j<pts.length;j++){
+      const dx = pts[i].x-pts[j].x, dy = pts[i].y-pts[j].y, d2 = dx*dx+dy*dy;
+      if(d2 < R2){
+        ctx.strokeStyle = `rgba(76,184,120,${(1-d2/R2)*.13})`;
+        ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.stroke();
+      }
+    }
+  }
+  raf = requestAnimationFrame(draw);
+}
+if(motionOK){
+  init(); raf = requestAnimationFrame(draw);
+  addEventListener('resize', init);
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.hidden){ cancelAnimationFrame(raf); raf=null; }
+    else if(!raf){ last = performance.now(); raf = requestAnimationFrame(draw); }
+  });
+}
+})();
+</script>
+</body>
+</html>
