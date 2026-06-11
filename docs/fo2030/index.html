@@ -568,11 +568,18 @@ sections.forEach((s,i)=>{
 const dots = [...rail.children];
 
 /* ---------- navigation ---------- */
-let cur = 0;
+let cur = 0, navLock = false, navT = null;
+function syncUI(){
+  dots.forEach((d,i)=>d.classList.toggle('on', i===cur));
+  document.getElementById('pgcur').textContent = String(cur+1).padStart(2,'0');
+}
 function go(i){
   cur = Math.max(0, Math.min(N-1, i));
+  navLock = true; clearTimeout(navT); navT = setTimeout(()=>navLock=false, 1000);
+  syncUI();
   sections[cur].scrollIntoView({behavior: motionOK ? 'smooth' : 'auto'});
 }
+deck.addEventListener('scrollend', ()=>{ navLock = false; });
 addEventListener('keydown', e=>{
   if(['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1);}
   else if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1);}
@@ -693,9 +700,7 @@ const io = new IntersectionObserver(es=>{
     const s = e.target;
     if(e.isIntersecting){
       s.classList.add('active');
-      cur = sections.indexOf(s);
-      dots.forEach((d,i)=>d.classList.toggle('on', i===cur));
-      document.getElementById('pgcur').textContent = String(cur+1).padStart(2,'0');
+      if(!navLock){ cur = sections.indexOf(s); syncUI(); }
       if(s.id==='s0') boot();
       if(s.id==='s5'){ const h = document.getElementById('scramble'); if(!ran.has(h)){ran.add(h); scramble(h);} }
       if(s.id==='s7') runDonut(s);
