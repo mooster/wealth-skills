@@ -244,7 +244,11 @@ section.active .ov-row .bt i{width:var(--w)}
 #s8 h1{font-size:clamp(38px,4.6vw,64px)}
 #s8 .typed{font-family:var(--mono);font-size:13px;color:var(--ink-soft);margin-top:30px;min-height:22px}
 #s8 .typed .ok{color:var(--signal);font-weight:700}
-#s8 .links{margin-top:34px;font-family:var(--mono);font-size:13px;color:var(--deep);letter-spacing:.06em}
+#s8 .links{margin-top:28px;font-family:var(--mono);font-size:13px;color:var(--deep);letter-spacing:.06em}
+#s8 .qrs{display:flex;justify-content:center;gap:28px;margin-top:34px}
+#s8 .qr{background:var(--paper2);border:1px solid var(--hair);border-radius:14px;padding:16px 18px 12px;box-shadow:0 10px 34px rgba(9,19,16,.05)}
+#s8 .qr img{width:128px;height:128px;display:block;border-radius:8px;object-fit:cover}
+#s8 .qr .t{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink-soft);margin-top:10px;text-align:center}
 
 @media (max-width:900px){
   section{padding:64px 24px}
@@ -523,7 +527,11 @@ section.active .ov-row .bt i{width:var(--w)}
     <div class="kicker" data-r style="--i:0">CANOPY · 2025 → 2030</div>
     <h1 data-r style="--i:1">万亿 Token 赋能万亿资产，<br>把可靠的 AI Native 实践，带给每个家办。</h1>
     <div class="typed" id="typed"></div>
-    <div class="links" data-r style="--i:3">canopy.cloud&ensp;·&ensp;mu@canopy.cloud</div>
+    <div class="qrs">
+      <div class="qr" data-r style="--i:2"><img src="assets/qr-personal.jpg" alt="个人微信"><div class="t">个人微信</div></div>
+      <div class="qr" data-r style="--i:3"><img src="assets/qr-gongzhonghao.jpg" alt="公众号 沐的沙盒"><div class="t">公众号「沐的沙盒」</div></div>
+    </div>
+    <div class="links" data-r style="--i:4">canopy.cloud&ensp;·&ensp;mu@canopy.cloud</div>
   </div>
 </section>
 
