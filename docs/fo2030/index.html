@@ -11,7 +11,7 @@
   --paper:#f7f9f4; --paper2:#fbfcf9; --ink:#091310; --ink-soft:#4b5b54;
   --deep:#14543d; --signal:#4cb878; --cyan:#7db7bd; --amber:#c9a45f;
   --hair:rgba(20,84,61,.13); --hair-soft:rgba(20,84,61,.07);
-  --serif:"Songti SC","STSong",Georgia,"Times New Roman",serif;
+  --serif:Georgia,"Songti SC","STSong","Times New Roman",serif;
   --sans:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,"PingFang SC",monospace;
 }
@@ -136,7 +136,7 @@ h2{font-size:clamp(30px,3.4vw,48px);line-height:1.2;margin-bottom:14px}
 .kpi .v{font-family:var(--serif);font-size:clamp(26px,2.6vw,38px);font-weight:700;color:var(--deep)}
 .kpi .t{font-size:12.5px;color:var(--ink-soft);margin-top:4px}
 .biz{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.biz .card h3{font-size:16.5px;font-weight:700;margin-bottom:2px}
+.biz .card h3{font-family:var(--serif);font-size:17.5px;font-weight:700;margin-bottom:2px}
 .biz .card h3 i{font-style:normal;font-family:var(--mono);color:var(--signal);font-size:13px;margin-right:8px}
 .biz .card .en{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:rgba(75,91,84,.7);margin-bottom:14px}
 .biz .card li{list-style:none;font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:18px;position:relative;margin-bottom:8px}
@@ -204,7 +204,7 @@ section.active .olink line{stroke-dashoffset:0}
 
 /* ============ S4 reorder / S5 findings ============ */
 .quad{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
-.quad .card h3{font-size:16.5px;margin-bottom:12px}
+.quad .card h3{font-family:var(--serif);font-size:17.5px;font-weight:700;margin-bottom:12px}
 .quad .card h3 i{font-style:normal;font-family:var(--mono);color:var(--signal);font-size:13px;margin-right:8px}
 .quad .card li{list-style:none;font-size:13.5px;color:var(--ink-soft);line-height:1.65;padding-left:18px;position:relative;margin-bottom:7px}
 .quad .card li::before{content:'—';position:absolute;left:0;color:var(--signal);font-weight:700}
@@ -237,7 +237,7 @@ section.active .brow .bt i{width:var(--w)}
 .ov-row .bt i{display:block;height:100%;border-radius:6px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1)}
 section.active .ov-row .bt i{width:var(--w)}
 .ov-row .bv{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--deep)}
-.alts .punch{font-size:15.5px;color:var(--deep);font-weight:700;margin-top:14px}
+.alts .punch{font-family:var(--serif);font-size:17px;color:var(--deep);font-weight:700;margin-top:14px}
 
 /* ============ S8 closing ============ */
 #s8{text-align:center}
