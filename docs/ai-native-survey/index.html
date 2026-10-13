@@ -104,6 +104,9 @@ input[type="text"]:focus { border-color: var(--green); outline: none; }
 input[type="email"] { display: block; width: 100%; padding: 14px 17px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text); font: inherit; font-size: .9rem; line-height: 1.4; }
 input[type="email"]::placeholder { color: var(--text-faint); }
 input[type="email"]:focus { border-color: var(--green); outline: none; }
+.field-error { display: none; margin: 0; color: #E05252; font-size: .76rem; line-height: 1.4; }
+.field-error.visible { display: block; }
+input[type="email"][aria-invalid="true"] { border-color: #E05252; }
 .q-skip { display: block; margin-top: 15px; padding: 0; border: 0; background: transparent; color: var(--text-faint); font: inherit; font-size: .78rem; cursor: pointer; }
 .q-skip:hover { color: var(--text-dim); }
 
@@ -150,7 +153,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
 
   <section class="questions-container" id="questionsContainer" aria-live="polite">
     <div class="question-slide" data-q="0">
-      <div class="q-number">Question 1 of 11</div>
+      <div class="q-number">Question 1 of 13</div>
       <h2 class="q-title">Which of these describe your role?</h2>
       <p class="q-subtitle">Select all that apply.</p>
       <div class="contact-fields" aria-label="Optional contact details">
@@ -160,7 +163,8 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
         </div>
         <div class="contact-field">
           <label for="respondentEmail">Email <span>(optional)</span></label>
-          <input type="email" id="respondentEmail" autocomplete="email" placeholder="you@example.com">
+          <input type="email" id="respondentEmail" autocomplete="email" placeholder="you@example.com" aria-describedby="contactEmailError">
+          <p class="field-error" id="contactEmailError" role="alert">Please enter a valid email address, or leave this blank.</p>
         </div>
       </div>
       <div class="multi-select" id="q0Multi">
@@ -178,7 +182,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     </div>
 
     <div class="question-slide" data-q="1">
-      <div class="q-number">Question 2 of 11</div>
+      <div class="q-number">Question 2 of 13</div>
       <h2 class="q-title">How often have you used AI for work in the past 30 days?</h2>
       <p class="q-subtitle">Count the number of days you used AI for a work task, not casual experimentation.</p>
       <div class="single-select" id="q1Single">
@@ -192,7 +196,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     </div>
 
     <div class="question-slide" data-q="2">
-      <div class="q-number">Question 3 of 11</div>
+      <div class="q-number">Question 3 of 13</div>
       <h2 class="q-title">What is the most advanced AI workflow you have actually used?</h2>
       <p class="q-subtitle">Choose the highest level you used at least twice in the past 30 days. A one-off experiment has its own option.</p>
       <div class="single-select" id="q2Single">
@@ -207,7 +211,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     </div>
 
     <div class="question-slide" data-q="3">
-      <div class="q-number">Question 4 of 11</div>
+      <div class="q-number">Question 4 of 13</div>
       <h2 class="q-title">What persists between your AI sessions?</h2>
       <p class="q-subtitle">Select all that apply.</p>
       <div class="multi-select" id="q3Multi">
@@ -221,7 +225,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     </div>
 
     <div class="question-slide" data-q="4">
-      <div class="q-number">Question 5 of 11</div>
+      <div class="q-number">Question 5 of 13</div>
       <h2 class="q-title">Which habits describe your best AI work?</h2>
       <p class="q-subtitle">Pick up to 4. Choose what you actually do, not what you intend to do.</p>
       <div class="multi-select" id="q4Multi">
@@ -235,7 +239,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     </div>
 
     <div class="question-slide" data-q="5">
-      <div class="q-number">Question 6 of 11</div>
+      <div class="q-number">Question 6 of 13</div>
       <h2 class="q-title">What do you check before using the output?</h2>
       <p class="q-subtitle">Pick up to 3. There is no right answer — we want the actual practice.</p>
       <div class="multi-select" id="q5Multi">
@@ -249,7 +253,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     </div>
 
     <div class="question-slide" data-q="6">
-      <div class="q-number">Question 7 of 11</div>
+      <div class="q-number">Question 7 of 13</div>
       <h2 class="q-title">Has anyone else used or reused your AI workflow?</h2>
       <p class="q-subtitle">Think about the workflow itself, not just the final document.</p>
       <div class="single-select" id="q6Single">
@@ -262,7 +266,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     </div>
 
     <div class="question-slide" data-q="7">
-      <div class="q-number">Question 8 of 11</div>
+      <div class="q-number">Question 8 of 13</div>
       <h2 class="q-title">What is the most complex thing you have used AI to do?</h2>
       <p class="q-subtitle">A few sentences is enough. Tell us what you asked AI to do, what made it complex, and where you checked or decided.</p>
       <textarea id="q7Text" placeholder="For example: I gave AI several policy documents and conflicting stakeholder comments; it mapped the disagreements and drafted options; I checked the source references and made the final recommendation."></textarea>
@@ -270,7 +274,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     </div>
 
     <div class="question-slide" data-q="8">
-      <div class="q-number">Question 9 of 11</div>
+      <div class="q-number">Question 9 of 13</div>
       <h2 class="q-title">What most limits your use of AI?</h2>
       <p class="q-subtitle">Pick up to 3.</p>
       <div class="multi-select" id="q8Multi">
@@ -287,10 +291,63 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     </div>
 
     <div class="question-slide" data-q="9">
-      <div class="q-number">Question 10 of 11</div>
+      <div class="q-number">Question 10 of 13</div>
+      <h2 class="q-title">Which AI tools have you personally used?</h2>
+      <p class="q-subtitle">For work or personal use. Select all that apply.</p>
+      <div class="multi-select" id="q9Multi">
+        <button type="button" class="multi-option" data-value="Dots"><span class="check"></span><span>Dots</span></button>
+        <button type="button" class="multi-option" data-value="Muse"><span class="check"></span><span>Muse</span></button>
+        <button type="button" class="multi-option" data-value="ChatGPT"><span class="check"></span><span>ChatGPT</span></button>
+        <button type="button" class="multi-option" data-value="Claude"><span class="check"></span><span>Claude</span></button>
+        <button type="button" class="multi-option" data-value="Gemini"><span class="check"></span><span>Gemini</span></button>
+        <button type="button" class="multi-option" data-value="Microsoft Copilot"><span class="check"></span><span>Microsoft Copilot</span></button>
+        <button type="button" class="multi-option" data-value="Perplexity"><span class="check"></span><span>Perplexity</span></button>
+        <button type="button" class="multi-option" data-value="NotebookLM"><span class="check"></span><span>NotebookLM</span></button>
+        <button type="button" class="multi-option" data-value="Grok"><span class="check"></span><span>Grok</span></button>
+        <button type="button" class="multi-option" data-value="DeepSeek"><span class="check"></span><span>DeepSeek</span></button>
+        <button type="button" class="multi-option" data-value="Cursor/Windsurf"><span class="check"></span><span>Cursor / Windsurf</span></button>
+        <button type="button" class="multi-option" data-value="Dify/n8n/automation tools"><span class="check"></span><span>Dify / n8n / other automation tools</span></button>
+        <button type="button" class="multi-option" data-value="AI features built into other apps"><span class="check"></span><span>AI features built into other apps</span></button>
+        <button type="button" class="multi-option" data-value="Other"><span class="check"></span><span>Other</span></button>
+        <button type="button" class="multi-option" data-value="None yet" data-exclusive="true"><span class="check"></span><span>None yet</span></button>
+      </div>
+      <div class="other-field" id="q9OtherField">
+        <input type="text" id="q9OtherText" placeholder="Which other AI tool?" aria-label="Other AI tool">
+      </div>
+    </div>
+
+    <div class="question-slide" data-q="10">
+      <div class="q-number">Question 11 of 13</div>
+      <h2 class="q-title">Which AI concepts could you explain in your own words?</h2>
+      <p class="q-subtitle">Select all that apply, without looking them up.</p>
+      <div class="multi-select" id="q10Multi">
+        <button type="button" class="multi-option" data-value="LLM"><span class="check"></span><span>Large language model (LLM)</span></button>
+        <button type="button" class="multi-option" data-value="Transformer"><span class="check"></span><span>Transformer</span></button>
+        <button type="button" class="multi-option" data-value="Hallucination"><span class="check"></span><span>Hallucination</span></button>
+        <button type="button" class="multi-option" data-value="Context / context window"><span class="check"></span><span>Context / context window</span></button>
+        <button type="button" class="multi-option" data-value="Prompting"><span class="check"></span><span>Prompting</span></button>
+        <button type="button" class="multi-option" data-value="RAG"><span class="check"></span><span>Retrieval-augmented generation (RAG)</span></button>
+        <button type="button" class="multi-option" data-value="AI agents"><span class="check"></span><span>AI agents</span></button>
+        <button type="button" class="multi-option" data-value="Tool/function calling"><span class="check"></span><span>Tool / function calling</span></button>
+        <button type="button" class="multi-option" data-value="Skills"><span class="check"></span><span>Skills</span></button>
+        <button type="button" class="multi-option" data-value="MCP"><span class="check"></span><span>Model Context Protocol (MCP)</span></button>
+        <button type="button" class="multi-option" data-value="Multimodal"><span class="check"></span><span>Multimodal AI</span></button>
+        <button type="button" class="multi-option" data-value="Evals/evaluation"><span class="check"></span><span>Evals / evaluation</span></button>
+        <button type="button" class="multi-option" data-value="Embeddings/vector search"><span class="check"></span><span>Embeddings / vector search</span></button>
+        <button type="button" class="multi-option" data-value="Fine-tuning"><span class="check"></span><span>Fine-tuning</span></button>
+        <button type="button" class="multi-option" data-value="Other"><span class="check"></span><span>Other</span></button>
+        <button type="button" class="multi-option" data-value="None/not sure" data-exclusive="true"><span class="check"></span><span>None / not sure</span></button>
+      </div>
+      <div class="other-field" id="q10OtherField">
+        <input type="text" id="q10OtherText" placeholder="Which other AI concept?" aria-label="Other AI concept">
+      </div>
+    </div>
+
+    <div class="question-slide" data-q="11">
+      <div class="q-number">Question 12 of 13</div>
       <h2 class="q-title">What would you most like to explore in the session?</h2>
       <p class="q-subtitle">Pick up to 3.</p>
-      <div class="multi-select" id="q9Multi">
+      <div class="multi-select" id="q11Multi">
         <button type="button" class="multi-option" data-value="AI native thinking"><span class="check"></span><span>How to think with AI</span></button>
         <button type="button" class="multi-option" data-value="Personal workflows"><span class="check"></span><span>Better personal workflows with AI</span></button>
         <button type="button" class="multi-option" data-value="AI for research and analysis"><span class="check"></span><span>Using AI for research and analysis</span></button>
@@ -302,12 +359,12 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
       </div>
     </div>
 
-    <div class="question-slide" data-q="10">
-      <div class="q-number">Question 11 of 11</div>
+    <div class="question-slide" data-q="12">
+      <div class="q-number">Question 13 of 13</div>
       <h2 class="q-title">What questions about AI would you most like to explore?</h2>
       <p class="q-subtitle">Ask anything about your own work, your organisation, or the wider social and economic changes.</p>
-      <textarea id="q10Text" placeholder="For example: Where should we trust an AI agent to act on its own? How do we redesign a team when AI can do the first draft of almost everything?"></textarea>
-      <button type="button" class="q-skip" id="q10Skip">Skip this question</button>
+      <textarea id="q12Text" placeholder="For example: Where should we trust an AI agent to act on its own? How do we redesign a team when AI can do the first draft of almost everything?"></textarea>
+      <button type="button" class="q-skip" id="q12Skip">Skip this question</button>
     </div>
   </section>
 
@@ -330,9 +387,8 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
 
 <script>
 (() => {
-  // Add the deployed Google Apps Script web-app URL here when the sheet is ready.
-  const APPS_SCRIPT_URL = '';
-  const totalQ = 11;
+  const SURVEY_API_URL = 'https://ai-native-survey-api.youngrhino.chatgpt.site/api/survey';
+  const totalQ = 13;
   let currentQ = 0;
   let submitting = false;
   const answers = {
@@ -348,6 +404,10 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     reuse: '',
     complex_task: '',
     limits: [],
+    ai_tools: [],
+    ai_tools_other: '',
+    ai_concepts: [],
+    ai_concepts_other: '',
     session_topics: [],
     questions: ''
   };
@@ -367,6 +427,15 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
 
   function updateProgress() {
     progressFill.style.width = `${((currentQ + 1) / totalQ) * 100}%`;
+  }
+
+  function emailIsValid() {
+    const input = document.getElementById('respondentEmail');
+    const error = document.getElementById('contactEmailError');
+    const valid = !input.value.trim() || input.checkValidity();
+    input.setAttribute('aria-invalid', valid ? 'false' : 'true');
+    error.classList.toggle('visible', !valid);
+    return valid;
   }
 
   function clearWorkUseAnswers() {
@@ -415,7 +484,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
 
   function updateNextEnabled() {
     let enabled = false;
-    if (currentQ === 0) enabled = answers.role.length > 0 && (!answers.role.includes('Other') || answers.role_other.trim().length > 0);
+    if (currentQ === 0) enabled = answers.role.length > 0 && (!answers.role.includes('Other') || answers.role_other.trim().length > 0) && emailIsValid();
     if (currentQ === 1) enabled = Boolean(answers.frequency);
     if (currentQ === 2) enabled = Boolean(answers.level);
     if (currentQ === 3) enabled = answers.context.length > 0;
@@ -424,8 +493,10 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     if (currentQ === 6) enabled = Boolean(answers.reuse);
     if (currentQ === 7) enabled = true;
     if (currentQ === 8) enabled = answers.limits.length > 0;
-    if (currentQ === 9) enabled = answers.session_topics.length > 0;
-    if (currentQ === 10) enabled = true;
+    if (currentQ === 9) enabled = answers.ai_tools.length > 0 && (!answers.ai_tools.includes('Other') || answers.ai_tools_other.trim().length > 0);
+    if (currentQ === 10) enabled = answers.ai_concepts.length > 0 && (!answers.ai_concepts.includes('Other') || answers.ai_concepts_other.trim().length > 0);
+    if (currentQ === 11) enabled = answers.session_topics.length > 0;
+    if (currentQ === 12) enabled = true;
     btnNext.disabled = !enabled || submitting;
   }
 
@@ -476,12 +547,39 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     });
   }
 
+  function bindOther(selector, key, fieldId, textId) {
+    const option = document.querySelector(`${selector} [data-value="Other"]`);
+    const field = document.getElementById(fieldId);
+    const text = document.getElementById(textId);
+    option.addEventListener('click', () => {
+      const isOther = answers[key].includes('Other');
+      field.classList.toggle('visible', isOther);
+      if (!isOther) {
+        answers[`${key}_other`] = '';
+        text.value = '';
+      }
+      persistDraft();
+      updateNextEnabled();
+    });
+    text.addEventListener('input', () => {
+      answers[`${key}_other`] = text.value.trim();
+      persistDraft();
+      updateNextEnabled();
+    });
+  }
+
   function restoreDraft() {
     try {
       const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
       if (!saved) return;
       if (typeof saved.role === 'string') saved.role = saved.role ? [saved.role] : [];
       if (typeof saved.context === 'string') saved.context = saved.context ? [saved.context] : [];
+      if (typeof saved.ai_actions === 'string') saved.ai_actions = saved.ai_actions ? [saved.ai_actions] : [];
+      if (typeof saved.assurance === 'string') saved.assurance = saved.assurance ? [saved.assurance] : [];
+      if (typeof saved.limits === 'string') saved.limits = saved.limits ? [saved.limits] : [];
+      if (typeof saved.ai_tools === 'string') saved.ai_tools = saved.ai_tools ? [saved.ai_tools] : [];
+      if (typeof saved.ai_concepts === 'string') saved.ai_concepts = saved.ai_concepts ? [saved.ai_concepts] : [];
+      if (typeof saved.session_topics === 'string') saved.session_topics = saved.session_topics ? [saved.session_topics] : [];
       if (!saved.complex_task && saved.workflow) saved.complex_task = saved.workflow;
       Object.assign(answers, saved);
       Object.entries({ frequency: '#q1Single', level: '#q2Single', reuse: '#q6Single' }).forEach(([key, selector]) => {
@@ -489,47 +587,49 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
         selected?.classList.add('selected');
         selected?.setAttribute('aria-pressed', 'true');
       });
-      [['role', '#q0Multi'], ['context', '#q3Multi'], ['ai_actions', '#q4Multi'], ['assurance', '#q5Multi'], ['limits', '#q8Multi'], ['session_topics', '#q9Multi']].forEach(([key, selector]) => {
-      (answers[key] || []).forEach(value => {
-        const selected = document.querySelector(`${selector} [data-value="${CSS.escape(value)}"]`);
-        selected?.classList.add('selected');
-        selected?.setAttribute('aria-pressed', 'true');
-      });
+      [['role', '#q0Multi'], ['context', '#q3Multi'], ['ai_actions', '#q4Multi'], ['assurance', '#q5Multi'], ['limits', '#q8Multi'], ['ai_tools', '#q9Multi'], ['ai_concepts', '#q10Multi'], ['session_topics', '#q11Multi']].forEach(([key, selector]) => {
+        (answers[key] || []).forEach(value => {
+          const selected = document.querySelector(`${selector} [data-value="${CSS.escape(value)}"]`);
+          selected?.classList.add('selected');
+          selected?.setAttribute('aria-pressed', 'true');
+        });
       });
       document.getElementById('q7Text').value = answers.complex_task || '';
-      document.getElementById('q10Text').value = answers.questions || '';
+      document.getElementById('q12Text').value = answers.questions || '';
       document.getElementById('respondentName').value = answers.name || '';
       document.getElementById('respondentEmail').value = answers.email || '';
       document.getElementById('q0OtherText').value = answers.role_other || '';
       document.getElementById('q0OtherField').classList.toggle('visible', answers.role.includes('Other'));
+      document.getElementById('q9OtherText').value = answers.ai_tools_other || '';
+      document.getElementById('q9OtherField').classList.toggle('visible', answers.ai_tools.includes('Other'));
+      document.getElementById('q10OtherText').value = answers.ai_concepts_other || '';
+      document.getElementById('q10OtherField').classList.toggle('visible', answers.ai_concepts.includes('Other'));
     } catch (_) { /* ignore an invalid draft */ }
   }
 
   async function submitSurvey() {
+    if (!emailIsValid()) {
+      document.getElementById('respondentEmail').focus();
+      return;
+    }
     submitting = true;
     answers.complex_task = document.getElementById('q7Text').value.trim();
-    answers.questions = document.getElementById('q10Text').value.trim();
+    answers.questions = document.getElementById('q12Text').value.trim();
     const payload = { ...answers, timestamp: new Date().toISOString(), duration_seconds: Math.round((Date.now() - startedAt) / 1000) };
     persistDraft();
     btnNext.innerHTML = '<span class="spinner" aria-hidden="true"></span>Saving';
     try {
-      if (APPS_SCRIPT_URL) {
-        const response = await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
-        if (!response.ok) throw new Error(`Survey endpoint returned ${response.status}`);
-        const result = await response.json();
-        if (result.status !== 'ok') throw new Error(result.message || 'Survey endpoint did not confirm the response.');
-      } else {
-        localStorage.setItem('ai-native-working-practice-survey-last-response', JSON.stringify(payload));
-      }
+      const response = await fetch(SURVEY_API_URL, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (!response.ok) throw new Error(`Survey endpoint returned ${response.status}`);
+      const result = await response.json();
+      if (result.status !== 'ok') throw new Error(result.message || 'Survey endpoint did not confirm the response.');
       document.getElementById('questionsContainer').style.display = 'none';
       navBar.style.display = 'none';
       submitError.classList.remove('visible');
       progressFill.style.width = '100%';
-      thankYou.querySelector('p').textContent = APPS_SCRIPT_URL
-        ? 'Your response has been submitted and will help shape the session around how work is actually changing.'
-        : 'Preview — your response has been saved on this device. Connect a Google Apps Script endpoint before sending this survey out.';
+      thankYou.querySelector('p').textContent = 'Your response has been submitted and will help shape the session around how work is actually changing.';
       const download = document.getElementById('downloadResponse');
-      download.hidden = Boolean(APPS_SCRIPT_URL);
+      download.hidden = true;
       download.onclick = () => downloadResponse(payload);
       thankYou.classList.add('active');
       localStorage.removeItem(storageKey);
@@ -545,7 +645,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
   const respondentName = document.getElementById('respondentName');
   const respondentEmail = document.getElementById('respondentEmail');
   respondentName.addEventListener('input', () => { answers.name = respondentName.value.trim(); persistDraft(); });
-  respondentEmail.addEventListener('input', () => { answers.email = respondentEmail.value.trim(); persistDraft(); });
+  respondentEmail.addEventListener('input', () => { answers.email = respondentEmail.value.trim(); persistDraft(); emailIsValid(); updateNextEnabled(); });
   bindMulti('#q0Multi', 'role', 7);
   const q0OtherOption = document.querySelector('#q0Multi [data-value="Other"]');
   const q0OtherField = document.getElementById('q0OtherField');
@@ -572,7 +672,11 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
   bindMulti('#q5Multi', 'assurance', 3);
   bindSingle('#q6Single', 'reuse');
   bindMulti('#q8Multi', 'limits', 3);
-  bindMulti('#q9Multi', 'session_topics', 3);
+  bindMulti('#q9Multi', 'ai_tools', 14);
+  bindMulti('#q10Multi', 'ai_concepts', 15);
+  bindMulti('#q11Multi', 'session_topics', 3);
+  bindOther('#q9Multi', 'ai_tools', 'q9OtherField', 'q9OtherText');
+  bindOther('#q10Multi', 'ai_concepts', 'q10OtherField', 'q10OtherText');
   restoreDraft();
 
   document.getElementById('q7Skip').addEventListener('click', () => {
@@ -581,9 +685,9 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     showQuestion(8);
   });
   document.getElementById('q7Text').addEventListener('input', () => { answers.complex_task = document.getElementById('q7Text').value.trim(); persistDraft(); });
-  document.getElementById('q10Text').addEventListener('input', () => { answers.questions = document.getElementById('q10Text').value.trim(); persistDraft(); });
-  document.getElementById('q10Skip').addEventListener('click', () => {
-    document.getElementById('q10Text').value = '';
+  document.getElementById('q12Text').addEventListener('input', () => { answers.questions = document.getElementById('q12Text').value.trim(); persistDraft(); });
+  document.getElementById('q12Skip').addEventListener('click', () => {
+    document.getElementById('q12Text').value = '';
     answers.questions = '';
     submitSurvey();
   });
