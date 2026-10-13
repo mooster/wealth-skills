@@ -359,7 +359,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
   const navBar = document.getElementById('navBar');
   const thankYou = document.getElementById('thankYou');
   const submitError = document.getElementById('submitError');
-  const storageKey = 'sg-pmo-ai-native-survey-draft';
+  const storageKey = 'ai-native-working-practice-survey-draft';
 
   function persistDraft() {
     try { localStorage.setItem(storageKey, JSON.stringify(answers)); } catch (_) { /* private browsing */ }
@@ -519,7 +519,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
         const result = await response.json();
         if (result.status !== 'ok') throw new Error(result.message || 'Survey endpoint did not confirm the response.');
       } else {
-        localStorage.setItem('sg-pmo-ai-native-survey-last-response', JSON.stringify(payload));
+        localStorage.setItem('ai-native-working-practice-survey-last-response', JSON.stringify(payload));
       }
       document.getElementById('questionsContainer').style.display = 'none';
       navBar.style.display = 'none';
@@ -592,7 +592,7 @@ input[type="email"]:focus { border-color: var(--green); outline: none; }
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'sg-pmo-ai-native-response.json';
+    link.download = 'ai-native-working-practice-response.json';
     link.click();
     URL.revokeObjectURL(url);
   }
