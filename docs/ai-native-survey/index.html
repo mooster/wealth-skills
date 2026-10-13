@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Native · Working Practice Survey</title>
+<meta name="description" content="A short field survey on how people are actually working with AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --green: #549E39;
+  --green-bright: #68B94B;
+  --green-dim: #549E3933;
+  --green-glow: #549E3966;
+  --bg: #141414;
+  --bg-card: #1C1C1C;
+  --bg-hover: #242424;
+  --text: #E8E4DF;
+  --text-dim: #8A857F;
+  --text-faint: #5A5650;
+  --border: #2A2A2A;
+  --border-active: #41413D;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body {
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: .7;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.03'/%3E%3C/svg%3E");
+}
+
+.progress-track { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 20; background: var(--border); }
+.progress-fill { width: 10%; height: 100%; background: var(--green); box-shadow: 0 0 14px var(--green-glow); transition: width .55s var(--ease); }
+
+.survey-wrapper { width: min(680px, calc(100% - 40px)); min-height: 100dvh; margin: 0 auto; padding: 76px 0 42px; display: flex; flex-direction: column; }
+.survey-header { margin-bottom: 42px; animation: fade-up .8s var(--ease) .15s both; }
+.eyebrow { margin-bottom: 16px; color: var(--green); font-size: .68rem; font-weight: 600; letter-spacing: .17em; text-transform: uppercase; }
+.survey-header h1 { max-width: 620px; margin: 0 0 14px; color: var(--text); font-family: var(--serif); font-size: clamp(2.2rem, 6vw, 3.45rem); font-weight: 400; line-height: 1.06; letter-spacing: -.02em; }
+.survey-header h1 em { color: var(--green); font-style: italic; }
+.survey-header p { max-width: 530px; margin: 0; color: var(--text-dim); font-size: .95rem; line-height: 1.65; }
+.axis-line { display: flex; flex-wrap: wrap; gap: 7px 18px; margin-top: 22px; color: var(--text-faint); font-size: .68rem; letter-spacing: .11em; text-transform: uppercase; }
+.axis-line span { position: relative; }
+.axis-line span:not(:last-child)::after { content: "·"; position: absolute; right: -12px; color: var(--green); }
+
+.questions-container { flex: 1; position: relative; }
+.question-slide { display: none; opacity: 0; transform: translateY(14px); }
+.question-slide.active { display: block; animation: fade-up .46s var(--ease) forwards; }
+.question-slide.exiting { display: block; animation: fade-out .25s var(--ease) forwards; }
+.q-number { margin-bottom: 12px; color: var(--text-faint); font-size: .68rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+.q-title { max-width: 620px; margin: 0 0 8px; font-family: var(--serif); font-size: clamp(1.45rem, 4vw, 2rem); font-weight: 400; line-height: 1.24; }
+.q-subtitle { max-width: 560px; margin: 0 0 27px; color: var(--text-dim); font-size: .85rem; line-height: 1.55; }
+
+.single-select, .multi-select { display: flex; flex-direction: column; gap: 8px; }
+.single-option, .multi-option { width: 100%; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text); font: inherit; font-size: .89rem; line-height: 1.4; text-align: left; cursor: pointer; transition: border-color .22s var(--ease), background .22s var(--ease), transform .22s var(--ease); }
+.single-option, .multi-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 17px; }
+.single-option:hover, .multi-option:hover { border-color: var(--border-active); background: var(--bg-hover); transform: translateY(-1px); }
+.single-option.selected, .multi-option.selected { border-color: var(--green); background: var(--green-dim); }
+.single-option:focus-visible, .multi-option:focus-visible, .btn-next:focus-visible, .btn-back:focus-visible, .q-skip:focus-visible, textarea:focus-visible { outline: 2px solid var(--green-bright); outline-offset: 3px; }
+.radio, .check { flex: 0 0 20px; width: 20px; height: 20px; margin-top: 1px; border: 1.5px solid var(--border-active); }
+.radio { border-radius: 50%; }
+.single-option.selected .radio { border-color: var(--green); box-shadow: inset 0 0 0 5px var(--green); }
+.check { border-radius: 5px; }
+.multi-option.selected .check { border-color: var(--green); background: var(--green); }
+.multi-option.selected .check::after { content: ""; display: block; width: 10px; height: 6px; margin: 5px 0 0 4px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg); }
+.multi-option.disabled { opacity: .37; pointer-events: none; }
+.option-note { display: block; margin-top: 3px; color: var(--text-dim); font-size: .78rem; line-height: 1.45; }
+
+.level-option { padding: 15px 17px; }
+.level-option .level-code { flex: 0 0 34px; color: var(--green); font-family: var(--serif); font-size: 1.25rem; line-height: 1; }
+.level-option strong { display: block; margin-bottom: 3px; font-weight: 500; }
+
+textarea { display: block; width: 100%; min-height: 160px; padding: 15px 17px; resize: vertical; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text); font: inherit; font-size: .9rem; line-height: 1.6; }
+textarea::placeholder { color: var(--text-faint); }
+textarea:focus { border-color: var(--green); outline: none; }
+.other-field { display: none; margin-top: 8px; }
+.other-field.visible { display: block; }
+input[type="text"] { display: block; width: 100%; padding: 14px 17px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text); font: inherit; font-size: .9rem; line-height: 1.4; }
+input[type="text"]::placeholder { color: var(--text-faint); }
+input[type="text"]:focus { border-color: var(--green); outline: none; }
+.contact-fields { display: grid; gap: 8px; margin-bottom: 24px; }
+.contact-field { display: grid; gap: 6px; }
+.contact-field label { color: var(--text-dim); font-size: .76rem; }
+.contact-field label span { color: var(--text-faint); }
+input[type="email"] { display: block; width: 100%; padding: 14px 17px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text); font: inherit; font-size: .9rem; line-height: 1.4; }
+input[type="email"]::placeholder { color: var(--text-faint); }
+input[type="email"]:focus { border-color: var(--green); outline: none; }
+.q-skip { display: block; margin-top: 15px; padding: 0; border: 0; background: transparent; color: var(--text-faint); font: inherit; font-size: .78rem; cursor: pointer; }
+.q-skip:hover { color: var(--text-dim); }
+
+.nav-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 42px; padding-top: 22px; border-top: 1px solid var(--border); }
+.btn-back { padding: 8px 0; border: 0; background: transparent; color: var(--text-dim); font: inherit; font-size: .84rem; cursor: pointer; }
+.btn-back:hover { color: var(--text); }
+.btn-back.hidden { visibility: hidden; }
+.btn-next { min-width: 112px; padding: 12px 27px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); color: var(--text); font: inherit; font-size: .83rem; font-weight: 600; cursor: pointer; transition: all .22s var(--ease); }
+.btn-next:hover:not(:disabled) { border-color: var(--border-active); background: var(--bg-hover); }
+.btn-next:disabled { opacity: .28; cursor: not-allowed; }
+.btn-submit { border-color: var(--green); background: var(--green); color: #fff; }
+.btn-submit:hover:not(:disabled) { background: var(--green-bright); box-shadow: 0 5px 22px var(--green-glow); }
+.spinner { display: inline-block; width: 14px; height: 14px; margin-right: 7px; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; vertical-align: -2px; animation: spin .6s linear infinite; }
+.submit-error { display: none; margin-top: 12px; color: #E05252; font-size: .82rem; text-align: right; }
+.submit-error.visible { display: block; }
+
+.thank-you { display: none; padding: 78px 0; text-align: center; }
+.thank-you.active { display: block; animation: fade-up .7s var(--ease) forwards; }
+.check-circle { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; margin: 0 auto 27px; border: 2px solid var(--green); border-radius: 50%; }
+.check-circle svg { width: 28px; height: 28px; fill: none; stroke: var(--green); stroke-width: 2.4; }
+.thank-you h2 { margin: 0 0 14px; font-family: var(--serif); font-size: 2.1rem; font-weight: 400; }
+.thank-you p { max-width: 430px; margin: 0 auto; color: var(--text-dim); font-size: .92rem; line-height: 1.65; }
+.thank-you .back-link { display: inline-block; margin-top: 28px; color: var(--green); font-size: .83rem; text-decoration: none; }
+.thank-you .back-link:hover { text-decoration: underline; }
+.survey-footer { padding-top: 48px; color: var(--text-faint); font-size: .66rem; letter-spacing: .1em; text-align: center; text-transform: uppercase; }
+
+@keyframes fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fade-out { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-7px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+@media (max-width: 520px) { .survey-wrapper { width: min(100% - 32px, 680px); padding-top: 60px; } .survey-header { margin-bottom: 34px; } .survey-header h1 { font-size: 2.45rem; } .axis-line { gap: 6px 14px; } .axis-line span:not(:last-child)::after { right: -10px; } .nav-bar { margin-top: 34px; } }
+</style>
+</head>
+<body>
+<div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+
+<main class="survey-wrapper">
+  <header class="survey-header" id="surveyHeader">
+    <div class="eyebrow">AI · WORKING PRACTICE</div>
+    <h1>How are you <em>working with AI</em>?</h1>
+    <p>A short field survey about how AI is actually entering work. We are mapping habits, workflows and the next questions for the session — not grading technical ability.</p>
+    <div class="axis-line" aria-label="Survey dimensions"><span>Context</span><span>Agency</span><span>Assurance</span><span>Reuse</span></div>
+  </header>
+
+  <section class="questions-container" id="questionsContainer" aria-live="polite">
+    <div class="question-slide" data-q="0">
+      <div class="q-number">Question 1 of 11</div>
+      <h2 class="q-title">Which of these describe your role?</h2>
+      <p class="q-subtitle">Select all that apply.</p>
+      <div class="contact-fields" aria-label="Optional contact details">
+        <div class="contact-field">
+          <label for="respondentName">Name <span>(optional)</span></label>
+          <input type="text" id="respondentName" autocomplete="name" placeholder="Your name">
+        </div>
+        <div class="contact-field">
+          <label for="respondentEmail">Email <span>(optional)</span></label>
+          <input type="email" id="respondentEmail" autocomplete="email" placeholder="you@example.com">
+        </div>
+      </div>
+      <div class="multi-select" id="q0Multi">
+        <button type="button" class="multi-option" data-value="Policy / strategy"><span class="check"></span><span>Policy / strategy</span></button>
+        <button type="button" class="multi-option" data-value="Operations / programme management"><span class="check"></span><span>Operations / programme management</span></button>
+        <button type="button" class="multi-option" data-value="Research / analysis"><span class="check"></span><span>Research / analysis</span></button>
+        <button type="button" class="multi-option" data-value="Communications / stakeholder engagement"><span class="check"></span><span>Communications / stakeholder engagement</span></button>
+        <button type="button" class="multi-option" data-value="Corporate / support function"><span class="check"></span><span>Corporate / support function</span></button>
+        <button type="button" class="multi-option" data-value="Leadership / management"><span class="check"></span><span>Leadership / management</span></button>
+        <button type="button" class="multi-option" data-value="Other"><span class="check"></span><span>Other</span></button>
+      </div>
+      <div class="other-field" id="q0OtherField">
+        <input type="text" id="q0OtherText" placeholder="Tell us your role or function" aria-label="Other role or function">
+      </div>
+    </div>
+
+    <div class="question-slide" data-q="1">
+      <div class="q-number">Question 2 of 11</div>
+      <h2 class="q-title">How often have you used AI for work in the past 30 days?</h2>
+      <p class="q-subtitle">Count the number of days you used AI for a work task, not casual experimentation.</p>
+      <div class="single-select" id="q1Single">
+        <button type="button" class="single-option" data-value="0 days"><span class="radio"></span><span>0 days</span></button>
+        <button type="button" class="single-option" data-value="1–2 days"><span class="radio"></span><span>1–2 days</span></button>
+        <button type="button" class="single-option" data-value="3–7 days"><span class="radio"></span><span>3–7 days</span></button>
+        <button type="button" class="single-option" data-value="8–15 days"><span class="radio"></span><span>8–15 days</span></button>
+        <button type="button" class="single-option" data-value="16–24 days"><span class="radio"></span><span>16–24 days</span></button>
+        <button type="button" class="single-option" data-value="25–30 days"><span class="radio"></span><span>25–30 days</span></button>
+      </div>
+    </div>
+
+    <div class="question-slide" data-q="2">
+      <div class="q-number">Question 3 of 11</div>
+      <h2 class="q-title">What is the most advanced AI workflow you have actually used?</h2>
+      <p class="q-subtitle">Choose the highest level you used at least twice in the past 30 days. A one-off experiment has its own option.</p>
+      <div class="single-select" id="q2Single">
+        <button type="button" class="single-option level-option" data-value="Level 1 — Ask"><span class="level-code">01</span><span><strong>Level 1 — Ask</strong><span class="option-note">A one-off answer, summary, translation or draft.</span></span></button>
+        <button type="button" class="single-option level-option" data-value="Level 2 — Give Context"><span class="level-code">02</span><span><strong>Level 2 — Give Context</strong><span class="option-note">Saved files, instructions, preferences or examples persist.</span></span></button>
+        <button type="button" class="single-option level-option" data-value="Level 3 — Direct"><span class="level-code">03</span><span><strong>Level 3 — Direct</strong><span class="option-note">Delegate a complete task with objectives, constraints and review criteria.</span></span></button>
+        <button type="button" class="single-option level-option" data-value="Level 4 — Operate"><span class="level-code">04</span><span><strong>Level 4 — Operate</strong><span class="option-note">An agent repeatedly or autonomously carries out a defined class of tasks, with human checkpoints.</span></span></button>
+        <button type="button" class="single-option level-option" data-value="Level 5 — Architect"><span class="level-code">05</span><span><strong>Level 5 — Architect</strong><span class="option-note">Design and manage an AI work system: multiple agents or tools, persistent context, defined permissions, monitoring and human accountability.</span></span></button>
+        <button type="button" class="single-option" data-value="Tried once; no repeated workflow yet"><span class="radio"></span><span>Tried once; no repeated workflow yet</span></button>
+        <button type="button" class="single-option" data-value="No work use in the past 30 days"><span class="radio"></span><span>No work use in the past 30 days</span></button>
+      </div>
+    </div>
+
+    <div class="question-slide" data-q="3">
+      <div class="q-number">Question 4 of 11</div>
+      <h2 class="q-title">What persists between your AI sessions?</h2>
+      <p class="q-subtitle">Select all that apply.</p>
+      <div class="multi-select" id="q3Multi">
+        <button type="button" class="multi-option" data-value="Nothing" data-exclusive="true"><span class="check"></span><span>Nothing; I start from scratch each time</span></button>
+        <button type="button" class="multi-option" data-value="Reusable prompts"><span class="check"></span><span>Reusable prompts or instructions</span></button>
+        <button type="button" class="multi-option" data-value="Project files"><span class="check"></span><span>Project files or a saved workspace</span></button>
+        <button type="button" class="multi-option" data-value="Knowledge base"><span class="check"></span><span>A maintained knowledge base or document library</span></button>
+        <button type="button" class="multi-option" data-value="Connected internal data"><span class="check"></span><span>Connected internal data or systems</span></button>
+        <button type="button" class="multi-option" data-value="Schedules and logs"><span class="check"></span><span>Scheduled tasks, logs or evaluation records</span></button>
+      </div>
+    </div>
+
+    <div class="question-slide" data-q="4">
+      <div class="q-number">Question 5 of 11</div>
+      <h2 class="q-title">Which habits describe your best AI work?</h2>
+      <p class="q-subtitle">Pick up to 4. Choose what you actually do, not what you intend to do.</p>
+      <div class="multi-select" id="q4Multi">
+        <button type="button" class="multi-option" data-value="Define outcome"><span class="check"></span><span>Define the desired outcome before asking AI</span></button>
+        <button type="button" class="multi-option" data-value="Provide context"><span class="check"></span><span>Provide context, examples or source material</span></button>
+        <button type="button" class="multi-option" data-value="Challenge assumptions"><span class="check"></span><span>Ask AI to surface assumptions or challenge my view</span></button>
+        <button type="button" class="multi-option" data-value="Delegate complete task"><span class="check"></span><span>Delegate a complete task with review criteria</span></button>
+        <button type="button" class="multi-option" data-value="Verify evidence"><span class="check"></span><span>Verify evidence and review the output</span></button>
+        <button type="button" class="multi-option" data-value="Save for reuse"><span class="check"></span><span>Save what worked for reuse</span></button>
+      </div>
+    </div>
+
+    <div class="question-slide" data-q="5">
+      <div class="q-number">Question 6 of 11</div>
+      <h2 class="q-title">What do you check before using the output?</h2>
+      <p class="q-subtitle">Pick up to 3. There is no right answer — we want the actual practice.</p>
+      <div class="multi-select" id="q5Multi">
+        <button type="button" class="multi-option" data-value="No consistent check" data-exclusive="true"><span class="check"></span><span>No consistent checking process</span></button>
+        <button type="button" class="multi-option" data-value="Tone and clarity"><span class="check"></span><span>Tone and clarity</span></button>
+        <button type="button" class="multi-option" data-value="Facts and sources"><span class="check"></span><span>Key facts and sources</span></button>
+        <button type="button" class="multi-option" data-value="Assumptions and calculations"><span class="check"></span><span>Calculations, assumptions and exceptions</span></button>
+        <button type="button" class="multi-option" data-value="Peer or manager review"><span class="check"></span><span>Colleague, manager or subject-matter review</span></button>
+        <button type="button" class="multi-option" data-value="Approval and audit trail"><span class="check"></span><span>Approval, logging or audit records</span></button>
+      </div>
+    </div>
+
+    <div class="question-slide" data-q="6">
+      <div class="q-number">Question 7 of 11</div>
+      <h2 class="q-title">Has anyone else used or reused your AI workflow?</h2>
+      <p class="q-subtitle">Think about the workflow itself, not just the final document.</p>
+      <div class="single-select" id="q6Single">
+        <button type="button" class="single-option" data-value="Personal only"><span class="radio"></span><span>It is only for me</span></button>
+        <button type="button" class="single-option" data-value="Shared example"><span class="radio"></span><span>I have shared an example or prompt</span></button>
+        <button type="button" class="single-option" data-value="Reusable template"><span class="radio"></span><span>I have shared a reusable template or project</span></button>
+        <button type="button" class="single-option" data-value="Team workflow"><span class="radio"></span><span>It is a team workflow with a named owner</span></button>
+        <button type="button" class="single-option" data-value="Organisation system"><span class="radio"></span><span>It is part of a broader organisational system</span></button>
+      </div>
+    </div>
+
+    <div class="question-slide" data-q="7">
+      <div class="q-number">Question 8 of 11</div>
+      <h2 class="q-title">What is the most complex thing you have used AI to do?</h2>
+      <p class="q-subtitle">A few sentences is enough. Tell us what you asked AI to do, what made it complex, and where you checked or decided.</p>
+      <textarea id="q7Text" placeholder="For example: I gave AI several policy documents and conflicting stakeholder comments; it mapped the disagreements and drafted options; I checked the source references and made the final recommendation."></textarea>
+      <button type="button" class="q-skip" id="q7Skip">Skip this question</button>
+    </div>
+
+    <div class="question-slide" data-q="8">
+      <div class="q-number">Question 9 of 11</div>
+      <h2 class="q-title">What most limits your use of AI?</h2>
+      <p class="q-subtitle">Pick up to 3.</p>
+      <div class="multi-select" id="q8Multi">
+        <button type="button" class="multi-option" data-value="Reliability"><span class="check"></span><span>Reliability or hallucinations</span></button>
+        <button type="button" class="multi-option" data-value="Confidentiality"><span class="check"></span><span>Confidentiality or data protection</span></button>
+        <button type="button" class="multi-option" data-value="Data access"><span class="check"></span><span>Lack of access to internal data</span></button>
+        <button type="button" class="multi-option" data-value="Tool permissions"><span class="check"></span><span>Lack of permission to connect tools</span></button>
+        <button type="button" class="multi-option" data-value="Setup time"><span class="check"></span><span>Setup takes too long</span></button>
+        <button type="button" class="multi-option" data-value="No repeatable use case"><span class="check"></span><span>I have not found a repeatable use case</span></button>
+        <button type="button" class="multi-option" data-value="Training"><span class="check"></span><span>Lack of training or examples</span></button>
+        <button type="button" class="multi-option" data-value="Accountability"><span class="check"></span><span>Unclear accountability or approval requirements</span></button>
+        <button type="button" class="multi-option" data-value="Nothing significant" data-exclusive="true"><span class="check"></span><span>Nothing significant currently limits me</span></button>
+      </div>
+    </div>
+
+    <div class="question-slide" data-q="9">
+      <div class="q-number">Question 10 of 11</div>
+      <h2 class="q-title">What would you most like to explore in the session?</h2>
+      <p class="q-subtitle">Pick up to 3.</p>
+      <div class="multi-select" id="q9Multi">
+        <button type="button" class="multi-option" data-value="AI native thinking"><span class="check"></span><span>How to think with AI</span></button>
+        <button type="button" class="multi-option" data-value="Personal workflows"><span class="check"></span><span>Better personal workflows with AI</span></button>
+        <button type="button" class="multi-option" data-value="AI for research and analysis"><span class="check"></span><span>Using AI for research and analysis</span></button>
+        <button type="button" class="multi-option" data-value="AI for writing and communication"><span class="check"></span><span>Using AI for writing and communication</span></button>
+        <button type="button" class="multi-option" data-value="Agents and recurring tasks"><span class="check"></span><span>AI agents and recurring tasks</span></button>
+        <button type="button" class="multi-option" data-value="Organisational use"><span class="check"></span><span>How organisations should use AI</span></button>
+        <button type="button" class="multi-option" data-value="Assurance and governance"><span class="check"></span><span>Assurance, permissions and risks</span></button>
+        <button type="button" class="multi-option" data-value="Society and economy"><span class="check"></span><span>Social and economic implications</span></button>
+      </div>
+    </div>
+
+    <div class="question-slide" data-q="10">
+      <div class="q-number">Question 11 of 11</div>
+      <h2 class="q-title">What questions about AI would you most like to explore?</h2>
+      <p class="q-subtitle">Ask anything about your own work, your organisation, or the wider social and economic changes.</p>
+      <textarea id="q10Text" placeholder="For example: Where should we trust an AI agent to act on its own? How do we redesign a team when AI can do the first draft of almost everything?"></textarea>
+      <button type="button" class="q-skip" id="q10Skip">Skip this question</button>
+    </div>
+  </section>
+
+  <div class="nav-bar" id="navBar">
+    <button type="button" class="btn-back hidden" id="btnBack">← Back</button>
+    <button type="button" class="btn-next" id="btnNext" disabled>Continue</button>
+  </div>
+  <div class="submit-error" id="submitError" role="alert">Something went wrong. Please try again.</div>
+
+  <section class="thank-you" id="thankYou" aria-live="polite">
+    <div class="check-circle"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 13 10 17 18 9"></polyline></svg></div>
+    <h2>Thank you.</h2>
+    <p>Your answers will help shape the session around how work is actually changing. Individual responses will be treated as confidential.</p>
+    <button type="button" class="q-skip" id="downloadResponse" hidden>Download this preview response</button>
+    <a class="back-link" href="https://amongstfamilies.substack.com" target="_blank" rel="noopener">Back to Amongst Families →</a>
+  </section>
+
+  <footer class="survey-footer">AI Native · Working Practice · 2026</footer>
+</main>
+
+<script>
+(() => {
+  // Add the deployed Google Apps Script web-app URL here when the sheet is ready.
+  const APPS_SCRIPT_URL = '';
+  const totalQ = 11;
+  let currentQ = 0;
+  let submitting = false;
+  const answers = {
+    name: '',
+    email: '',
+    role: [],
+    role_other: '',
+    frequency: '',
+    level: '',
+    context: [],
+    ai_actions: [],
+    assurance: [],
+    reuse: '',
+    complex_task: '',
+    limits: [],
+    session_topics: [],
+    questions: ''
+  };
+
+  const slides = [...document.querySelectorAll('.question-slide')];
+  const progressFill = document.getElementById('progressFill');
+  const btnNext = document.getElementById('btnNext');
+  const btnBack = document.getElementById('btnBack');
+  const navBar = document.getElementById('navBar');
+  const thankYou = document.getElementById('thankYou');
+  const submitError = document.getElementById('submitError');
+  const storageKey = 'sg-pmo-ai-native-survey-draft';
+
+  function persistDraft() {
+    try { localStorage.setItem(storageKey, JSON.stringify(answers)); } catch (_) { /* private browsing */ }
+  }
+
+  function updateProgress() {
+    progressFill.style.width = `${((currentQ + 1) / totalQ) * 100}%`;
+  }
+
+  function clearWorkUseAnswers() {
+    answers.level = '';
+    answers.context = [];
+    answers.ai_actions = [];
+    answers.assurance = [];
+    answers.reuse = '';
+    answers.complex_task = '';
+    ['#q2Single', '#q3Multi', '#q4Multi', '#q5Multi', '#q6Single'].forEach(selector => {
+      document.querySelectorAll(`${selector} .selected`).forEach(item => { item.classList.remove('selected'); item.setAttribute('aria-pressed', 'false'); });
+    });
+    document.querySelectorAll('#q4Multi .disabled, #q5Multi .disabled').forEach(item => item.classList.remove('disabled'));
+    document.getElementById('q7Text').value = '';
+    persistDraft();
+  }
+
+  function nextQuestion(index) {
+    if (index === 1 && answers.frequency === '0 days') return 8;
+    return index + 1;
+  }
+
+  function previousQuestion(index) {
+    if (index === 8 && answers.frequency === '0 days') return 1;
+    return index - 1;
+  }
+
+  function showQuestion(index) {
+    currentQ = index;
+    updateProgress();
+    slides.forEach(slide => {
+      if (slide.classList.contains('active')) {
+        slide.classList.remove('active');
+        slide.classList.add('exiting');
+        window.setTimeout(() => slide.classList.remove('exiting'), 260);
+      }
+    });
+    window.setTimeout(() => slides[index]?.classList.add('active'), 35);
+    btnBack.classList.toggle('hidden', index === 0);
+    btnNext.textContent = index === totalQ - 1 ? 'Submit' : 'Continue';
+    btnNext.classList.toggle('btn-submit', index === totalQ - 1);
+    btnNext.classList.toggle('btn-next', index !== totalQ - 1);
+    updateNextEnabled();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateNextEnabled() {
+    let enabled = false;
+    if (currentQ === 0) enabled = answers.role.length > 0 && (!answers.role.includes('Other') || answers.role_other.trim().length > 0);
+    if (currentQ === 1) enabled = Boolean(answers.frequency);
+    if (currentQ === 2) enabled = Boolean(answers.level);
+    if (currentQ === 3) enabled = answers.context.length > 0;
+    if (currentQ === 4) enabled = answers.ai_actions.length > 0;
+    if (currentQ === 5) enabled = answers.assurance.length > 0;
+    if (currentQ === 6) enabled = Boolean(answers.reuse);
+    if (currentQ === 7) enabled = true;
+    if (currentQ === 8) enabled = answers.limits.length > 0;
+    if (currentQ === 9) enabled = answers.session_topics.length > 0;
+    if (currentQ === 10) enabled = true;
+    btnNext.disabled = !enabled || submitting;
+  }
+
+  function bindSingle(selector, key) {
+    document.querySelectorAll(`${selector} .single-option`).forEach(option => {
+      option.addEventListener('click', () => {
+        document.querySelectorAll(`${selector} .single-option`).forEach(item => item.classList.remove('selected'));
+        option.classList.add('selected');
+        answers[key] = option.dataset.value;
+        if (key === 'frequency' && answers.frequency === '0 days') clearWorkUseAnswers();
+        document.querySelectorAll(`${selector} .single-option`).forEach(item => item.setAttribute('aria-pressed', item === option ? 'true' : 'false'));
+        persistDraft();
+        updateNextEnabled();
+      });
+    });
+  }
+
+  function bindMulti(selector, key, limit) {
+    const options = [...document.querySelectorAll(`${selector} .multi-option`)];
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        if (option.classList.contains('disabled')) return;
+        const value = option.dataset.value;
+        const exclusive = option.dataset.exclusive === 'true';
+        const selected = answers[key].includes(value);
+        if (selected) {
+          answers[key] = answers[key].filter(item => item !== value);
+        } else {
+          if (exclusive) {
+            answers[key] = [value];
+          } else {
+            const exclusiveOption = options.find(item => item.dataset.exclusive === 'true');
+            if (exclusiveOption) answers[key] = answers[key].filter(item => item !== exclusiveOption.dataset.value);
+            if (answers[key].length >= limit) return;
+            answers[key].push(value);
+          }
+        }
+        options.forEach(item => {
+          const isSelected = answers[key].includes(item.dataset.value);
+          item.classList.toggle('selected', isSelected);
+          item.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+          const locked = answers[key].length >= limit && !isSelected && item.dataset.exclusive !== 'true';
+          item.classList.toggle('disabled', locked);
+        });
+        persistDraft();
+        updateNextEnabled();
+      });
+    });
+  }
+
+  function restoreDraft() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      if (!saved) return;
+      if (typeof saved.role === 'string') saved.role = saved.role ? [saved.role] : [];
+      if (typeof saved.context === 'string') saved.context = saved.context ? [saved.context] : [];
+      if (!saved.complex_task && saved.workflow) saved.complex_task = saved.workflow;
+      Object.assign(answers, saved);
+      Object.entries({ frequency: '#q1Single', level: '#q2Single', reuse: '#q6Single' }).forEach(([key, selector]) => {
+        const selected = document.querySelector(`${selector} [data-value="${CSS.escape(answers[key] || '')}"]`);
+        selected?.classList.add('selected');
+        selected?.setAttribute('aria-pressed', 'true');
+      });
+      [['role', '#q0Multi'], ['context', '#q3Multi'], ['ai_actions', '#q4Multi'], ['assurance', '#q5Multi'], ['limits', '#q8Multi'], ['session_topics', '#q9Multi']].forEach(([key, selector]) => {
+      (answers[key] || []).forEach(value => {
+        const selected = document.querySelector(`${selector} [data-value="${CSS.escape(value)}"]`);
+        selected?.classList.add('selected');
+        selected?.setAttribute('aria-pressed', 'true');
+      });
+      });
+      document.getElementById('q7Text').value = answers.complex_task || '';
+      document.getElementById('q10Text').value = answers.questions || '';
+      document.getElementById('respondentName').value = answers.name || '';
+      document.getElementById('respondentEmail').value = answers.email || '';
+      document.getElementById('q0OtherText').value = answers.role_other || '';
+      document.getElementById('q0OtherField').classList.toggle('visible', answers.role.includes('Other'));
+    } catch (_) { /* ignore an invalid draft */ }
+  }
+
+  async function submitSurvey() {
+    submitting = true;
+    answers.complex_task = document.getElementById('q7Text').value.trim();
+    answers.questions = document.getElementById('q10Text').value.trim();
+    const payload = { ...answers, timestamp: new Date().toISOString(), duration_seconds: Math.round((Date.now() - startedAt) / 1000) };
+    persistDraft();
+    btnNext.innerHTML = '<span class="spinner" aria-hidden="true"></span>Saving';
+    try {
+      if (APPS_SCRIPT_URL) {
+        const response = await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+        if (!response.ok) throw new Error(`Survey endpoint returned ${response.status}`);
+        const result = await response.json();
+        if (result.status !== 'ok') throw new Error(result.message || 'Survey endpoint did not confirm the response.');
+      } else {
+        localStorage.setItem('sg-pmo-ai-native-survey-last-response', JSON.stringify(payload));
+      }
+      document.getElementById('questionsContainer').style.display = 'none';
+      navBar.style.display = 'none';
+      submitError.classList.remove('visible');
+      progressFill.style.width = '100%';
+      thankYou.querySelector('p').textContent = APPS_SCRIPT_URL
+        ? 'Your response has been submitted and will help shape the session around how work is actually changing.'
+        : 'Preview — your response has been saved on this device. Connect a Google Apps Script endpoint before sending this survey out.';
+      const download = document.getElementById('downloadResponse');
+      download.hidden = Boolean(APPS_SCRIPT_URL);
+      download.onclick = () => downloadResponse(payload);
+      thankYou.classList.add('active');
+      localStorage.removeItem(storageKey);
+    } catch (error) {
+      submitting = false;
+      btnNext.textContent = 'Submit';
+      submitError.classList.add('visible');
+      updateNextEnabled();
+    }
+  }
+
+  const startedAt = Date.now();
+  const respondentName = document.getElementById('respondentName');
+  const respondentEmail = document.getElementById('respondentEmail');
+  respondentName.addEventListener('input', () => { answers.name = respondentName.value.trim(); persistDraft(); });
+  respondentEmail.addEventListener('input', () => { answers.email = respondentEmail.value.trim(); persistDraft(); });
+  bindMulti('#q0Multi', 'role', 7);
+  const q0OtherOption = document.querySelector('#q0Multi [data-value="Other"]');
+  const q0OtherField = document.getElementById('q0OtherField');
+  const q0OtherText = document.getElementById('q0OtherText');
+  q0OtherOption.addEventListener('click', () => {
+    const isOther = answers.role.includes('Other');
+    q0OtherField.classList.toggle('visible', isOther);
+    if (!isOther) {
+      answers.role_other = '';
+      q0OtherText.value = '';
+    }
+    persistDraft();
+    updateNextEnabled();
+  });
+  q0OtherText.addEventListener('input', () => {
+    answers.role_other = q0OtherText.value.trim();
+    persistDraft();
+    updateNextEnabled();
+  });
+  bindSingle('#q1Single', 'frequency');
+  bindSingle('#q2Single', 'level');
+  bindMulti('#q3Multi', 'context', 6);
+  bindMulti('#q4Multi', 'ai_actions', 4);
+  bindMulti('#q5Multi', 'assurance', 3);
+  bindSingle('#q6Single', 'reuse');
+  bindMulti('#q8Multi', 'limits', 3);
+  bindMulti('#q9Multi', 'session_topics', 3);
+  restoreDraft();
+
+  document.getElementById('q7Skip').addEventListener('click', () => {
+    document.getElementById('q7Text').value = '';
+    answers.complex_task = '';
+    showQuestion(8);
+  });
+  document.getElementById('q7Text').addEventListener('input', () => { answers.complex_task = document.getElementById('q7Text').value.trim(); persistDraft(); });
+  document.getElementById('q10Text').addEventListener('input', () => { answers.questions = document.getElementById('q10Text').value.trim(); persistDraft(); });
+  document.getElementById('q10Skip').addEventListener('click', () => {
+    document.getElementById('q10Text').value = '';
+    answers.questions = '';
+    submitSurvey();
+  });
+  function downloadResponse(payload) {
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'sg-pmo-ai-native-response.json';
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  btnNext.addEventListener('click', () => {
+    if (btnNext.disabled) return;
+    if (currentQ === totalQ - 1) submitSurvey();
+    else showQuestion(nextQuestion(currentQ));
+  });
+  btnBack.addEventListener('click', () => { if (currentQ > 0) showQuestion(previousQuestion(currentQ)); });
+  showQuestion(0);
+})();
+</script>
+</body>
+</html>
