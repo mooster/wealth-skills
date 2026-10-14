@@ -91,6 +91,7 @@ body::before {
 .level-option { padding: 15px 17px; }
 .level-option .level-code { flex: 0 0 34px; color: var(--green); font-family: var(--serif); font-size: 1.25rem; line-height: 1; }
 .level-option strong { display: block; margin-bottom: 3px; font-weight: 500; }
+.multi-option strong { display: block; margin-bottom: 3px; font-weight: 500; }
 
 textarea { display: block; width: 100%; min-height: 160px; padding: 15px 17px; resize: vertical; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text); font: inherit; font-size: .9rem; line-height: 1.6; }
 textarea::placeholder { color: var(--text-faint); }
@@ -295,56 +296,23 @@ input[type="email"][aria-invalid="true"] { border-color: #E05252; }
 
     <div class="question-slide" data-q="9">
       <div class="q-number">Question 10 of 13</div>
-      <h2 class="q-title">Which AI tools have you personally used?</h2>
-      <p class="q-subtitle">For work or personal use. Select all that apply — grouped by the kind of work they support.</p>
+      <h2 class="q-title">Which kinds of AI tools have you personally used?</h2>
+      <p class="q-subtitle">For work or personal use. Select all that apply; examples are shown for orientation.</p>
       <div class="multi-select" id="q9Multi">
         <div class="option-group">
-          <div class="option-group-label">Chat AI</div>
-          <button type="button" class="multi-option" data-value="ChatGPT"><span class="check"></span><span>ChatGPT</span></button>
-          <button type="button" class="multi-option" data-value="Claude"><span class="check"></span><span>Claude</span></button>
-          <button type="button" class="multi-option" data-value="Gemini"><span class="check"></span><span>Gemini</span></button>
-          <button type="button" class="multi-option" data-value="Grok"><span class="check"></span><span>Grok</span></button>
-          <button type="button" class="multi-option" data-value="DeepSeek"><span class="check"></span><span>DeepSeek</span></button>
-        </div>
-        <div class="option-group">
-          <div class="option-group-label">Work agents</div>
-          <button type="button" class="multi-option" data-value="Codex Work"><span class="check"></span><span>Codex Work</span></button>
-          <button type="button" class="multi-option" data-value="Claude Cowork"><span class="check"></span><span>Claude Cowork</span></button>
-          <button type="button" class="multi-option" data-value="Microsoft Copilot"><span class="check"></span><span>Microsoft Copilot</span></button>
-        </div>
-        <div class="option-group">
-          <div class="option-group-label">Personal AI agents</div>
-          <button type="button" class="multi-option" data-value="Dots"><span class="check"></span><span>Dots</span></button>
-          <button type="button" class="multi-option" data-value="Muse"><span class="check"></span><span>Muse</span></button>
-        </div>
-        <div class="option-group">
-          <div class="option-group-label">Research &amp; knowledge</div>
-          <button type="button" class="multi-option" data-value="Perplexity"><span class="check"></span><span>Perplexity</span></button>
-          <button type="button" class="multi-option" data-value="NotebookLM"><span class="check"></span><span>NotebookLM</span></button>
-        </div>
-        <div class="option-group">
-          <div class="option-group-label">Open-source agents</div>
-          <button type="button" class="multi-option" data-value="Hermes"><span class="check"></span><span>Hermes</span></button>
-          <button type="button" class="multi-option" data-value="Pi"><span class="check"></span><span>Pi</span></button>
-          <button type="button" class="multi-option" data-value="OpenClaw"><span class="check"></span><span>OpenClaw</span></button>
-        </div>
-        <div class="option-group">
-          <div class="option-group-label">Building &amp; coding</div>
-          <button type="button" class="multi-option" data-value="Cursor/Windsurf"><span class="check"></span><span>Cursor / Windsurf</span></button>
-        </div>
-        <div class="option-group">
-          <div class="option-group-label">Automation &amp; embedded AI</div>
-          <button type="button" class="multi-option" data-value="Dify/n8n/automation tools"><span class="check"></span><span>Dify / n8n / other automation tools</span></button>
-          <button type="button" class="multi-option" data-value="AI features built into other apps"><span class="check"></span><span>AI features built into other apps</span></button>
-        </div>
-        <div class="option-group">
-          <div class="option-group-label">Other</div>
-          <button type="button" class="multi-option" data-value="Other"><span class="check"></span><span>Another AI tool</span></button>
-          <button type="button" class="multi-option" data-value="None yet" data-exclusive="true"><span class="check"></span><span>None yet</span></button>
+          <button type="button" class="multi-option" data-value="Chat AI"><span class="check"></span><span><strong>Chat AI</strong><span class="option-note">ChatGPT, Claude, Gemini, Grok, DeepSeek</span></span></button>
+          <button type="button" class="multi-option" data-value="Work agents"><span class="check"></span><span><strong>Work agents</strong><span class="option-note">Codex Work, Claude Cowork, Microsoft Copilot</span></span></button>
+          <button type="button" class="multi-option" data-value="Personal AI agents"><span class="check"></span><span><strong>Personal AI agents</strong><span class="option-note">Dots, Muse</span></span></button>
+          <button type="button" class="multi-option" data-value="Research &amp; knowledge"><span class="check"></span><span><strong>Research &amp; knowledge</strong><span class="option-note">Perplexity, NotebookLM</span></span></button>
+          <button type="button" class="multi-option" data-value="Open-source agents"><span class="check"></span><span><strong>Open-source agents</strong><span class="option-note">Hermes, Pi, OpenClaw</span></span></button>
+          <button type="button" class="multi-option" data-value="Building &amp; coding"><span class="check"></span><span><strong>Building &amp; coding</strong><span class="option-note">Cursor, Windsurf and similar tools</span></span></button>
+          <button type="button" class="multi-option" data-value="Automation &amp; embedded AI"><span class="check"></span><span><strong>Automation &amp; embedded AI</strong><span class="option-note">Dify, n8n and AI features inside other apps</span></span></button>
+          <button type="button" class="multi-option" data-value="Other"><span class="check"></span><span><strong>Other</strong><span class="option-note">Another kind of AI tool</span></span></button>
+          <button type="button" class="multi-option" data-value="None yet" data-exclusive="true"><span class="check"></span><span><strong>None yet</strong></span></button>
         </div>
       </div>
       <div class="other-field" id="q9OtherField">
-        <input type="text" id="q9OtherText" placeholder="Which other AI tool?" aria-label="Other AI tool">
+        <input type="text" id="q9OtherText" placeholder="Which other kind of AI tool?" aria-label="Other kind of AI tool">
       </div>
     </div>
 
