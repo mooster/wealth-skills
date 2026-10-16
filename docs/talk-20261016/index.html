@@ -92,6 +92,9 @@
     .fo .h { font-size:15px; }
     .fo .m { font-size:12.5px; }
     .fo .k { font-size:11.5px; fill:#8a968f; }
+    #fsbtn { position:fixed; right:16px; bottom:16px; z-index:50; font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--deep); background:rgba(255,255,255,.85); border:1px solid var(--line); border-radius:999px; padding:6px 12px; cursor:pointer; opacity:.35; transition:opacity .2s; }
+    #fsbtn:hover { opacity:1; }
+    :fullscreen #fsbtn { opacity:0; } :fullscreen #fsbtn:hover { opacity:1; }
     .reveal .controls { display:none; } .reveal .progress { color:var(--deep); height:3px; }
   </style>
 </head>
@@ -727,7 +730,12 @@
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
 <script>
-  Reveal.initialize({ hash:true, width:1280, height:720, margin:0.04, transition:'none', center:false, controls:false, plugins:[RevealNotes] });
+  function toggleFullscreen(){ const d=document; if(d.fullscreenElement){ d.exitFullscreen(); } else { d.documentElement.requestFullscreen().catch(()=>{}); } }
+  Reveal.initialize({ hash:true, width:1280, height:720, margin:0.04, transition:'none', center:false, controls:false, plugins:[RevealNotes],
+    keyboard:{ 70: toggleFullscreen } });
+  const fsBtn=document.createElement('button'); fsBtn.id='fsbtn'; fsBtn.textContent='全屏 · F'; fsBtn.title='按 F 或点这里进入全屏（Chrome 原生：⌃⌘F）';
+  fsBtn.addEventListener('click', toggleFullscreen); document.body.appendChild(fsBtn);
+  document.addEventListener('fullscreenchange', ()=>{ fsBtn.textContent = document.fullscreenElement ? '退出全屏 · F' : '全屏 · F'; });
 </script>
 </body>
 </html>
