@@ -734,7 +734,7 @@
   Reveal.initialize({ hash:true, width:1280, height:720, margin:0.04, transition:'none', center:false, controls:false, plugins:[RevealNotes],
     keyboard:{ 70: toggleFullscreen } });
   const fsBtn=document.createElement('button'); fsBtn.id='fsbtn'; fsBtn.textContent='全屏 · F'; fsBtn.title='按 F 或点这里进入全屏（Chrome 原生：⌃⌘F）';
-  fsBtn.addEventListener('click', toggleFullscreen); document.body.appendChild(fsBtn);
+  fsBtn.addEventListener('click', toggleFullscreen); if(!/[?&]nofs/.test(location.search)) document.body.appendChild(fsBtn);
   document.addEventListener('fullscreenchange', ()=>{ fsBtn.textContent = document.fullscreenElement ? '退出全屏 · F' : '全屏 · F'; });
 </script>
 </body>

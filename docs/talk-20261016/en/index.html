@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>What Changes and What Doesn't in the AI Era: Individuals, Organizations, Society</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --paper:#f7f9f4; --card:#ffffff; --ink:#091310; --body:#4b5b54; --muted:#6b7a72; --faint:#8a968f; --line:#d8ddd6; --deep:#14543d; --signal:#4cb878; --soft:#e6f2ea; --dk:#091210; --dk2:#0d1a15; --dk-text:#e8efe9; --dk-muted:#7d8f85; --dk-line:rgba(255,255,255,.08); --tg:#00e676; --red:#b3402e; --red-soft:#fbe9e7;
+      --serif:'Inter','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif; --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,'PingFang SC',monospace; --sans:'Inter','PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif; }
+    .reveal { font-family:var(--sans); color:var(--ink); font-size:24px; background:var(--paper); }
+    .reveal .backgrounds { background:var(--paper); }
+    .reveal .slides section { text-align:left; padding:48px 64px; box-sizing:border-box; height:100%; }
+    .reveal h1 { font-family:var(--serif); font-size:52px; font-weight:700; line-height:1.15; letter-spacing:0; text-transform:none; color:var(--ink); margin:0; }
+    .reveal h2 { font-family:var(--serif); font-size:40px; font-weight:700; line-height:1.2; letter-spacing:0; text-transform:none; color:var(--ink); margin:0 0 32px; }
+    .reveal h1 b, .reveal h2 b { font-weight:400; color:var(--deep); }
+    .reveal p { margin:0; line-height:1.5; }
+    .eyebrow { font-family:var(--mono); font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:var(--deep); font-weight:500; margin-bottom:12px; }
+    .lead { font-size:24px; color:var(--body); line-height:1.6; }
+    .big { font-size:32px; line-height:1.5; color:var(--ink); }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+    .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; }
+    .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:24px; }
+    .card.acc { background:var(--soft); border-color:var(--signal); }
+    .card.warn { background:var(--red-soft); border-color:#e3b3ad; }
+    .card h3 { font-family:var(--sans); font-size:24px; font-weight:600; margin:0 0 8px; text-transform:none; color:var(--ink); letter-spacing:0; }
+    .card p { font-size:21px; color:var(--body); }
+    .reveal table { font-size:21px; border-collapse:collapse; width:100%; margin:0; }
+    .reveal table th { font-family:var(--mono); text-align:left; font-weight:500; color:var(--muted); font-size:13px; letter-spacing:.1em; text-transform:uppercase; padding:8px 16px; border-bottom:1px solid var(--ink); }
+    .reveal table td { padding:12px 16px; border-bottom:1px solid var(--line); vertical-align:top; line-height:1.4; color:var(--body); }
+    .reveal table td.k { color:var(--ink); font-weight:600; }
+    .foot { position:absolute; left:64px; right:64px; bottom:32px; font-family:var(--mono); font-size:13px; color:var(--muted); letter-spacing:.02em; }
+    .exhibit { width:100%; border-radius:8px; border:1px solid var(--line); background:var(--card); }
+    .callout { position:absolute; background:var(--deep); color:#fff; font-size:19px; font-weight:600; padding:8px 16px; border-radius:4px; }
+    .quote { font-family:var(--serif); font-size:44px; font-weight:700; line-height:1.3; color:var(--ink); max-width:1040px; }
+    .num { font-family:var(--serif); font-size:64px; font-weight:700; color:var(--deep); line-height:1; letter-spacing:-.01em; }
+    .dim { color:var(--muted); }
+    .reveal .slides section.center { display:flex !important; flex-direction:column; justify-content:center; }
+    .reveal .slides section.dark { background:var(--dk); color:var(--dk-text); }
+    .reveal .slides section.dark h1, .reveal .slides section.dark h2, .reveal .slides section.dark .quote { color:var(--dk-text); }
+    .reveal .slides section.dark .lead { color:var(--dk-muted); }
+    .reveal .slides section.dark .eyebrow { color:var(--tg); }
+    .chain { display:flex; flex-direction:column; gap:14px; margin-top:8px; }
+    .chain .s { display:grid; grid-template-columns:64px 1fr; gap:16px; align-items:start; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px 24px; }
+    .chain .s .n { font-family:var(--mono); font-size:14px; color:var(--deep); letter-spacing:.14em; padding-top:6px; }
+    .chain .s h3 { font-family:var(--sans); font-size:24px; font-weight:600; margin:0 0 4px; color:var(--ink); text-transform:none; letter-spacing:0; }
+    .chain .s p { font-size:20px; color:var(--body); line-height:1.45; }
+    .chain .s.on { background:var(--soft); border-color:var(--signal); }
+    .cols { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+    .cols .col { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:24px 28px; }
+    .cols .col.acc { background:var(--soft); border-color:var(--signal); }
+    .cols .col h3 { font-family:var(--mono); font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:var(--deep); font-weight:500; margin:0 0 12px; }
+    .cols .col ul { margin:0; padding-left:0; list-style:none; }
+    .cols .col li { font-size:22px; color:var(--body); line-height:1.55; }
+    .cols .col li b { color:var(--ink); font-weight:600; }
+    .check { background:var(--card); border-left:4px solid var(--deep); padding:16px 24px; font-family:var(--mono); font-size:17px; color:var(--body); line-height:1.6; margin-top:24px; }
+    .divider-title { font-family:var(--serif); font-size:96px; font-weight:700; color:var(--dk-text); line-height:1; }
+    .reveal .slides section.dark .divider-sub { font-size:28px; color:var(--dk-muted); margin-top:24px; }
+    .venn text { font-family:var(--sans); font-size:19px; font-weight:600; fill:var(--ink); }
+    .venn text.c { font-size:21px; }
+    .legend h4 { font-family:var(--mono); font-size:14px; letter-spacing:.14em; text-transform:uppercase; font-weight:500; margin:0 0 6px; }
+    .legend p { font-size:19px; color:var(--body); line-height:1.5; margin:0 0 2px; }
+    .legend p b { color:var(--ink); font-weight:600; }
+    .legend .g { margin-bottom:18px; padding-left:14px; border-left:4px solid var(--line); }
+    .legend .g.a { border-color:var(--deep); } .legend .g.a h4 { color:var(--deep); }
+    .legend .g.b { border-color:var(--signal); } .legend .g.b h4 { color:var(--signal); }
+    .legend .g.c { border-color:var(--red); } .legend .g.c h4 { color:var(--red); }
+    .stat { display:grid; grid-template-columns:320px 1fr; gap:40px; align-items:center; margin-top:8px; }
+    .agenda td.k { width:200px; }
+    .fill { color:var(--red); font-family:var(--mono); font-size:18px; }
+    .arch text { font-size:12.5px; fill:#091310; font-family:var(--sans); }
+    .arch .h { font-size:13px; font-weight:650; }
+    .arch .m { font-size:11px; fill:#4b5b54; }
+    .arch .k { font-size:11px; fill:#8a968f; }
+    .arch .box { fill:#ffffff; stroke:#d8ddd6; stroke-width:1; rx:8; }
+    .arch .zone { fill:none; stroke:#d8ddd6; stroke-dasharray:4 4; rx:12; }
+    .arch .zl { font-size:11px; fill:#8a968f; letter-spacing:.08em; font-weight:600; }
+    .arch .acc { fill:#e6f2ea; stroke:#14543d; }
+    .arch .priv { fill:#fbe9e7; stroke:#d9a7a1; }
+    .arch .priv text, .arch .pt { fill:#b3402e; }
+    .arch .edge { stroke:#b9b7ae; stroke-width:1.2; fill:none; }
+    .arch .edge2 { stroke:#14543d; stroke-width:1.4; fill:none; }
+    .arch .tag { font-size:10.5px; fill:#14543d; font-weight:600; }
+    .arch .rail { fill:#f1f0ea; stroke:#d8ddd6; rx:10; }
+    .org .h { font-size:17px; }
+    .org .m { font-size:14px; }
+    .org .zl { font-size:13px; paint-order:stroke; stroke:#f7f9f4; stroke-width:8px; stroke-linejoin:round; }
+    .fo .h { font-size:15px; }
+    .fo .m { font-size:12.5px; }
+    .fo .k { font-size:11.5px; fill:#8a968f; }
+    #fsbtn { position:fixed; right:16px; bottom:16px; z-index:50; font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--deep); background:rgba(255,255,255,.85); border:1px solid var(--line); border-radius:999px; padding:6px 12px; cursor:pointer; opacity:.35; transition:opacity .2s; }
+    #fsbtn:hover { opacity:1; }
+    :fullscreen #fsbtn { opacity:0; } :fullscreen #fsbtn:hover { opacity:1; }
+    .arch .h { font-size:12px; } .arch .m { font-size:10px; } .arch .zl { font-size:10.5px; letter-spacing:.04em; }
+    .org .h { font-size:16px; } .org .m { font-size:12.5px; }
+    .fo .h { font-size:14.5px; } .fo .m { font-size:11.5px; }
+    .cols .col li { font-size:20px; line-height:1.45; }
+    .funnel .row { grid-template-columns:190px 1fr !important; }
+    .reg .c p { font-size:14px !important; line-height:1.38 !important; } .reg .c .t { font-size:11px !important; }
+    .kol table { font-size:15px !important; } .kol td.k { font-size:16px !important; width:205px !important; } .kol td.w { font-size:13.5px !important; width:480px !important; } .kol table td { padding:7px 10px !important; }
+    .ag table { font-size:15px !important; } .ag table td { padding:5px 10px !important; } .ag table td.w { font-size:14px !important; }
+    .card p { font-size:20px; }
+    .reveal .controls { display:none; } .reveal .progress { color:var(--deep); height:3px; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- 1 封面 -->
+<section class="center dark">
+  <div class="eyebrow">For people who want to learn AI · 2026.10</div>
+  <h1 style="font-size:50px;max-width:1150px;">What changes and what doesn't in the AI era:<br>individuals, organizations, society</h1>
+  <p class="lead" style="margin-top:40px;">Mu Chen · CEO, Canopy</p>
+</section>
+
+<!-- 2 数字 -->
+<section class="center">
+  <div class="eyebrow">My AI journey</div>
+  <h2>AI became a partner in my personal life, my family and my work</h2>
+  <div class="grid4" style="margin-top:8px;">
+    <div class="card"><div class="num" style="white-space:nowrap;font-size:56px;">26.5B</div><h3 style="margin-top:12px;">tokens since February</h3><p>255 days, about 100 million a day.</p></div>
+    <div class="card"><div class="num" style="white-space:nowrap;font-size:56px;">732</div><h3 style="margin-top:12px;">tasks I started myself</h3><p>About 3 a day; the system started another ~7,000 on my behalf.</p></div>
+    <div class="card"><div class="num" style="white-space:nowrap;font-size:56px;">4,400 h</div><h3 style="margin-top:12px;">human-equivalent, 8 roles</h3><p>Engineer, researcher, writer, analyst, investor relations, sales ops, admin, family assistant. Roughly 3 full-time people for eight and a half months.</p></div>
+    <div class="card acc"><div class="num" style="white-space:nowrap;font-size:56px;">2,000+</div><h3 style="margin-top:12px;">files I can take with me</h3><p>141 long-term memories, 33 reusable workflows. They survive a model swap.</p></div>
+  </div>
+</section>
+
+<!-- 2b 动机 -->
+<section class="center">
+  <div class="eyebrow">Why this session</div>
+  <h2>Two motives</h2>
+  <div class="grid2" style="margin-top:8px;">
+    <div class="card acc"><h3>AI is a once-in-a-generation shift</h3><p>I don't want to watch it alone. I want to share, argue and explore it with partners: what it is, and where we should stand.</p></div>
+    <div class="card"><h3>Canopy's vision: wealth management, with composure</h3><p>Getting people to actually use AI is part of that vision.</p></div>
+  </div>
+</section>
+
+<!-- 3 推导链 -->
+<section>
+  <div class="eyebrow">How I understand AI</div>
+  <h2 style="margin-bottom:16px;">One chain of reasoning</h2>
+  <div class="chain">
+    <div class="s"><div class="n">01</div><div><h3>A second type of intelligence is here. It is not a replacement; it is different in kind from human intelligence</h3><p>Different in constitution, not in capability: copyable, ownable, no stake, revocable. The capability line moves every six months; the constitution doesn't.</p></div></div>
+    <div class="s"><div class="n">02</div><div><h3>So it is not a tool to use. It is a fourth factor of production, to be governed</h3><p>It works like labor, can be owned and copied like capital, but bears nothing. Three questions: who owns it, how it is allocated, who answers when it fails.</p></div></div>
+    <div class="s on"><div class="n">03</div><div><h3>Information in and out got cheap. What is scarce: agency, judgement, taste. And someone always has to bear the consequence</h3><p>Four verbs: define, select, verify, bear.</p></div></div>
+    <div class="s"><div class="n">04</div><div><h3>We are still "pulling a Tesla with a horse"</h3><p>It runs on old infrastructure designed for humans. Every current form is transitional, and the transition is faster than six months ago.</p></div></div>
+  </div>
+</section>
+
+<!-- 4b 九个圈 -->
+<section>
+  <div class="eyebrow">Why it is hard</div>
+  <h2 style="margin-bottom:8px;">Understanding AI takes at least 10 fields, probably more</h2>
+  <div style="display:grid;grid-template-columns:540px 1fr;gap:24px;align-items:center;">
+    <svg class="venn" viewBox="0 0 680 560" width="540" height="445" role="img" aria-label="Ten fields overlapping">
+      <circle cx="340" cy="160" r="105" fill="#14543d" fill-opacity=".16" stroke="#14543d" stroke-width="1.2"/>
+      <circle cx="422" cy="187" r="105" fill="#14543d" fill-opacity=".16" stroke="#14543d" stroke-width="1.2"/>
+      <circle cx="473" cy="257" r="105" fill="#14543d" fill-opacity=".16" stroke="#14543d" stroke-width="1.2"/>
+      <circle cx="473" cy="343" r="105" fill="#14543d" fill-opacity=".16" stroke="#14543d" stroke-width="1.2"/>
+      <circle cx="422" cy="413" r="105" fill="#4cb878" fill-opacity=".22" stroke="#2f8f58" stroke-width="1.2" stroke-dasharray="7 5"/>
+      <circle cx="340" cy="440" r="105" fill="#4cb878" fill-opacity=".22" stroke="#2f8f58" stroke-width="1.2" stroke-dasharray="7 5"/>
+      <circle cx="258" cy="413" r="105" fill="#b3402e" fill-opacity=".13" stroke="#b3402e" stroke-width="1.2" stroke-dasharray="2 4"/>
+      <circle cx="207" cy="343" r="105" fill="#b3402e" fill-opacity=".13" stroke="#b3402e" stroke-width="1.2" stroke-dasharray="2 4"/>
+      <circle cx="207" cy="257" r="105" fill="#b3402e" fill-opacity=".13" stroke="#b3402e" stroke-width="1.2" stroke-dasharray="2 4"/>
+      <circle cx="258" cy="187" r="105" fill="#b3402e" fill-opacity=".13" stroke="#b3402e" stroke-width="1.2" stroke-dasharray="2 4"/>
+      <text x="340" y="90" text-anchor="middle" dominant-baseline="central">Neuroscience</text>
+      <text x="463" y="130" text-anchor="middle" dominant-baseline="central">Philosophy</text>
+      <text x="540" y="235" text-anchor="middle" dominant-baseline="central">Math</text>
+      <text x="540" y="365" text-anchor="middle" dominant-baseline="central">Statistics</text>
+      <text x="463" y="470" text-anchor="middle" dominant-baseline="central">Engineering</text>
+      <text x="340" y="510" text-anchor="middle" dominant-baseline="central">Economics</text>
+      <text x="217" y="470" text-anchor="middle" dominant-baseline="central">Politics</text>
+      <text x="140" y="365" text-anchor="middle" dominant-baseline="central">Law</text>
+      <text x="140" y="235" text-anchor="middle" dominant-baseline="central">Sociology</text>
+      <text x="217" y="130" text-anchor="middle" dominant-baseline="central">Religion</text>
+      <circle cx="340" cy="300" r="50" fill="#ffffff" stroke="#091310" stroke-width="1.2"/>
+      <text class="c" x="340" y="290" text-anchor="middle" dominant-baseline="central" style="font-size:17px;">Understand</text><text class="c" x="340" y="311" text-anchor="middle" dominant-baseline="central" style="font-size:17px;">AI</text>
+    </svg>
+    <div class="legend">
+      <div class="g a"><h4>What it is</h4><p><b>Math</b> what it is: a sampler</p><p><b>Statistics</b> when to trust it</p><p><b>Philosophy</b> two kinds of judgment; what intelligence is</p><p><b>Neuroscience</b> an artificial neural network, unlike the brain's</p></div>
+      <div class="g b"><h4>Using it</h4><p><b>Engineering</b> how models work, LLM, MCP and the rest of the vocabulary</p><p><b>Economics</b> the fourth factor; where value migrates</p></div>
+      <div class="g c"><h4>Living with it</h4><p><b>Politics</b> the redistribution of power</p><p><b>Law</b> a new being; how to define its legal personhood</p><p><b>Sociology</b> a new species entering organizations and society</p><p><b>Religion</b> how to live with a non-human intelligence</p></div>
+    </div>
+  </div>
+  <p class="big" style="margin-top:8px;font-weight:600;">Whichever circle you enter from, that is what you think it is.</p>
+</section>
+
+<!-- 5 分隔 个人 -->
+<section class="center dark">
+  <div class="eyebrow">Scale one</div>
+  <div class="divider-title">The individual</div>
+  <p class="divider-sub">A paradigm shift: entry point, way of working, mental energy.</p>
+</section>
+
+<!-- 5b 范式 -->
+<section class="center">
+  <div class="eyebrow">Individual · paradigm shift</div>
+  <h2>What changed is not just efficiency. It is the paradigm</h2>
+  <div class="grid3" style="margin-top:8px;">
+    <div class="card acc"><h3>The entry point to work moved</h3><p>From opening an app or a chat window, to saying one sentence to an always-on agent. The entry point is moving from applications to agents.</p></div>
+    <div class="card acc"><h3>Way of working: both extremes grow, fragments and long runs</h3><p>One end is dozens of judgments under thirty words each; the other is tasks that run for hours or days. The middle, "doing it by hand", is disappearing.</p></div>
+    <div class="card acc"><h3>Way of living: managing mental energy</h3><p>Attention became a budget. When to look, when not to, when to stop: things you now manage every day.</p></div>
+  </div>
+</section>
+
+<!-- 8 总助 -->
+<section>
+  <div class="eyebrow">Individual · entry point</div>
+  <h2 style="margin-bottom:8px;">How my AI system is set up</h2>
+  <svg class="arch" viewBox="0 0 1240 604" width="1152" height="561" style="display:block;" role="img" aria-label="AI working system architecture">
+   <rect class="rail" x="1036" y="16" width="188" height="572"/>
+   <text class="zl" x="1052" y="40">Boundaries · every layer</text>
+   <g transform="translate(1052,72)">
+    <text class="h" y="0">Tiered permissions</text><text class="m" y="18">read · write w/ approval · forbidden</text>
+    <text class="h" y="62">Humans approve outbound</text><text class="m" y="80">nothing leaves without a person</text>
+    <text class="h" y="124">No shared credentials</text><text class="m" y="142">context in, conclusions out</text>
+    <text class="h" y="186">Audit and review</text><text class="m" y="204">logs kept; incidents become rules</text>
+    <text class="h" y="248">Human takeover</text><text class="m" y="266">unsure, sensitive or irreversible</text>
+    <text class="h" y="310">Never decides for me</text><text class="m" y="328">money and equity: analysis only</text>
+    <text class="h" y="372">Models are swappable</text><text class="m" y="390">swapped once; zero rule changes</text>
+   </g>
+
+   <!-- 我 + 入口 -->
+   <rect class="box acc" x="208" y="16" width="300" height="40"/>
+   <text class="h" x="358" y="41" text-anchor="middle">Me · goals, boundaries, judgment, sign-off</text>
+   <path class="edge2" d="M358 56 V66 H186 V72"/>
+   <path class="edge2" d="M358 56 V66 H510 V72"/>
+   <rect class="box" x="32" y="72" width="308" height="44"/>
+   <text class="h" x="186" y="90" text-anchor="middle">Local desktop</text><text class="m" x="186" y="107" text-anchor="middle">I am present, working with AI apps</text>
+   <rect class="box" x="356" y="72" width="308" height="44"/>
+   <text class="h" x="510" y="90" text-anchor="middle">DM channel</text><text class="m" x="510" y="107" text-anchor="middle">when I am away: instruct and confirm the assistant</text>
+   <path class="edge" d="M186 116 V160"/><path class="edge" d="M510 116 V160"/>
+
+   <!-- 顶层 -->
+   <rect class="zone" x="16" y="132" width="684" height="192"/>
+   <text class="zl" x="32" y="152">My system · two AI apps + one coordinating agent, shared rules and context</text>
+   <rect class="box acc" x="32" y="160" width="308" height="48"/>
+   <text class="h" x="44" y="179">Claude · Codex (local, I am present)</text>
+   <text class="m" x="44" y="197">strategy, creation, analysis, writing · engineering</text>
+   <rect class="box acc" x="356" y="160" width="308" height="48"/>
+   <text class="h" x="368" y="179">Assistant agent (always-on, cloud)</text>
+   <text class="m" x="368" y="197">delegates, follows up, reports on schedule; runs unattended</text>
+
+   <path class="edge" d="M186 208 V232"/><text class="k" x="194" y="228">parallel dispatch</text>
+   <path class="edge" d="M510 208 V232"/><text class="k" x="518" y="228">task dispatch</text>
+   <rect class="box" x="32" y="232" width="308" height="38"/><text class="h" x="44" y="248">Sub-agents / parallel agents</text><text class="m" x="44" y="263">research, red-team review, verification, batch experiments</text>
+   <rect class="box" x="32" y="278" width="308" height="38"/><text class="h" x="44" y="294">33 reusable workflows (skills)</text><text class="m" x="44" y="309">red-team panel, decision memo, sourcing, research</text>
+   <rect class="box" x="356" y="232" width="150" height="38"/><text class="h" x="366" y="248">Fundraising agent</text><text class="m" x="366" y="263">tracking · nightly report</text>
+   <rect class="box" x="514" y="232" width="150" height="38"/><text class="h" x="524" y="248">Writing agent</text><text class="m" x="524" y="263">long-form · Tue / Fri</text>
+   <rect class="box" x="356" y="278" width="150" height="38"/><text class="h" x="366" y="294">Family tutor agent</text><text class="m" x="366" y="309">family matters · home machine</text>
+
+   <!-- 公司层：入口是 总助 agent -->
+   <rect class="zone" x="716" y="132" width="300" height="192"/>
+   <text class="zl" x="732" y="152">Company AI ops layer · run by colleagues</text>
+   <path class="edge2" d="M664 184 H732"/>
+   <rect class="box acc" x="732" y="160" width="268" height="48"/>
+   <text class="h" x="744" y="179">Company Slack</text>
+   <text class="m" x="744" y="197">assistant reads channels, asks agents for status</text>
+   <path class="edge" d="M866 208 V216"/>
+   <rect class="box" x="732" y="216" width="268" height="102"/>
+   <text class="h" x="744" y="233">Agents in company Slack</text>
+   <text class="m" x="744" y="250">Data ops agent · 30 scheduled jobs</text>
+   <text class="m" x="744" y="264">Sales agent · leads and CRM checks</text>
+   <text class="m" x="744" y="278">Infra agent · engineering agent</text>
+   <text class="m" x="744" y="292">Content agent · LinkedIn drafts, I review</text>
+   <text class="m" x="744" y="306">AI digest agent · each has a human owner</text>
+
+   <!-- 工具 -->
+   <rect class="zone" x="16" y="340" width="1000" height="80"/>
+   <text class="zl" x="32" y="356">Tools and channels · read / write w/ approval / forbidden; one tier each</text>
+   <path class="edge" d="M186 324 V360"/><path class="edge" d="M510 324 V360"/><path class="edge" d="M866 324 V360"/>
+   <rect class="box" x="32" y="360" width="440" height="44"/><text class="h" x="44" y="378">Communication and collaboration</text><text class="m" x="44" y="395">email · Slack · DM channel · Notion · calendar · GitHub</text>
+   <rect class="box" x="484" y="360" width="256" height="44"/><text class="h" x="496" y="378">Business data</text><text class="m" x="496" y="395">Superset · CRM · reports</text>
+   <rect class="box" x="752" y="360" width="248" height="44"/><text class="h" x="764" y="378">Models</text><text class="m" x="764" y="395">switched per task; replaceable wholesale</text>
+
+   <!-- 积累 -->
+   <rect class="zone" x="16" y="436" width="1000" height="80"/>
+   <text class="zl" x="32" y="452">Accumulation layer · what survives a model swap</text>
+   <path class="edge" d="M186 420 V456"/><path class="edge" d="M510 420 V456"/><path class="edge" d="M866 420 V456"/>
+   <g transform="translate(32,456)">
+    <rect class="box acc" x="0" y="0" width="236" height="44"/><text class="h" x="10" y="18">Shared rules</text><text class="m" x="10" y="35">rules, roster, memory policy; one copy</text>
+    <rect class="box" x="248" y="0" width="236" height="44"/><text class="h" x="258" y="18">Workspace and memory</text><text class="m" x="258" y="35">2,000+ .md files · 141 long-term memories</text>
+    <rect class="box" x="496" y="0" width="236" height="44"/><text class="h" x="506" y="18">Working state</text><text class="m" x="506" y="35">task snapshot · metrics · goals · VIP list</text>
+    <rect class="box" x="744" y="0" width="240" height="44"/><text class="h" x="754" y="18">Ontology (next layer)</text><text class="m" x="754" y="35">people, orgs, projects, decisions; in design</text>
+   </g>
+
+   <!-- 私人 -->
+   <rect class="zone" x="16" y="532" width="1000" height="56"/>
+   <text class="zl" x="32" y="548">Private layer · local only, never in the cloud</text>
+   <g transform="translate(32,556)">
+    <rect class="box priv" x="0" y="0" width="316" height="24"/><text class="h pt" x="10" y="17">Personal profile</text>
+    <rect class="box priv" x="334" y="0" width="316" height="24"/><text class="h pt" x="344" y="17">Family memory</text>
+    <rect class="box priv" x="668" y="0" width="316" height="24"/><text class="h pt" x="678" y="17">Working preferences</text>
+   </g>
+  </svg>
+</section>
+
+<!-- 7 四次外置 -->
+<section>
+  <div class="eyebrow">Individual · way of working</div>
+  <h2 style="margin-bottom:8px;">How the AI grew (conversations I started)</h2>
+  <div id="lg3" style="font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin:0 0 6px 2px;"></div>
+  <svg id="c3" viewBox="0 0 1200 575" width="1152" height="551" role="img" aria-label="Timeline of all sessions I started" style="display:block;"></svg>
+  <script>
+  (function(){
+    const ns="http://www.w3.org/2000/svg";
+    const el=(t,a,p)=>{const n=document.createElementNS(ns,t);for(const k in a)n.setAttribute(k,a[k]);if(p)p.appendChild(n);return n;};
+    const text=(p,x,y,s,c,an)=>{const t=el("text",{x,y,"text-anchor":an||"start"},p);t.textContent=s;t.setAttribute("font-family","Inter, PingFang SC, sans-serif");if(c==="lbl"){t.setAttribute("font-size","15");t.setAttribute("fill","#4b5b54");}else if(c==="tick"){t.setAttribute("font-size","13");t.setAttribute("fill","#8a968f");}else{t.setAttribute("font-size","13");t.setAttribute("fill","#091310");}return t;};
+    const svg=document.getElementById("c3"); if(!svg) return;
+    const P=[{"d": "2026-02-02", "c": 5, "n": 46, "u": "产品计划推进与文档审查", "s": "claude"}, {"d": "2026-02-02", "c": 5, "n": 28, "u": "Canopy 消息处理开发", "s": "claude"}, {"d": "2026-02-02", "c": 5, "n": 3, "u": "原型代码修复与页面设计", "s": "claude"}, {"d": "2026-02-02", "c": 0, "n": 7, "u": "canopy agent 排障", "s": "claude"}, {"d": "2026-02-03", "c": 1, "n": 1, "u": "战略规划与对话整理", "s": "claude"}, {"d": "2026-02-03", "c": 0, "n": 2, "u": "agent路径排障", "s": "claude"}, {"d": "2026-02-03", "c": 5, "n": 39, "u": "产品UI与规格审查", "s": "claude"}, {"d": "2026-02-03", "c": 0, "n": 1, "u": "Monday数据抓取分析Agent", "s": "claude"}, {"d": "2026-02-03", "c": 4, "n": 3, "u": "销售线索与商机分析", "s": "claude"}, {"d": "2026-02-03", "c": 0, "n": 33, "u": "HubSpot商机挖掘Agent", "s": "claude"}, {"d": "2026-02-03", "c": 4, "n": 11, "u": "CRM流失客户分析", "s": "claude"}, {"d": "2026-02-03", "c": 2, "n": 6, "u": "财富管理AI文章策划", "s": "claude"}, {"d": "2026-02-03", "c": 5, "n": 6, "u": "前端程序部署调试", "s": "claude"}, {"d": "2026-02-03", "c": 0, "n": 6, "u": "交互式表单搭建", "s": "claude"}, {"d": "2026-02-03", "c": 0, "n": 8, "u": "MCP 部署调试", "s": "claude"}, {"d": "2026-02-04", "c": 2, "n": 32, "u": "文章起草与润色", "s": "claude"}, {"d": "2026-02-04", "c": 0, "n": 23, "u": "Agent 配置与优化", "s": "claude"}, {"d": "2026-02-04", "c": 0, "n": 2, "u": "AI工具排障", "s": "claude"}, {"d": "2026-02-05", "c": 2, "n": 121, "u": "AI价值文章撰写", "s": "claude"}, {"d": "2026-02-05", "c": 2, "n": 1, "u": "产品演示录制", "s": "claude"}, {"d": "2026-02-05", "c": 5, "n": 1, "u": "合并demo与本地文件", "s": "claude"}, {"d": "2026-02-06", "c": 0, "n": 2, "u": "AI连接诊断", "s": "claude"}, {"d": "2026-02-06", "c": 0, "n": 7, "u": "更新Agent记忆配置", "s": "claude"}, {"d": "2026-02-06", "c": 0, "n": 2, "u": "连接状态测试", "s": "claude"}, {"d": "2026-02-06", "c": 0, "n": 1, "u": "微信聊天扫描与清理", "s": "claude"}, {"d": "2026-02-07", "c": 3, "n": 5, "u": "融资邀约邮件起草", "s": "claude"}, {"d": "2026-02-07", "c": 6, "n": 2, "u": "企业邮箱账号管理", "s": "claude"}, {"d": "2026-02-08", "c": 5, "n": 1, "u": "项目上下文回顾与规划", "s": "claude"}, {"d": "2026-02-08", "c": 1, "n": 12, "u": "AI概念与工具调研", "s": "claude"}, {"d": "2026-02-08", "c": 7, "n": 15, "u": "个人事务", "s": "claude"}, {"d": "2026-02-08", "c": 0, "n": 2, "u": "agent排障", "s": "claude"}, {"d": "2026-02-08", "c": 0, "n": 3, "u": "AI工具排障", "s": "claude"}, {"d": "2026-02-08", "c": 0, "n": 1, "u": "AI连接测试", "s": "claude"}, {"d": "2026-02-08", "c": 0, "n": 5, "u": "多智能体功能测试", "s": "claude"}, {"d": "2026-02-08", "c": 3, "n": 24, "u": "投资人问答准备", "s": "claude"}, {"d": "2026-02-09", "c": 1, "n": 4, "u": "美元债投资分析", "s": "claude"}, {"d": "2026-02-09", "c": 0, "n": 2, "u": "Claude App 排障", "s": "claude"}, {"d": "2026-02-09", "c": 0, "n": 4, "u": "Claude网络排障", "s": "claude"}, {"d": "2026-02-09", "c": 5, "n": 1, "u": "开发环境配置", "s": "claude"}, {"d": "2026-02-09", "c": 7, "n": 3, "u": "家庭事务", "s": "claude"}, {"d": "2026-02-09", "c": 5, "n": 6, "u": "Tailscale 安装排障", "s": "claude"}, {"d": "2026-02-10", "c": 0, "n": 3, "u": "接口连通性测试", "s": "claude"}, {"d": "2026-02-10", "c": 0, "n": 2, "u": "系统登录认证", "s": "claude"}, {"d": "2026-02-10", "c": 5, "n": 4, "u": "财富诊断产品模块设计", "s": "claude"}, {"d": "2026-02-10", "c": 0, "n": 1, "u": "AI系统登录", "s": "claude"}, {"d": "2026-02-10", "c": 0, "n": 1, "u": "系统登录配置", "s": "claude"}, {"d": "2026-02-10", "c": 0, "n": 2, "u": "AI 系统登录初始化", "s": "claude"}, {"d": "2026-02-10", "c": 0, "n": 5, "u": "连通性测试", "s": "claude"}, {"d": "2026-02-10", "c": 0, "n": 26, "u": "智能体环境配置", "s": "claude"}, {"d": "2026-02-10", "c": 7, "n": 2, "u": "个人事务", "s": "claude"}, {"d": "2026-02-10", "c": 0, "n": 11, "u": "Agent配置与记忆上传", "s": "claude"}, {"d": "2026-02-10", "c": 0, "n": 18, "u": "个人知识库配置", "s": "claude"}, {"d": "2026-02-10", "c": 7, "n": 1, "u": "个人事务", "s": "claude"}, {"d": "2026-02-10", "c": 0, "n": 2, "u": "Agent 登录与目录配置", "s": "claude"}, {"d": "2026-02-11", "c": 0, "n": 27, "u": "脚本运行与上下文配置", "s": "claude"}, {"d": "2026-02-11", "c": 0, "n": 5, "u": "AI系统接入配置", "s": "claude"}, {"d": "2026-02-11", "c": 0, "n": 12, "u": "Notion数据接入", "s": "claude"}, {"d": "2026-02-11", "c": 2, "n": 16, "u": "社群招募图文制作", "s": "claude"}, {"d": "2026-02-11", "c": 0, "n": 5, "u": "领英帖子生成与技能配置", "s": "claude"}, {"d": "2026-02-11", "c": 7, "n": 1, "u": "个人事务", "s": "claude"}, {"d": "2026-02-11", "c": 5, "n": 24, "u": "Mac远程控制开发", "s": "claude"}, {"d": "2026-02-12", "c": 0, "n": 2, "u": "系统登录认证", "s": "claude"}, {"d": "2026-02-12", "c": 0, "n": 5, "u": "AI工具代理配置", "s": "claude"}, {"d": "2026-02-12", "c": 2, "n": 20, "u": "教程生成与流程记录", "s": "claude"}, {"d": "2026-02-12", "c": 0, "n": 69, "u": "电脑存储清理与日志记录", "s": "claude"}, {"d": "2026-02-12", "c": 0, "n": 35, "u": "Agent部署与SSH配置", "s": "claude"}, {"d": "2026-02-13", "c": 2, "n": 3, "u": "小红书内容修改", "s": "claude"}, {"d": "2026-02-13", "c": 5, "n": 12, "u": "终端环境搭建", "s": "claude"}, {"d": "2026-02-15", "c": 0, "n": 55, "u": "Agent 连通排障", "s": "claude"}, {"d": "2026-02-15", "c": 0, "n": 5, "u": "Codex 日志排查", "s": "codex"}, {"d": "2026-02-16", "c": 0, "n": 21, "u": "AI系统部署配置", "s": "codex"}, {"d": "2026-02-16", "c": 0, "n": 2, "u": "历史会话续接", "s": "codex"}, {"d": "2026-02-16", "c": 0, "n": 138, "u": "agent 进度查询", "s": "codex"}, {"d": "2026-02-16", "c": 0, "n": 98, "u": "Agent 连接调试", "s": "claude"}, {"d": "2026-02-17", "c": 0, "n": 3, "u": "开启多智能体并行测试", "s": "claude"}, {"d": "2026-02-17", "c": 0, "n": 2, "u": "女友AI助手部署", "s": "claude"}, {"d": "2026-02-17", "c": 2, "n": 7, "u": "Newsletter文章规划", "s": "claude"}, {"d": "2026-02-17", "c": 0, "n": 19, "u": "agent提示词调优", "s": "claude"}, {"d": "2026-02-17", "c": 0, "n": 7, "u": "MacMini远程SSH排障", "s": "codex"}, {"d": "2026-02-17", "c": 0, "n": 24, "u": "Agent 配置与测试", "s": "claude"}, {"d": "2026-02-17", "c": 0, "n": 24, "u": "部署并行AI实例", "s": "claude"}, {"d": "2026-02-17", "c": 0, "n": 34, "u": "Agent 记忆与存储架构", "s": "claude"}, {"d": "2026-02-18", "c": 0, "n": 10, "u": "会话上下文排障", "s": "claude"}, {"d": "2026-02-18", "c": 0, "n": 25, "u": "AI会话监控与成本优化", "s": "claude"}, {"d": "2026-02-18", "c": 0, "n": 65, "u": "Agent记忆与文档整理", "s": "claude"}, {"d": "2026-02-18", "c": 0, "n": 22, "u": "Agent工作流优化", "s": "claude"}, {"d": "2026-02-18", "c": 0, "n": 21, "u": "Agent记忆配置", "s": "claude"}, {"d": "2026-02-18", "c": 0, "n": 22, "u": "Agent系统排障", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 1, "u": "Agent 系统配置", "s": "codex"}, {"d": "2026-02-20", "c": 0, "n": 42, "u": "Agent日志与SSH调试", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 2, "u": "agent 会话续写", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 164, "u": "AI写作工作流配置", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 4, "u": "模型配置查询", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 30, "u": "Agent 环境排障", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 9, "u": "Agent 记忆与环境配置", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 23, "u": "Agent系统排障调试", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 2, "u": "系统健康检查", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 28, "u": "LLM调用审计与优化", "s": "claude"}, {"d": "2026-02-20", "c": 5, "n": 2, "u": "产品原型开发", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 11, "u": "Agent 环境配置与排障", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 3, "u": "配置Tailscale连接", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 4, "u": "agent 排障", "s": "claude"}, {"d": "2026-02-20", "c": 0, "n": 13, "u": "AI系统部署调试", "s": "claude"}, {"d": "2026-02-21", "c": 0, "n": 12, "u": "AI记忆与文档读取配置", "s": "claude"}, {"d": "2026-02-22", "c": 0, "n": 4, "u": "Agent运行状态检查", "s": "claude"}, {"d": "2026-02-22", "c": 0, "n": 2, "u": "Agent运行状态检查", "s": "claude"}, {"d": "2026-02-22", "c": 0, "n": 30, "u": "公众号发布自动化搭建", "s": "claude"}, {"d": "2026-02-22", "c": 2, "n": 46, "u": "公众号推文修改", "s": "claude"}, {"d": "2026-02-22", "c": 4, "n": 2, "u": "CRM系统对接", "s": "claude"}, {"d": "2026-02-22", "c": 0, "n": 5, "u": "HubSpot MCP 搭建", "s": "claude"}, {"d": "2026-02-22", "c": 0, "n": 2, "u": "AI运行排障", "s": "claude"}, {"d": "2026-02-22", "c": 7, "n": 26, "u": "个人事务", "s": "claude"}, {"d": "2026-02-22", "c": 4, "n": 17, "u": "CRM数据盘点与外联规划", "s": "claude"}, {"d": "2026-02-23", "c": 0, "n": 34, "u": "Agent异常排障", "s": "claude"}, {"d": "2026-02-23", "c": 4, "n": 12, "u": "外拓数据清洗与核对", "s": "claude"}, {"d": "2026-02-23", "c": 0, "n": 4, "u": "Agent 指令测试", "s": "claude"}, {"d": "2026-02-23", "c": 0, "n": 22, "u": "CLI连接排障", "s": "codex"}, {"d": "2026-02-23", "c": 0, "n": 5, "u": "SSH配置查询", "s": "codex"}, {"d": "2026-02-23", "c": 7, "n": 2, "u": "个人事务", "s": "claude"}, {"d": "2026-02-23", "c": 0, "n": 2, "u": "Agent 开关调试", "s": "claude"}, {"d": "2026-02-23", "c": 4, "n": 40, "u": "销售名单分析与拓客", "s": "claude"}, {"d": "2026-02-23", "c": 0, "n": 10, "u": "云端 agent登录排障", "s": "claude"}, {"d": "2026-02-23", "c": 0, "n": 18, "u": "AI模型配置对比", "s": "claude"}, {"d": "2026-02-23", "c": 0, "n": 7, "u": "Claude访问排障", "s": "claude"}, {"d": "2026-02-23", "c": 2, "n": 18, "u": "Newsletter写作与发布流程", "s": "claude"}, {"d": "2026-02-24", "c": 0, "n": 5, "u": "AI系统排障", "s": "claude"}, {"d": "2026-02-24", "c": 4, "n": 78, "u": "客户数据与增长分析", "s": "claude"}, {"d": "2026-02-24", "c": 4, "n": 62, "u": "客户数据核查与整合", "s": "claude"}, {"d": "2026-02-24", "c": 0, "n": 27, "u": "Agent 报销检索配置", "s": "claude"}, {"d": "2026-02-24", "c": 0, "n": 1, "u": "恢复历史会话", "s": "claude"}, {"d": "2026-02-24", "c": 6, "n": 52, "u": "销售招聘管理", "s": "claude"}, {"d": "2026-02-24", "c": 0, "n": 9, "u": "Codex安装配置", "s": "claude"}, {"d": "2026-02-24", "c": 0, "n": 22, "u": "系统排障与日志检查", "s": "claude"}, {"d": "2026-02-24", "c": 4, "n": 76, "u": "销售线索分级", "s": "claude"}, {"d": "2026-02-25", "c": 2, "n": 14, "u": "Substack文章修改", "s": "claude"}, {"d": "2026-02-25", "c": 0, "n": 3, "u": "团队内容协作AI搭建", "s": "claude"}, {"d": "2026-02-25", "c": 0, "n": 44, "u": "AI模型访问排障", "s": "claude"}, {"d": "2026-02-25", "c": 1, "n": 125, "u": "竞品威胁与战略分析", "s": "claude"}, {"d": "2026-02-25", "c": 0, "n": 1, "u": "Agent 配置测试", "s": "claude"}, {"d": "2026-02-25", "c": 7, "n": 1, "u": "个人事务", "s": "claude"}, {"d": "2026-02-25", "c": 0, "n": 11, "u": "AI插件安装与配置", "s": "claude"}, {"d": "2026-02-25", "c": 0, "n": 1, "u": "云服务器SSH排障", "s": "claude"}, {"d": "2026-02-25", "c": 0, "n": 76, "u": "Claude云迁移配置", "s": "claude"}, {"d": "2026-02-25", "c": 0, "n": 42, "u": "智能体记忆排障", "s": "claude"}, {"d": "2026-02-25", "c": 0, "n": 13, "u": "AI记忆配置", "s": "claude"}, {"d": "2026-02-26", "c": 5, "n": 1, "u": "Canopy目录整理计划", "s": "claude"}, {"d": "2026-02-26", "c": 0, "n": 9, "u": "Claude 访问排障", "s": "claude"}, {"d": "2026-02-26", "c": 0, "n": 1, "u": "会话恢复", "s": "claude"}, {"d": "2026-02-26", "c": 0, "n": 21, "u": "AI开发环境搭建", "s": "claude"}, {"d": "2026-02-26", "c": 0, "n": 35, "u": "云端 agent 部署测试", "s": "claude"}, {"d": "2026-02-26", "c": 5, "n": 1, "u": "Canopy 功能说明", "s": "claude"}, {"d": "2026-02-26", "c": 0, "n": 2, "u": "调取系统配置JSON", "s": "claude"}, {"d": "2026-02-26", "c": 0, "n": 3, "u": "Kimi接口测试", "s": "claude"}, {"d": "2026-02-26", "c": 7, "n": 1, "u": "个人事务", "s": "claude"}, {"d": "2026-02-26", "c": 1, "n": 130, "u": "AI编程工具竞品分析", "s": "claude"}, {"d": "2026-02-26", "c": 0, "n": 14, "u": "API密钥替换与检查", "s": "claude"}, {"d": "2026-02-26", "c": 0, "n": 3, "u": "配置 Claude 笔记技能", "s": "claude"}, {"d": "2026-02-27", "c": 2, "n": 7, "u": "文章写作与内容规划", "s": "claude"}, {"d": "2026-02-27", "c": 6, "n": 1, "u": "Notion项目进度检查", "s": "claude"}, {"d": "2026-02-27", "c": 0, "n": 6, "u": "agent日志与配置排查", "s": "claude"}, {"d": "2026-02-27", "c": 7, "n": 5, "u": "个人事务", "s": "claude"}, {"d": "2026-02-27", "c": 0, "n": 6, "u": "配置Agent权限", "s": "claude"}, {"d": "2026-02-27", "c": 2, "n": 145, "u": "讨论稿修改", "s": "claude"}, {"d": "2026-02-28", "c": 0, "n": 42, "u": "Agent token消耗排查", "s": "claude"}, {"d": "2026-03-01", "c": 0, "n": 55, "u": "Agent进化周期配置", "s": "claude"}, {"d": "2026-03-01", "c": 0, "n": 18, "u": "Agent 部署配置", "s": "claude"}, {"d": "2026-03-01", "c": 0, "n": 29, "u": "Agent搜索技能配置", "s": "claude"}, {"d": "2026-03-01", "c": 1, "n": 194, "u": "大模型趋势分析", "s": "claude"}, {"d": "2026-03-01", "c": 0, "n": 4, "u": "AI会话排障", "s": "claude"}, {"d": "2026-03-01", "c": 0, "n": 10, "u": "Agent 排障", "s": "claude"}, {"d": "2026-03-01", "c": 0, "n": 68, "u": "agent排障", "s": "claude"}, {"d": "2026-03-01", "c": 0, "n": 5, "u": "AI记忆模块配置", "s": "claude"}, {"d": "2026-03-01", "c": 0, "n": 2, "u": "模型知识边界查询", "s": "claude"}, {"d": "2026-03-02", "c": 0, "n": 32, "u": "Agent技能与逻辑梳理", "s": "claude"}, {"d": "2026-03-02", "c": 5, "n": 8, "u": "代码库产品化分析", "s": "claude"}, {"d": "2026-03-02", "c": 5, "n": 9, "u": "Canopy目录结构调整", "s": "claude"}, {"d": "2026-03-02", "c": 2, "n": 215, "u": "Substack文章撰写", "s": "claude"}, {"d": "2026-03-02", "c": 1, "n": 2, "u": "文章事实核查", "s": "claude"}, {"d": "2026-03-02", "c": 5, "n": 5, "u": "GitHub权限配置", "s": "claude"}, {"d": "2026-03-02", "c": 0, "n": 13, "u": "销售线索Agent调优", "s": "claude"}, {"d": "2026-03-02", "c": 0, "n": 32, "u": "Agent 部署排查与配置", "s": "claude"}, {"d": "2026-03-02", "c": 0, "n": 18, "u": "Agent Slack配置", "s": "claude"}, {"d": "2026-03-02", "c": 0, "n": 25, "u": "Agent排障与配置", "s": "claude"}, {"d": "2026-03-02", "c": 0, "n": 2, "u": "Gmail 连接配置", "s": "claude"}, {"d": "2026-03-02", "c": 0, "n": 11, "u": "Agent用量诊断", "s": "claude"}, {"d": "2026-03-03", "c": 0, "n": 12, "u": "MCP配置调试", "s": "claude"}, {"d": "2026-03-03", "c": 0, "n": 100, "u": "Agent配置与排障", "s": "claude"}, {"d": "2026-03-03", "c": 3, "n": 15, "u": "投资人对话分析", "s": "claude"}, {"d": "2026-03-03", "c": 1, "n": 2, "u": "工作推进计划", "s": "claude"}, {"d": "2026-03-03", "c": 1, "n": 36, "u": "财富Agent战略规划", "s": "claude"}, {"d": "2026-03-03", "c": 5, "n": 25, "u": "产品脚本定位与文档推送", "s": "claude"}, {"d": "2026-03-03", "c": 2, "n": 29, "u": "微信文章标题优化", "s": "claude"}, {"d": "2026-03-04", "c": 0, "n": 18, "u": "Agent任务追踪调优", "s": "claude"}, {"d": "2026-03-04", "c": 0, "n": 6, "u": "AI记忆配置", "s": "claude"}, {"d": "2026-03-04", "c": 0, "n": 2, "u": "API集成排障", "s": "claude"}, {"d": "2026-03-04", "c": 2, "n": 14, "u": "文章校对与配图生成", "s": "claude"}, {"d": "2026-03-04", "c": 2, "n": 1, "u": "Canopy维基百科撰写", "s": "claude"}, {"d": "2026-03-04", "c": 2, "n": 12, "u": "one-pager 翻译排版", "s": "claude"}, {"d": "2026-03-04", "c": 2, "n": 4, "u": "AI使用复盘文章", "s": "claude"}, {"d": "2026-03-04", "c": 0, "n": 6, "u": "Codex 日志排查", "s": "claude"}, {"d": "2026-03-04", "c": 0, "n": 10, "u": "Agent UI 缩放排障", "s": "claude"}, {"d": "2026-03-04", "c": 0, "n": 2, "u": "AI系统状态与额度查询", "s": "codex"}, {"d": "2026-03-04", "c": 0, "n": 16, "u": "AI工作流架构设计", "s": "claude"}, {"d": "2026-03-04", "c": 5, "n": 1, "u": "修复应用窗口尺寸问题", "s": "codex"}, {"d": "2026-03-04", "c": 0, "n": 2, "u": "AI读取权限检查", "s": "claude"}, {"d": "2026-03-04", "c": 0, "n": 1, "u": "AI上下文读取检查", "s": "claude"}, {"d": "2026-03-04", "c": 0, "n": 1, "u": "AI 权限调试", "s": "claude"}, {"d": "2026-03-04", "c": 0, "n": 1, "u": "Canopy权限调试", "s": "claude"}, {"d": "2026-03-05", "c": 2, "n": 2, "u": "Fintech 演讲内容重写", "s": "claude"}, {"d": "2026-03-05", "c": 2, "n": 40, "u": "文章转视频制作", "s": "claude"}, {"d": "2026-03-05", "c": 1, "n": 37, "u": "加密货币策略分析与复刻", "s": "claude"}, {"d": "2026-03-05", "c": 3, "n": 53, "u": "投资人沟通材料准备", "s": "claude"}, {"d": "2026-03-05", "c": 0, "n": 19, "u": "AI密钥检查清理", "s": "claude"}, {"d": "2026-03-05", "c": 0, "n": 67, "u": "agent排障与指导", "s": "claude"}, {"d": "2026-03-05", "c": 5, "n": 45, "u": "开发Canopy迷你版", "s": "claude"}, {"d": "2026-03-05", "c": 0, "n": 17, "u": "会话压缩与数据查询", "s": "claude"}, {"d": "2026-03-05", "c": 3, "n": 30, "u": "投资回报模拟与建仓", "s": "claude"}, {"d": "2026-03-05", "c": 3, "n": 19, "u": "融资teaser撰写", "s": "claude"}, {"d": "2026-03-06", "c": 3, "n": 68, "u": "投资人沟通准备", "s": "claude"}, {"d": "2026-03-06", "c": 1, "n": 2, "u": "竞品调研分析", "s": "claude"}, {"d": "2026-03-06", "c": 5, "n": 2, "u": "Odoo集成可行性评估", "s": "claude"}, {"d": "2026-03-06", "c": 0, "n": 59, "u": "agent排障", "s": "claude"}, {"d": "2026-03-06", "c": 0, "n": 1, "u": "AI系统更新维护", "s": "codex"}, {"d": "2026-03-06", "c": 0, "n": 10, "u": "AI记忆排障", "s": "claude"}, {"d": "2026-03-06", "c": 0, "n": 2, "u": "AI输出排障", "s": "claude"}, {"d": "2026-03-07", "c": 1, "n": 66, "u": "竞品流量调研", "s": "claude"}, {"d": "2026-03-07", "c": 1, "n": 1, "u": "行业数据与报告搜集", "s": "claude"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "历史会话检索", "s": "claude"}, {"d": "2026-03-07", "c": 0, "n": 5, "u": "agent 排障", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 21, "u": "会话记忆配置", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 2, "u": "历史对话检索", "s": "claude"}, {"d": "2026-03-07", "c": 0, "n": 26, "u": "AI 助手排障与配置", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 4, "u": "多模型搜索配置", "s": "claude"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "Notion MCP 接入", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 17, "u": "Notion MCP 接入", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "Agent记忆验证", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "Agent记忆配置测试", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "MCP记忆工具调试", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "AI系统探针调试", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "系统探针测试", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "Agent内存探针测试", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "AI记忆探针测试", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "Agent 配置与记忆设置", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "Agent 记忆配置", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "Agent记忆探针测试", "s": "codex"}, {"d": "2026-03-07", "c": 1, "n": 14, "u": "投资标的分析", "s": "codex"}, {"d": "2026-03-07", "c": 0, "n": 1, "u": "AI记忆探针测试", "s": "codex"}, {"d": "2026-03-08", "c": 0, "n": 8, "u": "任务追踪器维护", "s": "claude"}, {"d": "2026-03-08", "c": 0, "n": 1, "u": "Agent会话排障", "s": "codex"}, {"d": "2026-03-08", "c": 0, "n": 81, "u": "AI会话回顾", "s": "claude"}, {"d": "2026-03-08", "c": 7, "n": 7, "u": "个人状态记录", "s": "claude"}, {"d": "2026-03-08", "c": 2, "n": 115, "u": "系列文章撰写", "s": "claude"}, {"d": "2026-03-08", "c": 2, "n": 1, "u": "AI记忆架构文档重写", "s": "claude"}, {"d": "2026-03-09", "c": 6, "n": 5, "u": "财务指标与报告查询", "s": "claude"}, {"d": "2026-03-09", "c": 6, "n": 34, "u": "顾问会议议程", "s": "claude"}, {"d": "2026-03-09", "c": 3, "n": 26, "u": "融资Brief润色", "s": "claude"}, {"d": "2026-03-10", "c": 6, "n": 71, "u": "人事事务", "s": "claude"}, {"d": "2026-03-10", "c": 4, "n": 26, "u": "销售外展策略调整", "s": "claude"}, {"d": "2026-03-10", "c": 0, "n": 18, "u": "Gmail接入配置", "s": "claude"}, {"d": "2026-03-10", "c": 4, "n": 24, "u": "客户数据与价值评估", "s": "claude"}, {"d": "2026-03-10", "c": 1, "n": 3, "u": "竞品与市场空间分析", "s": "claude"}, {"d": "2026-03-10", "c": 4, "n": 2, "u": "销售数据API评估", "s": "claude"}, {"d": "2026-03-10", "c": 0, "n": 1, "u": "Agent记忆框架选型", "s": "claude"}, {"d": "2026-03-10", "c": 3, "n": 15, "u": "财务与股权事务", "s": "claude"}, {"d": "2026-03-10", "c": 2, "n": 17, "u": "公众号安全教程撰写", "s": "claude"}, {"d": "2026-03-11", "c": 0, "n": 1, "u": "龙虾CLI对接方案", "s": "claude"}, {"d": "2026-03-11", "c": 0, "n": 1, "u": "扫描可用模型", "s": "claude"}, {"d": "2026-03-11", "c": 3, "n": 2, "u": "财务与股权事务", "s": "claude"}, {"d": "2026-03-11", "c": 6, "n": 57, "u": "销售经理招聘", "s": "claude"}, {"d": "2026-03-11", "c": 1, "n": 10, "u": "家族财富调研", "s": "claude"}, {"d": "2026-03-11", "c": 7, "n": 3, "u": "个人事务", "s": "claude"}, {"d": "2026-03-11", "c": 4, "n": 18, "u": "销售产品知识库", "s": "claude"}, {"d": "2026-03-11", "c": 5, "n": 27, "u": "落地页开发", "s": "claude"}, {"d": "2026-03-11", "c": 0, "n": 25, "u": "内部AI中台规划", "s": "claude"}, {"d": "2026-03-11", "c": 5, "n": 2, "u": "技术库调研", "s": "claude"}, {"d": "2026-03-11", "c": 7, "n": 2, "u": "个人事务", "s": "claude"}, {"d": "2026-03-12", "c": 4, "n": 8, "u": "客户集成提案准备", "s": "claude"}, {"d": "2026-03-12", "c": 0, "n": 2, "u": "Agent配置确认", "s": "claude"}, {"d": "2026-03-12", "c": 6, "n": 11, "u": "BD经理招聘JD", "s": "claude"}, {"d": "2026-03-12", "c": 3, "n": 18, "u": "财务与股权事务", "s": "claude"}, {"d": "2026-03-12", "c": 0, "n": 1, "u": "AI技能清单查询", "s": "claude"}, {"d": "2026-03-12", "c": 5, "n": 1, "u": "小红书图片抓取", "s": "claude"}, {"d": "2026-03-12", "c": 0, "n": 174, "u": "AI agent 排障", "s": "claude"}, {"d": "2026-03-12", "c": 7, "n": 3, "u": "个人事务", "s": "claude"}, {"d": "2026-03-13", "c": 5, "n": 6, "u": "UOB数据源接入检查", "s": "claude"}, {"d": "2026-03-13", "c": 4, "n": 3, "u": "客户KYC文件清单", "s": "claude"}, {"d": "2026-03-13", "c": 4, "n": 10, "u": "销售数据问答库", "s": "claude"}, {"d": "2026-03-13", "c": 0, "n": 3, "u": "Agent上下文文档生成", "s": "claude"}, {"d": "2026-03-13", "c": 0, "n": 3, "u": "AI插件安全评估", "s": "claude"}, {"d": "2026-03-13", "c": 1, "n": 34, "u": "商业可行性评估", "s": "claude"}, {"d": "2026-03-14", "c": 1, "n": 4, "u": "大模型能力评估清单", "s": "claude"}, {"d": "2026-03-14", "c": 7, "n": 2, "u": "个人事务", "s": "claude"}, {"d": "2026-03-14", "c": 2, "n": 4, "u": "媒体采访回复草稿", "s": "claude"}, {"d": "2026-03-14", "c": 3, "n": 14, "u": "融资简报修改", "s": "claude"}, {"d": "2026-03-14", "c": 0, "n": 10, "u": "AI写作工作流配置", "s": "claude"}, {"d": "2026-03-14", "c": 2, "n": 50, "u": "文章撰写与编辑", "s": "claude"}, {"d": "2026-03-15", "c": 2, "n": 10, "u": "家办AI分享课件", "s": "claude"}, {"d": "2026-03-15", "c": 0, "n": 3, "u": "安装UI/UX技能", "s": "claude"}, {"d": "2026-03-16", "c": 4, "n": 6, "u": "交易数据查询分析", "s": "claude"}, {"d": "2026-03-16", "c": 2, "n": 93, "u": "多Agent系统介绍", "s": "claude"}, {"d": "2026-03-16", "c": 7, "n": 101, "u": "家庭事务", "s": "claude"}, {"d": "2026-03-16", "c": 0, "n": 4, "u": "AI会话卡顿诊断", "s": "claude"}, {"d": "2026-03-16", "c": 4, "n": 13, "u": "客户归属数据挖掘", "s": "claude"}, {"d": "2026-03-17", "c": 0, "n": 33, "u": "AI访问网络排障", "s": "claude"}, {"d": "2026-03-17", "c": 0, "n": 4, "u": "AI终端连接配置", "s": "claude"}, {"d": "2026-03-17", "c": 0, "n": 15, "u": "agent 权限调试", "s": "claude"}, {"d": "2026-03-17", "c": 7, "n": 31, "u": "个人状态记录", "s": "claude"}, {"d": "2026-03-17", "c": 2, "n": 12, "u": "AI自动撰稿", "s": "claude"}, {"d": "2026-03-17", "c": 0, "n": 1, "u": "AI agent 配置", "s": "claude"}, {"d": "2026-03-17", "c": 0, "n": 25, "u": "Agent环境配置与权限", "s": "claude"}, {"d": "2026-03-17", "c": 0, "n": 6, "u": "agent排障", "s": "claude"}, {"d": "2026-03-17", "c": 0, "n": 44, "u": "AI 会话排障", "s": "claude"}, {"d": "2026-03-17", "c": 0, "n": 35, "u": "模型接入与订阅调研", "s": "claude"}, {"d": "2026-03-18", "c": 0, "n": 3, "u": "AI助手记忆配置", "s": "claude"}, {"d": "2026-03-18", "c": 0, "n": 1, "u": "继续历史会话", "s": "claude"}, {"d": "2026-03-18", "c": 1, "n": 20, "u": "PE场景ROI评估", "s": "claude"}, {"d": "2026-03-18", "c": 4, "n": 7, "u": "CRM数据同步与更新", "s": "claude"}, {"d": "2026-03-18", "c": 7, "n": 16, "u": "个人状态记录", "s": "claude"}, {"d": "2026-03-18", "c": 0, "n": 25, "u": "AI会话排障", "s": "claude"}, {"d": "2026-03-18", "c": 0, "n": 1, "u": "终端网络诊断", "s": "claude"}, {"d": "2026-03-18", "c": 5, "n": 1, "u": "老虎机游戏代码开发", "s": "claude"}, {"d": "2026-03-18", "c": 1, "n": 6, "u": "竞品调研与战略规划", "s": "claude"}, {"d": "2026-03-18", "c": 0, "n": 1, "u": "AI 记忆路径配置", "s": "claude"}, {"d": "2026-03-19", "c": 0, "n": 1, "u": "PDF处理Agent排障", "s": "claude"}, {"d": "2026-03-19", "c": 0, "n": 8, "u": "AI配置与排障", "s": "claude"}, {"d": "2026-03-19", "c": 0, "n": 3, "u": "Agent上下文构建", "s": "claude"}, {"d": "2026-03-19", "c": 0, "n": 48, "u": "AI会话迁移与交接", "s": "claude"}, {"d": "2026-03-19", "c": 2, "n": 1, "u": "一家家办讲课课程准备", "s": "claude"}, {"d": "2026-03-19", "c": 0, "n": 6, "u": "AI记忆修正与上下文重建", "s": "claude"}, {"d": "2026-03-19", "c": 0, "n": 8, "u": "LLM接口切换配置", "s": "claude"}, {"d": "2026-03-19", "c": 0, "n": 3, "u": "配置Agent上下文", "s": "claude"}, {"d": "2026-03-19", "c": 0, "n": 3, "u": "SSH密钥授权配置", "s": "claude"}, {"d": "2026-03-19", "c": 0, "n": 5, "u": "Agent 工具调研", "s": "claude"}, {"d": "2026-03-20", "c": 2, "n": 12, "u": "文章续写与痛点调研", "s": "claude"}, {"d": "2026-03-20", "c": 1, "n": 115, "u": "行业生态与趋势预测", "s": "claude"}, {"d": "2026-03-20", "c": 4, "n": 5, "u": "销售客户数据核查", "s": "claude"}, {"d": "2026-03-22", "c": 0, "n": 25, "u": "AI系统排障", "s": "claude"}, {"d": "2026-03-22", "c": 0, "n": 31, "u": "AI项目配置调试", "s": "claude"}, {"d": "2026-03-22", "c": 2, "n": 40, "u": "AI课程讲义准备", "s": "claude"}, {"d": "2026-03-23", "c": 6, "n": 14, "u": "ESOP协议业务分析", "s": "claude"}, {"d": "2026-03-23", "c": 1, "n": 35, "u": "财富行业AI研究", "s": "claude"}, {"d": "2026-03-23", "c": 0, "n": 2, "u": "agent掉线排查", "s": "claude"}, {"d": "2026-03-24", "c": 0, "n": 3, "u": "AI系统配置与架构排查", "s": "claude"}, {"d": "2026-03-24", "c": 6, "n": 12, "u": "招聘TA指引起草", "s": "claude"}, {"d": "2026-03-25", "c": 7, "n": 2, "u": "家庭事务", "s": "claude"}, {"d": "2026-03-25", "c": 7, "n": 2, "u": "个人事务", "s": "claude"}, {"d": "2026-03-26", "c": 1, "n": 93, "u": "AI财富行业研究推进", "s": "claude"}, {"d": "2026-03-26", "c": 5, "n": 36, "u": "云服务器SSH配置", "s": "claude"}, {"d": "2026-03-26", "c": 0, "n": 4, "u": "CLI 访问排障", "s": "claude"}, {"d": "2026-03-26", "c": 7, "n": 2, "u": "个人事务", "s": "claude"}, {"d": "2026-03-26", "c": 5, "n": 5, "u": "网站加载慢排查", "s": "claude"}, {"d": "2026-03-26", "c": 7, "n": 10, "u": "个人状态记录", "s": "claude"}, {"d": "2026-03-27", "c": 2, "n": 77, "u": "AI分享主题脑暴", "s": "claude"}, {"d": "2026-03-27", "c": 5, "n": 7, "u": "数字通行证修改与二维码生成", "s": "claude"}, {"d": "2026-03-28", "c": 0, "n": 59, "u": "AI会话排障", "s": "claude"}, {"d": "2026-03-28", "c": 7, "n": 3, "u": "个人事务", "s": "claude"}, {"d": "2026-03-28", "c": 7, "n": 12, "u": "个人事务", "s": "claude"}, {"d": "2026-03-29", "c": 0, "n": 8, "u": "AI系统排障与升级", "s": "claude"}, {"d": "2026-03-29", "c": 5, "n": 23, "u": "Canopy数据管线配置", "s": "claude"}, {"d": "2026-03-30", "c": 0, "n": 10, "u": "Agent排障", "s": "claude"}, {"d": "2026-03-30", "c": 0, "n": 10, "u": "AI配置排障", "s": "claude"}, {"d": "2026-03-30", "c": 2, "n": 20, "u": "项目写作开头起草", "s": "claude"}, {"d": "2026-03-30", "c": 6, "n": 80, "u": "董事会材料准备", "s": "claude"}, {"d": "2026-03-30", "c": 7, "n": 16, "u": "个人事务", "s": "claude"}, {"d": "2026-03-31", "c": 5, "n": 8, "u": "SSH/Mosh 连接排障", "s": "claude"}, {"d": "2026-03-31", "c": 2, "n": 2, "u": "音频转写与文章整理", "s": "claude"}, {"d": "2026-04-01", "c": 2, "n": 5, "u": "Talk 页面排版上传", "s": "claude"}, {"d": "2026-04-01", "c": 6, "n": 9, "u": "董事会材料准备", "s": "claude"}, {"d": "2026-04-01", "c": 4, "n": 2, "u": "销售外联跟踪配置", "s": "claude"}, {"d": "2026-04-01", "c": 7, "n": 14, "u": "个人状态记录", "s": "claude"}, {"d": "2026-04-02", "c": 0, "n": 14, "u": "云端 agent 更新排查", "s": "claude"}, {"d": "2026-04-02", "c": 0, "n": 20, "u": "音频转写配置", "s": "claude"}, {"d": "2026-04-02", "c": 4, "n": 32, "u": "客户报价策略", "s": "claude"}, {"d": "2026-04-02", "c": 4, "n": 45, "u": "客户销售材料修改", "s": "claude"}, {"d": "2026-04-02", "c": 5, "n": 37, "u": "Canopy系统代码审查", "s": "claude"}, {"d": "2026-04-02", "c": 7, "n": 29, "u": "个人事务", "s": "claude"}, {"d": "2026-04-02", "c": 0, "n": 15, "u": "Claude配置优化", "s": "claude"}, {"d": "2026-04-03", "c": 0, "n": 15, "u": "Agent上下文配置", "s": "claude"}, {"d": "2026-04-04", "c": 7, "n": 7, "u": "个人事务", "s": "claude"}, {"d": "2026-04-04", "c": 0, "n": 67, "u": "AI技能与Prompt配置", "s": "claude"}, {"d": "2026-04-05", "c": 7, "n": 9, "u": "个人事务", "s": "claude"}, {"d": "2026-04-05", "c": 0, "n": 14, "u": "AI系统配置与调优", "s": "claude"}, {"d": "2026-04-05", "c": 1, "n": 10, "u": "本地模型选型研究", "s": "claude"}, {"d": "2026-04-05", "c": 3, "n": 26, "u": "财务与股权事务", "s": "claude"}, {"d": "2026-04-06", "c": 2, "n": 168, "u": "框架结构梳理", "s": "claude"}, {"d": "2026-04-06", "c": 4, "n": 8, "u": "客户数据核对与补漏", "s": "claude"}, {"d": "2026-04-06", "c": 2, "n": 4, "u": "社交媒体回复草稿", "s": "claude"}, {"d": "2026-04-06", "c": 0, "n": 10, "u": "MCP接入配置", "s": "claude"}, {"d": "2026-04-06", "c": 7, "n": 26, "u": "个人状态记录", "s": "claude"}, {"d": "2026-04-07", "c": 7, "n": 13, "u": "个人事务", "s": "claude"}, {"d": "2026-04-07", "c": 0, "n": 84, "u": "AI工作流自动化规划", "s": "claude"}, {"d": "2026-04-07", "c": 7, "n": 17, "u": "个人状态记录", "s": "claude"}, {"d": "2026-04-07", "c": 4, "n": 5, "u": "PE数据核对与归档", "s": "claude"}, {"d": "2026-04-07", "c": 7, "n": 7, "u": "个人状态记录", "s": "claude"}, {"d": "2026-04-07", "c": 0, "n": 1, "u": "Agent触发配置", "s": "claude"}, {"d": "2026-04-08", "c": 0, "n": 17, "u": "优化写作流程", "s": "claude"}, {"d": "2026-04-08", "c": 0, "n": 1, "u": "AI接口密钥检索", "s": "claude"}, {"d": "2026-04-08", "c": 7, "n": 49, "u": "个人事务", "s": "claude"}, {"d": "2026-04-08", "c": 0, "n": 27, "u": "AI工具配置检查", "s": "claude"}, {"d": "2026-04-10", "c": 0, "n": 1, "u": "历史对话检索", "s": "claude"}, {"d": "2026-04-10", "c": 5, "n": 8, "u": "Canopy集成Clay测试", "s": "claude"}, {"d": "2026-04-10", "c": 0, "n": 3, "u": "新电脑环境迁移", "s": "claude"}, {"d": "2026-04-11", "c": 0, "n": 10, "u": "电脑环境迁移排障", "s": "codex"}, {"d": "2026-04-11", "c": 0, "n": 161, "u": "AI系统迁移与排障", "s": "claude"}, {"d": "2026-04-11", "c": 0, "n": 3, "u": "Agent环境排障", "s": "claude"}, {"d": "2026-04-11", "c": 4, "n": 57, "u": "CRM选型与KR跟进", "s": "claude"}, {"d": "2026-04-11", "c": 1, "n": 102, "u": "行业研究与战略分析", "s": "claude"}, {"d": "2026-04-11", "c": 7, "n": 4, "u": "个人事务", "s": "claude"}, {"d": "2026-04-11", "c": 0, "n": 2, "u": "AI系统排障", "s": "claude"}, {"d": "2026-04-11", "c": 0, "n": 1, "u": "agent排障", "s": "claude"}, {"d": "2026-04-13", "c": 4, "n": 18, "u": "客户实施计划批注", "s": "claude"}, {"d": "2026-04-13", "c": 3, "n": 6, "u": "财务与股权事务", "s": "claude"}, {"d": "2026-04-13", "c": 0, "n": 24, "u": "AI服务连接排障", "s": "claude"}, {"d": "2026-04-13", "c": 0, "n": 9, "u": "Gmail MCP 连接配置", "s": "codex"}, {"d": "2026-04-13", "c": 0, "n": 7, "u": "配置AI邮件与行程工具", "s": "claude"}, {"d": "2026-04-13", "c": 7, "n": 2, "u": "个人事务", "s": "claude"}, {"d": "2026-04-14", "c": 2, "n": 36, "u": "分享会内容准备", "s": "claude"}, {"d": "2026-04-14", "c": 1, "n": 32, "u": "AI竞品技术调研", "s": "claude"}, {"d": "2026-04-14", "c": 4, "n": 66, "u": "销售管线文件查询", "s": "claude"}, {"d": "2026-04-14", "c": 5, "n": 6, "u": "技术数据提取宣传", "s": "claude"}, {"d": "2026-04-14", "c": 5, "n": 3, "u": "VPS网络与代理排障", "s": "claude"}, {"d": "2026-04-14", "c": 0, "n": 15, "u": "会话审查与任务追踪", "s": "claude"}, {"d": "2026-04-15", "c": 3, "n": 24, "u": "投资人沟通分析", "s": "claude"}, {"d": "2026-04-16", "c": 0, "n": 1, "u": "切换AI模型配置", "s": "claude"}, {"d": "2026-04-16", "c": 0, "n": 1, "u": "模型切换与查询", "s": "claude"}, {"d": "2026-04-16", "c": 1, "n": 1, "u": "投资标的挖掘", "s": "claude"}, {"d": "2026-04-16", "c": 0, "n": 35, "u": "AI模型版本测试", "s": "claude"}, {"d": "2026-04-16", "c": 0, "n": 176, "u": "云端 agent 同步排障", "s": "claude"}, {"d": "2026-04-17", "c": 4, "n": 35, "u": "monday.com 看板配置", "s": "claude"}, {"d": "2026-04-17", "c": 1, "n": 70, "u": "AI经济框架与VC评估", "s": "claude"}, {"d": "2026-04-18", "c": 7, "n": 4, "u": "个人事务", "s": "claude"}, {"d": "2026-04-18", "c": 0, "n": 4, "u": "代理工具冲突排查", "s": "codex"}, {"d": "2026-04-18", "c": 0, "n": 2, "u": "网络代理回滚", "s": "claude"}, {"d": "2026-04-19", "c": 0, "n": 8, "u": "多Agent邮件扫描配置", "s": "claude"}, {"d": "2026-04-19", "c": 0, "n": 10, "u": "agent 排障", "s": "claude"}, {"d": "2026-04-20", "c": 0, "n": 2, "u": "Claude字幕排障", "s": "claude"}, {"d": "2026-04-20", "c": 2, "n": 5, "u": "HK协会命名创意", "s": "claude"}, {"d": "2026-04-20", "c": 7, "n": 23, "u": "个人状态记录", "s": "claude"}, {"d": "2026-04-20", "c": 0, "n": 33, "u": "数字员工评估", "s": "claude"}, {"d": "2026-04-20", "c": 3, "n": 157, "u": "财务与股权事务", "s": "claude"}, {"d": "2026-04-20", "c": 6, "n": 87, "u": "人事事务", "s": "claude"}, {"d": "2026-04-20", "c": 0, "n": 3, "u": "Agent 接口测试", "s": "claude"}, {"d": "2026-04-21", "c": 0, "n": 1, "u": "模型切换配置", "s": "claude"}, {"d": "2026-04-21", "c": 0, "n": 1, "u": "切换AI模型", "s": "claude"}, {"d": "2026-04-21", "c": 0, "n": 2, "u": "AI系统测试", "s": "claude"}, {"d": "2026-04-21", "c": 0, "n": 2, "u": "Agent配置测试", "s": "claude"}, {"d": "2026-04-21", "c": 3, "n": 10, "u": "VC机构合伙人调研", "s": "claude"}, {"d": "2026-04-22", "c": 5, "n": 2, "u": "Canopy数据架构图", "s": "claude"}, {"d": "2026-04-23", "c": 0, "n": 1, "u": "查找历史会话", "s": "claude"}, {"d": "2026-04-26", "c": 0, "n": 3, "u": "查询Codex模型版本", "s": "codex"}, {"d": "2026-04-26", "c": 0, "n": 26, "u": "家庭教育Agent搭建", "s": "codex"}, {"d": "2026-04-27", "c": 0, "n": 8, "u": "BD工作流排障", "s": "claude"}, {"d": "2026-04-27", "c": 4, "n": 10, "u": "业务数据查询与分析", "s": "claude"}, {"d": "2026-04-27", "c": 4, "n": 11, "u": "客户邮件回复与数据核实", "s": "claude"}, {"d": "2026-04-28", "c": 6, "n": 45, "u": "查找ESOP对话记录", "s": "claude"}, {"d": "2026-04-28", "c": 3, "n": 12, "u": "数据室资料整理", "s": "claude"}, {"d": "2026-04-29", "c": 3, "n": 110, "u": "B轮融资测算与追踪", "s": "codex"}, {"d": "2026-04-29", "c": 3, "n": 2, "u": "财务与股权事务", "s": "claude"}, {"d": "2026-04-29", "c": 2, "n": 39, "u": "文章写作准备", "s": "codex"}, {"d": "2026-04-30", "c": 3, "n": 6, "u": "ESOP融资条款审阅", "s": "claude"}, {"d": "2026-05-01", "c": 0, "n": 10, "u": "Agent 网络排障", "s": "codex"}, {"d": "2026-05-01", "c": 0, "n": 8, "u": "Codex 终端排障", "s": "claude"}, {"d": "2026-05-01", "c": 7, "n": 5, "u": "个人事务", "s": "codex"}, {"d": "2026-05-06", "c": 3, "n": 32, "u": "融资条款与投资人核实", "s": "claude"}, {"d": "2026-05-06", "c": 7, "n": 33, "u": "个人状态记录", "s": "codex"}, {"d": "2026-05-07", "c": 4, "n": 33, "u": "CRM 数据交接", "s": "claude"}, {"d": "2026-05-07", "c": 0, "n": 5, "u": "AI 技能与管线调试", "s": "claude"}, {"d": "2026-05-07", "c": 0, "n": 2, "u": "Agent 诊断调参", "s": "claude"}, {"d": "2026-05-07", "c": 0, "n": 2, "u": "Qwen密钥配置", "s": "claude"}, {"d": "2026-05-07", "c": 4, "n": 76, "u": "销售漏斗图绘制", "s": "codex"}, {"d": "2026-05-08", "c": 7, "n": 4, "u": "个人状态记录", "s": "claude"}, {"d": "2026-05-09", "c": 1, "n": 113, "u": "市场潜力测算", "s": "codex"}, {"d": "2026-05-10", "c": 5, "n": 3, "u": "网页演示文稿更新", "s": "codex"}, {"d": "2026-05-10", "c": 4, "n": 54, "u": "销售数据复盘与叙事", "s": "codex"}, {"d": "2026-05-10", "c": 7, "n": 1, "u": "个人事务", "s": "codex"}, {"d": "2026-05-11", "c": 3, "n": 11, "u": "融资关系梳理", "s": "codex"}, {"d": "2026-05-11", "c": 0, "n": 41, "u": "Agent系统排障与维护", "s": "codex"}, {"d": "2026-05-12", "c": 3, "n": 5, "u": "投资人Deck制作", "s": "claude"}, {"d": "2026-05-12", "c": 3, "n": 9, "u": "融资轮次命名", "s": "claude"}, {"d": "2026-05-12", "c": 2, "n": 8, "u": "高管演讲PPT制作", "s": "codex"}, {"d": "2026-05-13", "c": 2, "n": 41, "u": "讲课脚本优化", "s": "codex"}, {"d": "2026-05-13", "c": 1, "n": 3, "u": "中美谈判选股分析", "s": "claude"}, {"d": "2026-05-15", "c": 0, "n": 1, "u": "AI模型配置查询", "s": "claude"}, {"d": "2026-05-15", "c": 0, "n": 2, "u": "模型配置排查", "s": "claude"}, {"d": "2026-05-16", "c": 1, "n": 25, "u": "财务与股权事务", "s": "codex"}, {"d": "2026-05-20", "c": 2, "n": 2, "u": "课程备课与资料查找", "s": "codex"}, {"d": "2026-05-20", "c": 2, "n": 1, "u": "公众号文章重写", "s": "claude"}, {"d": "2026-05-21", "c": 0, "n": 2, "u": "本地部署配置", "s": "claude"}, {"d": "2026-05-21", "c": 1, "n": 2, "u": "SpaceX上市投资分析", "s": "claude"}, {"d": "2026-05-29", "c": 0, "n": 5, "u": "AI工具配置与恢复", "s": "claude"}, {"d": "2026-06-01", "c": 0, "n": 1, "u": "Codex缓存排查", "s": "claude"}, {"d": "2026-06-07", "c": 2, "n": 5, "u": "PPT分享材料制作", "s": "claude"}, {"d": "2026-06-08", "c": 5, "n": 15, "u": "网站改版与调试", "s": "codex"}, {"d": "2026-06-08", "c": 5, "n": 8, "u": "AI网站设计调研与原型", "s": "claude"}, {"d": "2026-06-08", "c": 6, "n": 1, "u": "子公司关联公司统计", "s": "claude"}, {"d": "2026-06-09", "c": 4, "n": 11, "u": "销售商机跟进", "s": "codex"}, {"d": "2026-06-09", "c": 4, "n": 15, "u": "家办投资数据查询", "s": "codex"}, {"d": "2026-06-09", "c": 0, "n": 9, "u": "AI工具排障与调优", "s": "claude"}, {"d": "2026-06-09", "c": 4, "n": 13, "u": "CRM 外展排查", "s": "claude"}, {"d": "2026-06-09", "c": 0, "n": 2, "u": "Agent目录配置优化", "s": "claude"}, {"d": "2026-06-10", "c": 0, "n": 1, "u": "Claude配置更新", "s": "claude"}, {"d": "2026-06-10", "c": 2, "n": 32, "u": "PPT内容制作", "s": "claude"}, {"d": "2026-06-10", "c": 0, "n": 38, "u": "Agent 逻辑调优", "s": "claude"}, {"d": "2026-06-10", "c": 0, "n": 1, "u": "Claude客户端下载", "s": "claude"}, {"d": "2026-06-10", "c": 0, "n": 1, "u": "系统状态诊断", "s": "claude"}, {"d": "2026-06-10", "c": 0, "n": 3, "u": "查找历史会话", "s": "claude"}, {"d": "2026-06-10", "c": 1, "n": 5, "u": "政府补贴申请调研", "s": "claude"}, {"d": "2026-06-10", "c": 1, "n": 1, "u": "企业背景调查", "s": "claude"}, {"d": "2026-06-11", "c": 0, "n": 3, "u": "AI系统后台排查", "s": "codex"}, {"d": "2026-06-11", "c": 3, "n": 22, "u": "BP去水印与排版", "s": "claude"}, {"d": "2026-06-11", "c": 7, "n": 3, "u": "个人事务", "s": "claude"}, {"d": "2026-06-11", "c": 0, "n": 2, "u": "AI会话模型排查", "s": "claude"}, {"d": "2026-06-15", "c": 0, "n": 1, "u": "代理配置排障", "s": "claude"}, {"d": "2026-06-15", "c": 4, "n": 2, "u": "查找客户列表", "s": "codex"}, {"d": "2026-06-15", "c": 0, "n": 21, "u": "AI会话管理与网站生成", "s": "claude"}, {"d": "2026-06-15", "c": 0, "n": 6, "u": "Agent技能查询与调用", "s": "claude"}, {"d": "2026-06-15", "c": 3, "n": 4, "u": "商业计划书排版", "s": "claude"}, {"d": "2026-06-15", "c": 3, "n": 2, "u": "客户跟投名单筛选", "s": "claude"}, {"d": "2026-06-15", "c": 7, "n": 4, "u": "个人事务", "s": "claude"}, {"d": "2026-06-15", "c": 7, "n": 6, "u": "个人事务", "s": "claude"}, {"d": "2026-06-18", "c": 7, "n": 1, "u": "个人事务", "s": "claude"}, {"d": "2026-06-18", "c": 1, "n": 4, "u": "香港家族财富调研", "s": "claude"}, {"d": "2026-06-18", "c": 2, "n": 2, "u": "演讲文稿审阅", "s": "claude"}, {"d": "2026-06-18", "c": 2, "n": 2, "u": "文章润色与品牌植入", "s": "claude"}, {"d": "2026-06-20", "c": 0, "n": 1, "u": "检查agent上线状态", "s": "claude"}, {"d": "2026-06-23", "c": 3, "n": 9, "u": "融资路演PPT优化", "s": "codex"}, {"d": "2026-06-23", "c": 2, "n": 5, "u": "AI应用普及文章撰写", "s": "codex"}, {"d": "2026-06-23", "c": 0, "n": 3, "u": "AI系统配置排查", "s": "claude"}, {"d": "2026-06-23", "c": 2, "n": 5, "u": "Substack文章翻译与润色", "s": "codex"}, {"d": "2026-06-23", "c": 0, "n": 19, "u": "本地大模型配置", "s": "claude"}, {"d": "2026-06-23", "c": 0, "n": 10, "u": "招聘工作流搭建", "s": "claude"}, {"d": "2026-06-28", "c": 3, "n": 42, "u": "Cap Table 更新与融资谈判", "s": "codex"}, {"d": "2026-07-01", "c": 0, "n": 4, "u": "AI系统升级配置", "s": "claude"}, {"d": "2026-07-01", "c": 0, "n": 5, "u": "Agent 配置排障", "s": "claude"}, {"d": "2026-07-01", "c": 1, "n": 13, "u": "并购标的分析", "s": "codex"}, {"d": "2026-07-01", "c": 0, "n": 30, "u": "多Agent排障与交接", "s": "claude"}, {"d": "2026-07-01", "c": 0, "n": 1, "u": "Agent升级维护", "s": "claude"}, {"d": "2026-07-01", "c": 3, "n": 1, "u": "私有化交易评估", "s": "claude"}, {"d": "2026-07-06", "c": 0, "n": 1, "u": "AI模型切换", "s": "claude"}, {"d": "2026-07-06", "c": 2, "n": 29, "u": "AI使用体会文章", "s": "claude"}, {"d": "2026-07-06", "c": 0, "n": 1, "u": "恢复历史会话", "s": "claude"}, {"d": "2026-07-06", "c": 0, "n": 17, "u": "Agent调试与日志记录", "s": "claude"}, {"d": "2026-07-06", "c": 0, "n": 1, "u": "会话恢复", "s": "claude"}, {"d": "2026-07-06", "c": 5, "n": 1, "u": "网站设计评审", "s": "claude"}, {"d": "2026-07-06", "c": 2, "n": 1, "u": "撰写AI心得文章", "s": "claude"}, {"d": "2026-07-06", "c": 0, "n": 4, "u": "AI访问策略排查", "s": "claude"}, {"d": "2026-07-07", "c": 0, "n": 16, "u": "个人Agent搭建", "s": "claude"}, {"d": "2026-07-07", "c": 0, "n": 16, "u": "本地模型配置优化", "s": "claude"}, {"d": "2026-07-07", "c": 1, "n": 6, "u": "结构性产品市场调研", "s": "codex"}, {"d": "2026-07-08", "c": 0, "n": 43, "u": "Agent 迁移与技能提取", "s": "claude"}, {"d": "2026-07-08", "c": 5, "n": 3, "u": "官网文案与体验评审", "s": "claude"}, {"d": "2026-07-08", "c": 2, "n": 64, "u": "大厂对比文章写作", "s": "claude"}, {"d": "2026-07-08", "c": 0, "n": 1, "u": "记录会话参数", "s": "claude"}, {"d": "2026-07-08", "c": 0, "n": 7, "u": "本地代理排障与记忆", "s": "claude"}, {"d": "2026-07-08", "c": 7, "n": 4, "u": "个人事务", "s": "claude"}, {"d": "2026-07-08", "c": 3, "n": 5, "u": "投资人调研与活动规划", "s": "claude"}, {"d": "2026-07-08", "c": 2, "n": 5, "u": "撰写AI模型Prompt对比文章", "s": "claude"}, {"d": "2026-07-08", "c": 3, "n": 5, "u": "BP基金表现调研", "s": "claude"}, {"d": "2026-07-08", "c": 7, "n": 2, "u": "个人事务", "s": "claude"}, {"d": "2026-07-08", "c": 0, "n": 5, "u": "AI工具网络排障", "s": "claude"}, {"d": "2026-07-08", "c": 0, "n": 10, "u": "AI工具排障", "s": "claude"}, {"d": "2026-07-10", "c": 0, "n": 36, "u": "写作Agent搭建", "s": "codex"}, {"d": "2026-07-10", "c": 0, "n": 8, "u": "MCP 服务排障", "s": "claude"}, {"d": "2026-07-10", "c": 2, "n": 1, "u": "项目大纲起草", "s": "claude"}, {"d": "2026-07-10", "c": 0, "n": 2, "u": "AI编码环境排障", "s": "claude"}, {"d": "2026-07-12", "c": 1, "n": 1, "u": "人物背景调研与评估", "s": "claude"}, {"d": "2026-07-12", "c": 7, "n": 3, "u": "个人事务", "s": "claude"}, {"d": "2026-07-13", "c": 0, "n": 1, "u": "Agent 连通性测试", "s": "claude"}, {"d": "2026-07-14", "c": 0, "n": 1, "u": "AI会话日志诊断", "s": "claude"}, {"d": "2026-07-14", "c": 7, "n": 2, "u": "个人事务", "s": "claude"}, {"d": "2026-07-14", "c": 7, "n": 11, "u": "个人事务", "s": "claude"}, {"d": "2026-07-14", "c": 7, "n": 104, "u": "个人状态记录", "s": "claude"}, {"d": "2026-07-17", "c": 6, "n": 2, "u": "员工AI使用培训", "s": "claude"}, {"d": "2026-07-17", "c": 6, "n": 1, "u": "员工培训材料整理", "s": "claude"}, {"d": "2026-07-19", "c": 2, "n": 1, "u": "微信草稿续写", "s": "claude"}, {"d": "2026-07-19", "c": 0, "n": 1, "u": "代理连接排障", "s": "claude"}, {"d": "2026-07-20", "c": 3, "n": 6, "u": "融资文件检索", "s": "claude"}, {"d": "2026-07-22", "c": 4, "n": 15, "u": "晨报Agent试点定价策略", "s": "claude"}, {"d": "2026-07-23", "c": 4, "n": 17, "u": "定价问题讨论", "s": "claude"}, {"d": "2026-07-23", "c": 5, "n": 22, "u": "模型蒸馏探针验证", "s": "claude"}, {"d": "2026-07-23", "c": 1, "n": 1, "u": "足球员收入分布分析", "s": "claude"}, {"d": "2026-07-24", "c": 0, "n": 6, "u": "微信数据接入配置", "s": "codex"}, {"d": "2026-07-24", "c": 1, "n": 13, "u": "Kimi估值与竞品分析", "s": "codex"}, {"d": "2026-07-24", "c": 7, "n": 4, "u": "个人事务", "s": "claude"}, {"d": "2026-07-26", "c": 0, "n": 1, "u": "agent 会话恢复", "s": "claude"}, {"d": "2026-07-26", "c": 0, "n": 15, "u": "AI系统排障", "s": "codex"}, {"d": "2026-07-26", "c": 0, "n": 1, "u": "AI系统配置测试", "s": "claude"}, {"d": "2026-07-26", "c": 0, "n": 1, "u": "恢复历史会话上下文", "s": "claude"}, {"d": "2026-07-26", "c": 0, "n": 1, "u": "AI会话初始化测试", "s": "claude"}, {"d": "2026-07-26", "c": 0, "n": 1, "u": "智能体配置测试", "s": "claude"}, {"d": "2026-07-26", "c": 0, "n": 4, "u": "MCP排障与工具优化", "s": "claude"}, {"d": "2026-07-26", "c": 0, "n": 1, "u": "系统超时测试", "s": "claude"}, {"d": "2026-07-26", "c": 0, "n": 1, "u": "系统测试指令", "s": "claude"}, {"d": "2026-07-26", "c": 0, "n": 1, "u": "AI系统配置测试", "s": "claude"}, {"d": "2026-07-27", "c": 3, "n": 20, "u": "投资人回复草稿", "s": "claude"}, {"d": "2026-07-27", "c": 3, "n": 93, "u": "投资人回复草稿", "s": "claude"}, {"d": "2026-07-27", "c": 3, "n": 178, "u": "投资人回复与跟进", "s": "claude"}, {"d": "2026-07-27", "c": 0, "n": 1, "u": "恢复会话上下文", "s": "claude"}, {"d": "2026-07-27", "c": 2, "n": 1, "u": "营销文案翻译", "s": "claude"}, {"d": "2026-07-28", "c": 1, "n": 56, "u": "宏观危机研判分析", "s": "codex"}, {"d": "2026-07-28", "c": 0, "n": 6, "u": "AI系统更新排障", "s": "claude"}, {"d": "2026-07-28", "c": 1, "n": 31, "u": "大模型技术原理调研", "s": "codex"}, {"d": "2026-07-28", "c": 1, "n": 2, "u": "投资标的分析", "s": "claude"}, {"d": "2026-07-28", "c": 1, "n": 1, "u": "竞品AI定价调研", "s": "claude"}, {"d": "2026-07-29", "c": 0, "n": 36, "u": "AI Agent 规划搭建", "s": "claude"}, {"d": "2026-07-29", "c": 0, "n": 41, "u": "AI agent 规划搭建", "s": "claude"}, {"d": "2026-07-29", "c": 0, "n": 100, "u": "AI agent 规划", "s": "claude"}, {"d": "2026-07-30", "c": 0, "n": 1, "u": "系统状态检查", "s": "claude"}, {"d": "2026-07-30", "c": 4, "n": 3, "u": "年化营收计算", "s": "claude"}, {"d": "2026-07-30", "c": 0, "n": 4, "u": "AI会话排障", "s": "claude"}, {"d": "2026-07-30", "c": 0, "n": 7, "u": "AI代理排障", "s": "claude"}, {"d": "2026-07-31", "c": 4, "n": 8, "u": "CRM 漏斗分析", "s": "codex"}, {"d": "2026-07-31", "c": 5, "n": 48, "u": "前端界面开发与调试", "s": "codex"}, {"d": "2026-07-31", "c": 4, "n": 21, "u": "销售线索挖掘", "s": "claude"}, {"d": "2026-08-01", "c": 1, "n": 31, "u": "交易商模式调研", "s": "claude"}, {"d": "2026-08-01", "c": 4, "n": 6, "u": "金融数据采购", "s": "claude"}, {"d": "2026-08-02", "c": 1, "n": 7, "u": "量化套利策略调研", "s": "codex"}, {"d": "2026-08-02", "c": 0, "n": 19, "u": "AI会话维护与配置", "s": "claude"}, {"d": "2026-08-02", "c": 7, "n": 7, "u": "个人状态记录", "s": "claude"}, {"d": "2026-08-04", "c": 1, "n": 60, "u": "AI产业链研究", "s": "claude"}, {"d": "2026-08-04", "c": 0, "n": 1, "u": "Agent权限配置", "s": "claude"}, {"d": "2026-08-04", "c": 6, "n": 3, "u": "人事事务", "s": "claude"}, {"d": "2026-08-05", "c": 0, "n": 67, "u": "AI会话接管排障", "s": "claude"}, {"d": "2026-08-05", "c": 0, "n": 77, "u": "SSH路由排障", "s": "claude"}, {"d": "2026-08-05", "c": 7, "n": 1, "u": "个人状态记录", "s": "claude"}, {"d": "2026-08-05", "c": 0, "n": 3, "u": "历史会话与提示词检索", "s": "claude"}, {"d": "2026-08-06", "c": 6, "n": 3, "u": "合同违约条款审查", "s": "claude"}, {"d": "2026-08-06", "c": 0, "n": 1, "u": "API错误排查", "s": "claude"}, {"d": "2026-08-06", "c": 6, "n": 9, "u": "竞业协议买断咨询", "s": "claude"}, {"d": "2026-08-06", "c": 0, "n": 2, "u": "安装grillme技能", "s": "claude"}, {"d": "2026-08-06", "c": 0, "n": 4, "u": "远程网络排障", "s": "claude"}, {"d": "2026-08-09", "c": 1, "n": 2, "u": "股票估值分析", "s": "claude"}, {"d": "2026-08-09", "c": 0, "n": 1, "u": "agent 插件排障", "s": "claude"}, {"d": "2026-08-09", "c": 0, "n": 6, "u": "AI工具排障配置", "s": "claude"}, {"d": "2026-08-09", "c": 0, "n": 6, "u": "CLI 连接排障", "s": "claude"}, {"d": "2026-08-09", "c": 0, "n": 24, "u": "Claude API 连接排障", "s": "claude"}, {"d": "2026-08-10", "c": 0, "n": 2, "u": "AI状态与模型检查", "s": "claude"}, {"d": "2026-08-10", "c": 7, "n": 12, "u": "个人状态记录", "s": "claude"}, {"d": "2026-08-10", "c": 0, "n": 1, "u": "Agent状态检查", "s": "claude"}, {"d": "2026-08-10", "c": 0, "n": 19, "u": "AI界面排障", "s": "claude"}, {"d": "2026-08-10", "c": 3, "n": 59, "u": "融资沟通策略", "s": "claude"}, {"d": "2026-08-10", "c": 3, "n": 146, "u": "融资沟通策略", "s": "claude"}, {"d": "2026-08-10", "c": 1, "n": 1, "u": "人物背景与影响力调研", "s": "claude"}, {"d": "2026-08-10", "c": 1, "n": 1, "u": "亚洲企业出海战略分析", "s": "claude"}, {"d": "2026-08-10", "c": 6, "n": 2, "u": "人事事务", "s": "claude"}, {"d": "2026-08-10", "c": 7, "n": 2, "u": "个人状态记录", "s": "claude"}, {"d": "2026-08-10", "c": 4, "n": 3, "u": "CRM线索拉取与查看", "s": "claude"}, {"d": "2026-08-10", "c": 0, "n": 6, "u": "本地Agent配置与排障", "s": "claude"}, {"d": "2026-08-11", "c": 1, "n": 8, "u": "家族办公室策略汇报", "s": "claude"}, {"d": "2026-08-11", "c": 5, "n": 4, "u": "互动地图开发与部署", "s": "claude"}, {"d": "2026-08-11", "c": 0, "n": 42, "u": "Agent调用与AI审查", "s": "claude"}, {"d": "2026-08-11", "c": 5, "n": 14, "u": "产品价值主张与UI策略", "s": "claude"}, {"d": "2026-08-11", "c": 0, "n": 47, "u": "Agent配置排障", "s": "claude"}, {"d": "2026-08-11", "c": 4, "n": 1, "u": "客户演示问答准备", "s": "claude"}, {"d": "2026-08-11", "c": 1, "n": 2, "u": "人物背景调研", "s": "claude"}, {"d": "2026-08-11", "c": 0, "n": 26, "u": "客户Agent部署调试", "s": "claude"}, {"d": "2026-08-12", "c": 4, "n": 1, "u": "公众号调研功能咨询", "s": "claude"}, {"d": "2026-08-12", "c": 3, "n": 13, "u": "投资人回复草稿", "s": "claude"}, {"d": "2026-08-12", "c": 0, "n": 4, "u": "AI配置参数调整", "s": "claude"}, {"d": "2026-08-12", "c": 7, "n": 9, "u": "家庭事务", "s": "claude"}, {"d": "2026-08-13", "c": 3, "n": 4, "u": "投资人回复草稿", "s": "claude"}, {"d": "2026-08-13", "c": 7, "n": 65, "u": "个人状态记录", "s": "claude"}, {"d": "2026-08-13", "c": 4, "n": 33, "u": "家办客户邀约起草", "s": "claude"}, {"d": "2026-08-14", "c": 2, "n": 18, "u": "讲座照片与链接查找", "s": "claude"}, {"d": "2026-08-14", "c": 2, "n": 6, "u": "会议录音转写与总结", "s": "claude"}, {"d": "2026-08-15", "c": 7, "n": 5, "u": "家庭事务", "s": "claude"}, {"d": "2026-08-16", "c": 3, "n": 9, "u": "融资条款谈判", "s": "claude"}, {"d": "2026-08-16", "c": 7, "n": 3, "u": "个人状态记录", "s": "claude"}, {"d": "2026-08-16", "c": 3, "n": 32, "u": "C轮融资治理咨询", "s": "claude"}, {"d": "2026-08-17", "c": 6, "n": 6, "u": "员工职衔命名", "s": "claude"}, {"d": "2026-08-18", "c": 3, "n": 4, "u": "财务与股权事务", "s": "claude"}, {"d": "2026-08-18", "c": 0, "n": 30, "u": "基础设施排障", "s": "claude"}, {"d": "2026-08-19", "c": 0, "n": 2, "u": "AI额度排查与重置", "s": "claude"}, {"d": "2026-08-19", "c": 4, "n": 3, "u": "客户名单更新查询", "s": "claude"}, {"d": "2026-08-20", "c": 2, "n": 1, "u": "商务沟通润色", "s": "claude"}, {"d": "2026-08-20", "c": 1, "n": 2, "u": "AI金融监管解读", "s": "claude"}, {"d": "2026-08-20", "c": 0, "n": 1, "u": "AI系统异常排查", "s": "claude"}, {"d": "2026-08-21", "c": 4, "n": 1, "u": "竞品白标政策调研", "s": "claude"}, {"d": "2026-08-21", "c": 2, "n": 2, "u": "报价单排版调整", "s": "claude"}, {"d": "2026-08-24", "c": 0, "n": 2, "u": "智能体框架选型评估", "s": "claude"}, {"d": "2026-08-24", "c": 6, "n": 1, "u": "会议录音转写", "s": "claude"}, {"d": "2026-08-24", "c": 0, "n": 1, "u": "Agent搜索工具选型", "s": "claude"}, {"d": "2026-08-25", "c": 2, "n": 23, "u": "创始人致辞润色", "s": "claude"}, {"d": "2026-08-27", "c": 3, "n": 48, "u": "投资人汇报数据梳理", "s": "claude"}, {"d": "2026-08-27", "c": 7, "n": 3, "u": "个人事务", "s": "claude"}, {"d": "2026-09-01", "c": 1, "n": 3, "u": "支付清算系统调研", "s": "claude"}, {"d": "2026-09-01", "c": 7, "n": 7, "u": "家庭事务", "s": "claude"}, {"d": "2026-09-01", "c": 7, "n": 5, "u": "个人事务", "s": "claude"}, {"d": "2026-09-03", "c": 4, "n": 3, "u": "潜在客户背调", "s": "claude"}, {"d": "2026-09-03", "c": 4, "n": 31, "u": "CRM 销售管道跟进", "s": "claude"}, {"d": "2026-09-03", "c": 4, "n": 3, "u": "销售线索抓取与整理", "s": "claude"}, {"d": "2026-09-06", "c": 1, "n": 10, "u": "量化策略分析与编排", "s": "codex"}, {"d": "2026-09-06", "c": 0, "n": 5, "u": "Agent配置调优", "s": "codex"}, {"d": "2026-09-06", "c": 7, "n": 30, "u": "家庭事务", "s": "codex"}, {"d": "2026-09-06", "c": 0, "n": 1, "u": "记忆管线冒烟测试", "s": "claude"}, {"d": "2026-09-07", "c": 3, "n": 53, "u": "融资进展与投资人沟通", "s": "codex"}, {"d": "2026-09-07", "c": 1, "n": 52, "u": "竞品分析与战略规划", "s": "codex"}, {"d": "2026-09-09", "c": 0, "n": 2, "u": "AI 会话检索", "s": "codex"}, {"d": "2026-09-12", "c": 1, "n": 2, "u": "竞品报告摘要", "s": "claude"}, {"d": "2026-09-12", "c": 0, "n": 2, "u": "配置外部模型密钥", "s": "claude"}, {"d": "2026-09-18", "c": 1, "n": 7, "u": "新加坡MAS AI资助调研", "s": "claude"}, {"d": "2026-09-21", "c": 0, "n": 18, "u": "Agent记忆本体设计", "s": "codex"}, {"d": "2026-09-24", "c": 4, "n": 1, "u": "客户交易数据分析", "s": "codex"}, {"d": "2026-09-28", "c": 1, "n": 5, "u": "量化交易概念研究", "s": "claude"}, {"d": "2026-10-07", "c": 2, "n": 22, "u": "AI讲座内容准备", "s": "codex"}, {"d": "2026-10-09", "c": 1, "n": 16, "u": "算力市场调研", "s": "claude"}, {"d": "2026-10-09", "c": 0, "n": 10, "u": "Agent配置与上下文整理", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "聊天建议生成", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "AI 建议消息生成", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "聊天框下条消息预测", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "对话建议功能配置", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "聊天建议生成配置", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "AI对话预测配置", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "AI 界面功能调试", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "AI对话建议生成", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "聊天建议回复生成", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "AI 界面建议生成", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "AI 聊天建议生成", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "对话建议生成", "s": "claude"}, {"d": "2026-10-10", "c": 0, "n": 1, "u": "AI对话建议生成", "s": "claude"}, {"d": "2026-10-11", "c": 0, "n": 1, "u": "聊天建议生成", "s": "claude"}, {"d": "2026-10-11", "c": 0, "n": 1, "u": "对话建议生成配置", "s": "claude"}, {"d": "2026-10-12", "c": 3, "n": 12, "u": "融资数据整理", "s": "claude"}, {"d": "2026-10-14", "c": 0, "n": 2, "u": "AI搜索功能调试", "s": "claude"}, {"d": "2026-10-14", "c": 0, "n": 14, "u": "AI使用数据分析", "s": "claude"}, {"d": "2026-10-14", "c": 5, "n": 4, "u": "代码提交", "s": "claude"}, {"d": "2026-10-14", "c": 3, "n": 5, "u": "加密投资文件访问", "s": "claude"}, {"d": "2026-10-14", "c": 0, "n": 2, "u": "Agent字段排查", "s": "claude"}, {"d": "2026-10-14", "c": 3, "n": 10, "u": "投资人沟通草稿", "s": "claude"}, {"d": "2026-10-14", "c": 4, "n": 4, "u": "销售合同进度查询", "s": "claude"}, {"d": "2026-10-14", "c": 0, "n": 2, "u": "AI终端登录排障", "s": "claude"}, {"d": "2026-10-14", "c": 1, "n": 2, "u": "AI认知框架研究", "s": "claude"}];
+    const cats=["AI systems","Research & strategy","Writing & teaching","Fundraising","Sales & data","Product & eng","HR & finance","Personal & family"];
+    const LBL={"AI agent 排障":"AI agent troubleshooting","AI agent 规划":"AI agent planning","AI价值文章撰写":"AI value article","AI会话回顾":"session review","AI写作工作流配置":"writing workflow setup","AI分享主题脑暴":"talk topic brainstorm","AI工作流自动化规划":"workflow automation plan","AI系统迁移与排障":"system migration","AI经济框架与VC评估":"AI economics & VC","AI编程工具竞品分析":"coding tools comparison","AI财富行业研究推进":"AI in wealth research","Agent 连接调试":"agent connection debug","Agent配置与排障":"agent config & debug","B轮融资测算与追踪":"Series B modelling","Claude云迁移配置":"cloud migration","SSH路由排障":"SSH routing fix","Substack文章撰写":"Substack article","agent 进度查询":"agent progress check","个人状态记录":"personal state log","云端 agent 同步排障":"cloud agent sync","人事事务":"HR matters","多Agent系统介绍":"multi-agent intro","大模型趋势分析":"LLM trend analysis","客户数据与增长分析":"client data & growth","家庭事务":"family matters","市场潜力测算":"market sizing","投资人回复与跟进":"investor replies","投资人回复草稿":"investor reply draft","框架结构梳理":"framework structuring","竞品威胁与战略分析":"competitive threats","系列文章撰写":"article series","董事会材料准备":"board materials","融资沟通策略":"fundraising comms","行业生态与趋势预测":"industry trends","行业研究与战略分析":"industry research","讨论稿修改":"discussion draft edits","财务与股权事务":"finance & equity","销售漏斗图绘制":"sales funnel chart","销售线索分级":"lead grading"};
+    const cols=["#2a78d6","#eb6834","#1baf7a","#eda100","#e87ba4","#008300","#4a3aa7","#e34948"];
+    const lg=document.getElementById("lg3"); cats.forEach((c,i)=>{const sp=document.createElement("span");sp.innerHTML='<i style="display:inline-block;width:11px;height:11px;border-radius:3px;background:'+cols[i]+';margin-right:6px;vertical-align:-1px"></i>'+c;lg.appendChild(sp);});
+    const W=1200,L=210,R=20,T=26; const laneH=56; const x0=new Date("2026-02-01").getTime(), x1=new Date("2026-10-20").getTime();
+    const X=d=>L+(new Date(d).getTime()-x0)/(x1-x0)*(W-L-R);
+    const months=["2026-02-01","2026-03-01","2026-04-01","2026-05-01","2026-06-01","2026-07-01","2026-08-01","2026-09-01","2026-10-01"]; const mlab=["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"];
+    months.forEach((d,i)=>{el("line",{x1:X(d),x2:X(d),y1:T,y2:T+cats.length*laneH,stroke:"#d8ddd6"},svg);text(svg,X(d)+4,T-8,mlab[i],"tick");});
+    cats.forEach((ln,i)=>{const y=T+i*laneH; el("rect",{x:L,y,width:W-L-R,height:laneH,fill:i%2?"#f1f3ee":"none"},svg); const cnt=P.filter(p=>p.c===i).length; text(svg,L-12,y+laneH/2+1,ln,"lbl","end"); text(svg,L-12,y+laneH/2+17,cnt+" sessions","tick","end"); });
+    const r=n=>Math.max(2.5,Math.min(10,2.5+Math.sqrt(n)*1.05));
+    const placed=cats.map(()=>[]);
+    P.forEach(p=>{
+      const x=X(p.d), rr=r(p.n), base=T+p.c*laneH+laneH/2; let y=base, k=0;
+      const ok=yy=>!placed[p.c].some(([px,py,pr])=>Math.hypot(px-x,py-yy)<pr+rr+1);
+      while(!ok(y) && k<12){k++; y=base+(k%2?1:-1)*Math.ceil(k/2)*4.5;} if(Math.abs(y-base)>laneH/2-rr) y=base;
+      placed[p.c].push([x,y,rr]);
+      el("circle",{cx:x,cy:y,r:rr,fill:cols[p.c],"fill-opacity":0.85,stroke:"#fff","stroke-width":0.8},svg);
+    });
+    const labs=P.map((p,i)=>[p,i]).filter(([p])=>p.n>=70).sort((a,b)=>b[0].n-a[0].n); const taken=cats.map(()=>[]);
+    labs.forEach(([p])=>{const x=X(p.d); if(taken[p.c].some(tx=>Math.abs(tx-x)<170)) return; taken[p.c].push(x);
+      const [px,py,pr]=placed[p.c].find(([qx])=>Math.abs(qx-x)<0.5)||[x,T+p.c*laneH+laneH/2,4];
+      const left=x>W-180; const t=text(svg,left?px-pr-3:px+pr+3,py+4,(LBL[p.u]||p.u),"m",left?"end":"start"); t.setAttribute("font-size","12"); t.setAttribute("font-weight","600"); t.setAttribute("paint-order","stroke"); t.setAttribute("stroke","#fff"); t.setAttribute("stroke-width","3");});
+    const lv=[["2026-02-02","L1–2: ask, then feed context"],["2026-04-19","L3: direct"],["2026-07-07","L4: always-on"],["2026-09-21","L5: architecture"]];
+    const yl=T+cats.length*laneH+28;
+    el("line",{x1:L,x2:W-R,y1:yl,y2:yl,stroke:"#b9b7ae"},svg);
+    lv.forEach(([d,lab],i)=>{const x=X(d); el("circle",{cx:x,cy:yl,r:6,fill:"#14543d"},svg); if(i<lv.length-1) el("line",{x1:x,x2:X(lv[i+1][0]),y1:yl,y2:yl,stroke:"#14543d","stroke-width":3},svg); text(svg,x,yl+24,lab,"lbl",i===lv.length-1?"end":"start");});
+    text(svg,L-12,yl+5,"Five levels","lbl","end");
+  })();
+  </script>
+</section>
+
+<!-- 9 家庭 -->
+<section>
+  <div class="eyebrow">Individual · at home</div>
+  <h2 style="margin-bottom:8px;">Same at home: a tutoring agent that only asks questions and never gives answers</h2>
+  <img class="exhibit" src="../assets/family-weekly.webp" alt="Weekly focus adjustment by the family tutor agent (screenshot in Chinese)" style="display:block;margin:0 auto;max-height:455px;width:auto;max-width:100%;object-fit:contain;">
+  <p class="foot">Screenshot in Chinese: every Sunday it rewrites next week's focus from the evidence it saw, and flags anything that needs a parent's decision.</p>
+</section>
+
+<!-- 10 心理 -->
+<section class="center">
+  <div class="eyebrow">Individual · way of living</div>
+  <h2>The psychology changes too</h2>
+  <div class="grid3" style="margin-top:8px;">
+    <div class="card"><h3>More meta-thinking</h3><p>No longer executing details. All day thinking about "what should be done" and "how to make it do it well": planning, decomposing, verifying.</p></div>
+    <div class="card warn"><h3>Anxiety from AI</h3><p>Pushed to the very frontier. Ahead is nothing but uncertainty; humanity has no answer, and the leading researchers are split.</p></div>
+    <div class="card acc"><h3>Becoming more "human"</h3><p>Das Kapital said industrialization alienated people. This is de-alienation: forced back onto the things only a human can do.</p></div>
+  </div>
+</section>
+
+<!-- 12 分隔 组织 -->
+<section class="center dark">
+  <div class="eyebrow">Scale two</div>
+  <div class="divider-title">The organization</div>
+  <p class="divider-sub">A new species has entered the organization.</p>
+</section>
+
+<!-- 13 组织图 -->
+<section class="center">
+  <div class="eyebrow">Organization · structure</div>
+  <h2 style="margin-bottom:16px;">Every function = a human owner + AI workflows; agents have started delegating to each other</h2>
+<svg class="arch org" viewBox="0 0 1240 526" width="1152" height="489" style="display:block;margin-top:8px;" role="img" aria-label="Two-layer company org chart">
+   <rect class="box acc" x="520" y="10" width="200" height="46"/>
+   <text class="h" x="620" y="39" text-anchor="middle">CEO</text>
+   <rect class="zone" x="16" y="74" width="1208" height="104"/>
+   <text class="zl" x="32" y="96">Human layer · reporting lines unchanged</text>
+   <g id="fn"></g>
+   <rect class="zone" x="16" y="198" width="1208" height="190"/>
+   <text class="zl" x="32" y="220">AI ops layer · every agent hangs under a named person</text>
+   <g id="ag"></g>
+   <rect class="zone" x="16" y="404" width="1208" height="104"/>
+   <g id="sor"></g>
+   <rect x="5" y="186" width="1230" height="330" rx="14" fill="none" stroke="#b3402e" stroke-width="2.2" stroke-dasharray="9 5"/>
+   <text class="zl" x="1214" y="208" text-anchor="end" style="fill:#b3402e;font-size:16px;font-weight:700;">Compliance frame · aligned with MAS SAFR</text>
+   <text class="zl" x="1214" y="226" text-anchor="end" style="fill:#b3402e;font-weight:500;letter-spacing:0;font-size:13px;">Before any agent action: declare → authorize → assess, fully logged</text>
+  </svg>
+  <script>
+  (function(){
+   const ns="http://www.w3.org/2000/svg";
+   const el=(t,a,p)=>{const n=document.createElementNS(ns,t);for(const k in a)n.setAttribute(k,a[k]);if(p)p.appendChild(n);return n;};
+   const tx=(p,x,y,s,c,an)=>{const t=el("text",{x,y,class:c,"text-anchor":an||"start"},p);t.textContent=s;return t;};
+   const fn=document.getElementById("fn"), ag=document.getElementById("ag"); if(!fn) return;
+   const funcs=["Product & Eng","Data","Client Success","Marketing & Sales","Finance","People"];
+   const fw=180, gap=(1208-6*fw)/7; const fx=i=>16+gap+i*(fw+gap);
+   funcs.forEach((f,i)=>{ el("rect",{x:fx(i),y:112,width:fw,height:48,class:"box"},fn); tx(fn,fx(i)+fw/2,142,f,"h","middle"); el("path",{d:`M620 56 V68 H${fx(i)+fw/2} V112`,class:"edge"},fn); });
+   const agents=[
+    ["Data ops agent",["under Data & Product","30 scheduled jobs","checks, recon, feeds"],1],
+    ["Sales agent",["under Sales","enrichment, CRM checks","sales process analysis"],3],
+    ["Infra agent",["under Engineering","k8s / airflow log forensics","production error triage"],0],
+    ["Engineering agent",["under Engineering","issue analysis, acceptance","automated PR review"],0],
+    ["Content agent",["under Marketing, I review","LinkedIn pipeline","buffer target: 5 posts"],3],
+    ["AI digest agent",["under Data","AI news digest","feeds AI in Finance Digest"],1]];
+   const aw=186, ag_gap=(1208-6*aw)/7; const ax=i=>16+ag_gap+i*(aw+ag_gap);
+   agents.forEach(([n,lines,f],i)=>{
+    const x=ax(i); el("rect",{x,y:240,width:aw,height:130,class:"box"},ag);
+    tx(ag,x+12,268,n,"h"); lines.forEach((l,j)=>tx(ag,x+12,296+j*22,l,"m"));
+    const topx = f<0 ? 620 : fx(f)+fw/2; const topy = f<0 ? 56 : 160;
+    el("path",{d:`M${x+aw/2} 240 V188 H${topx} V${topy}`,class:f<0?"edge2":"edge"},ag);
+    el("path",{d:`M${x+aw/2} 370 V404`,class:"edge"},ag);
+   });
+   const sor=document.getElementById("sor");
+   const left=[["GitHub","code, PRs"],["Notion","tickets, docs"],["Slack","channels"],["CRM","leads, clients"],["Biz data","reports"]];
+   const right=[["Model router","per-task routing"],["Agent runtime","shared, with panel"],["Org memory","knowledge search"],["Skill library","workflows"]];
+   const lw=112, rw=150, g=(1208-5*lw-4*rw)/10; let x=16+g;
+   tx(sor,32,426,"Systems of record & collaboration · the shared surface between agents","zl");
+   left.forEach(([n,m])=>{ el("rect",{x,y:440,width:lw,height:56,class:"box"},sor); tx(sor,x+lw/2,462,n,"h","middle"); tx(sor,x+lw/2,484,m,"m","middle"); x+=lw+g; });
+   const rx0=x; tx(sor,rx0,426,"Self-built harness","zl");
+   right.forEach(([n,m])=>{ el("rect",{x,y:440,width:rw,height:56,class:"box acc"},sor); tx(sor,x+rw/2,462,n,"h","middle"); tx(sor,x+rw/2,484,m,"m","middle"); x+=rw+g; });
+  })();
+  </script>
+</section>
+
+<!-- 14 走过的路 -->
+<section class="center">
+  <div class="eyebrow">Organization · the road so far</div>
+  <h2>From a few people using AI, to many agents and many people working under governance</h2>
+  <style>
+    .path { display:flex; align-items:stretch; gap:10px; margin-top:8px; }
+    .path .st { flex:1; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:20px 18px; }
+    .path .st.on { background:var(--soft); border-color:var(--signal); }
+    .path .st .n { font-family:var(--mono); font-size:13px; letter-spacing:.14em; color:var(--deep); margin-bottom:8px; }
+    .path .st h3 { font-family:var(--sans); font-size:21px; font-weight:600; margin:0 0 8px; color:var(--ink); text-transform:none; letter-spacing:0; line-height:1.3; }
+    .path .st p { font-size:17px; color:var(--body); line-height:1.5; }
+    .path .ar { display:flex; align-items:center; color:var(--signal); font-size:28px; font-weight:600; }
+  </style>
+  <div class="path">
+    <div class="st"><div class="n">01</div><h3>A few people use AI</h3><p>Each on their own; the experience stays with the individual.</p></div>
+    <div class="ar">→</div>
+    <div class="st"><div class="n">02</div><h3>AI opened to everyone</h3><p>Everyone gets access; it grows wild. Usage takes off.</p></div>
+    <div class="ar">→</div>
+    <div class="st"><div class="n">03</div><h3>General-purpose agent</h3><p>One agent that does everything. The trap: permissions, context and skills all become unmanageable.</p></div>
+    <div class="ar">→</div>
+    <div class="st"><div class="n">04</div><h3>Specialist agents</h3><p>One per function, under a named person, with a job description.</p></div>
+    <div class="ar">→</div>
+    <div class="st on"><div class="n">05</div><h3>Many agents, many people, governed</h3><p>Agents delegate to each other; people sit in the approval seat; permissions, logs and reviews written into a framework.</p></div>
+  </div>
+</section>
+
+<!-- 15 组织的影响 -->
+<section class="center">
+  <div class="eyebrow">Organization · impact</div>
+  <h2>Impact on the organization: four things change at once</h2>
+  <div class="grid4" style="margin-top:8px;">
+    <div class="card"><h3>Job boundaries move</h3><p>Everyone can do more kinds of tasks. What a person can touch is no longer set by their specialty.</p></div>
+    <div class="card"><h3>Efficiency goes up</h3><p>Not worth arguing. Reading everything, computing everything, writing everything became the default.</p></div>
+    <div class="card acc"><h3>Talent requirements change</h3><p>Agency, judgement, taste. Hiring and evaluation criteria have to follow.</p></div>
+    <div class="card acc"><h3>Demands on the organization change</h3><p>Knowledge sharing, information sharing, data accumulation, token control. These are infrastructure, not perks.</p></div>
+  </div>
+</section>
+
+<!-- 16 AI 主权 -->
+<section class="center">
+  <div class="eyebrow">Organization · a new concept</div>
+  <h2>AI sovereignty: how much control you have over your own AI factor</h2>
+  <div class="cols">
+    <div class="col acc"><h3>What it is: four abilities</h3><ul><li><b>Leave</b>: move rules and memory to another vendor without changing a word</li><li><b>Verify</b>: check one vendor with a second</li><li><b>Account</b>: when something goes wrong, produce the evidence chain: who approved, which rule changed when</li><li><b>Withhold</b>: some things never enter a platform's memory</li></ul></div>
+    <div class="col"><h3>Why you need it</h3><ul><li><b>LLM vendors' interests are not yours</b>: they sell tokens, you want maximum ROI</li><li><b>Models become interchangeable within months</b>, so platforms moved the lock-in to the memory layer: your context stays with them</li><li><b>Platforms will absorb the engineering layer</b>; the governance layer stays yours, like internal controls and audit, which no vendor switch removes</li><li><b>Regulation is uneven and contracts come before law</b>: nobody sets your boundaries for you</li></ul></div>
+  </div>
+  <p class="foot">Sovereignty is not building everything yourself. It can be thin: a stack of text you own, rules, memory, permission tables, logs. Without it, you are only renting.</p>
+</section>
+
+<!-- 18 组织 AI OS -->
+<section class="center">
+  <div class="eyebrow">Organization · blueprint</div>
+  <h2 style="margin-bottom:16px;">Every organization will have its own AI OS, and every person their own agentic access</h2>
+  <table class="shift">
+    <thead><tr><th></th><th>Today's organization</th><th>An organization with an AI OS</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Where information lives</td><td>In people's heads, email, dozens of spreadsheets</td><td>In a layer the organization owns: written once, read everywhere</td></tr>
+      <tr><td class="k">Who watches</td><td>People watch everything, and stop when they can't keep up</td><td>Agents watch everything; people see the dozen items that need judgment</td></tr>
+      <tr><td class="k">Is done really done</td><td>The system doesn't know; people have to remember</td><td>Closed loop: the system knows when it is done, and chases when it isn't</td></tr>
+      <tr><td class="k">Who is accountable</td><td>"I thought he had looked at it"</td><td>Written in the permission table: who can read, write, never touch; which step must have a human owner</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 18b 落地架构 -->
+<section>
+  <div class="eyebrow">Organization · blueprint in practice</div>
+  <h2 style="margin-bottom:6px;">The AI OS we built for a family office</h2>
+  <svg class="arch fo" viewBox="0 0 1240 600" width="1152" height="558" style="display:block;" role="img" aria-label="Family office AI pilot architecture">
+   <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#8a968f" stroke-width="1.4"/></marker></defs>
+   <!-- Web GUI -->
+   <rect class="box" x="540" y="14" width="330" height="78"/>
+   <text class="h" x="556" y="38">Web GUI · human control</text>
+   <text class="m" x="556" y="58">Create, read, update, delete what lives in the layer:</text>
+   <text class="m" x="556" y="74">review sources, fix records, manage access</text>
+   <!-- Hub -->
+   <rect class="box acc" x="540" y="128" width="330" height="340"/>
+   <text class="zl" x="556" y="150">THE HUB</text>
+   <text class="h" x="556" y="176" style="font-size:20px;">Knowledge layer</text>
+   <text class="m" x="556" y="196">A concept, not a product: all of the family office's</text>
+   <text class="m" x="556" y="212">valuable data, managed as one body of knowledge.</text>
+   <rect class="box" x="556" y="226" width="298" height="50"/><text class="h" x="568" y="246">Positions and transactions</text><text class="m" x="568" y="264">custodians, funds, alternatives, across entities</text>
+   <rect class="box" x="556" y="284" width="298" height="50"/><text class="h" x="568" y="304">Documents and agreements</text><text class="m" x="568" y="322">trusts, LPAs, reports, correspondence</text>
+   <rect class="box" x="556" y="342" width="298" height="50"/><text class="h" x="568" y="362">People and relationships</text><text class="m" x="568" y="380">family members, advisors, managers, GPs</text>
+   <rect class="box" x="556" y="400" width="298" height="50"/><text class="h" x="568" y="420">Meetings and decisions</text><text class="m" x="568" y="438">minutes, decisions, follow-ups, who approved</text>
+   <!-- Peer agent -->
+   <rect class="box" x="250" y="60" width="240" height="84" style="stroke-dasharray:4 3;"/>
+   <text class="h" x="266" y="84" style="fill:#6b7a72;">Canopy V3 agent (peer agent)</text>
+   <text class="m" x="266" y="104" style="fill:#8a968f;">Talks over an agent-to-agent protocol,</text>
+   <text class="m" x="266" y="120" style="fill:#8a968f;">not as a data connector. Outside the pilot.</text>
+   <!-- Agent -->
+   <rect class="box" x="250" y="222" width="240" height="150"/>
+   <text class="zl" x="266" y="244">READER</text>
+   <text class="h" x="266" y="268" style="font-size:18px;">Agent</text>
+   <text class="m" x="266" y="290">Harness framework. Reads the layer</text>
+   <text class="m" x="266" y="306">via CLI, answers at the entry point.</text>
+   <rect x="266" y="326" width="68" height="22" rx="11" fill="#f1f3ee" stroke="#d8ddd6"/><text class="m" x="300" y="341" text-anchor="middle">harness</text>
+   <rect x="342" y="326" width="90" height="22" rx="11" fill="#f1f3ee" stroke="#d8ddd6"/><text class="m" x="387" y="341" text-anchor="middle">CLI read-only</text>
+   <!-- Entry -->
+   <rect class="box" x="20" y="238" width="180" height="118"/>
+   <text class="zl" x="36" y="260">ENTRY POINT</text>
+   <text class="h" x="36" y="284" style="font-size:18px;">IM / email</text>
+   <text class="m" x="36" y="306">Where people already ask</text>
+   <text class="m" x="36" y="322">questions. No new app to learn.</text>
+   <!-- Connectors -->
+   <text class="zl" x="930" y="140">CONNECTORS AND SOURCES</text>
+   <rect class="box acc" x="930" y="150" width="290" height="192"/>
+   <text class="h" x="944" y="170">Canopy PMS · already consolidated</text>
+   <rect class="box" x="942" y="180" width="266" height="46"/><text class="h" x="954" y="199">Positions, trades, valuations</text><text class="m" x="954" y="217">across entities and custodians</text>
+   <rect class="box" x="942" y="232" width="266" height="46"/><text class="h" x="954" y="251">Custodian statements and feeds</text><text class="m" x="954" y="269">many banks, many currencies</text>
+   <rect class="box" x="942" y="284" width="266" height="46"/><text class="h" x="954" y="303">GP reports and capital calls</text><text class="m" x="954" y="321">quarterly reports, call notices, valuations</text>
+   <rect class="box" x="930" y="354" width="290" height="50"/><text class="h" x="944" y="374">Legal, accounting, trust documents</text><text class="m" x="944" y="392">documents of every kind, mostly PDF</text>
+   <rect class="box" x="930" y="412" width="290" height="50"/><text class="h" x="944" y="432">CRM and calendar</text><text class="m" x="944" y="450">family members, advisors, meetings</text>
+   <!-- edges -->
+   <path class="edge" d="M200 297 H250" marker-end="url(#ah)"/><path class="edge" d="M250 283 H200" marker-end="url(#ah)"/><text class="k" x="214" y="276">chat</text>
+   <path class="edge" d="M490 297 H540" marker-end="url(#ah)"/><path class="edge" d="M540 283 H490" marker-end="url(#ah)"/><text class="k" x="503" y="276">CLI</text>
+   <path class="edge" d="M370 144 V222" marker-end="url(#ah)" style="stroke-dasharray:4 3;"/><path class="edge" d="M370 222 V144" marker-end="url(#ah)" style="stroke-dasharray:4 3;"/><text class="k" x="378" y="188">A2A protocol</text>
+   <path class="edge" d="M705 92 V128" marker-end="url(#ah)"/><path class="edge" d="M705 128 V92" marker-end="url(#ah)"/><text class="k" x="714" y="114">CRUD</text>
+   <path class="edge2" d="M930 246 H870" marker-end="url(#ah)"/><path class="edge" d="M930 379 H870" marker-end="url(#ah)"/><path class="edge" d="M930 437 H870" marker-end="url(#ah)"/>
+   <path class="edge" d="M540 40 H236 V232 H250" marker-end="url(#ah)" style="stroke-dasharray:4 3;"/><text class="k" x="250" y="34">review tasks triggered from the GUI</text>
+   <path class="edge" d="M1226 500 V40 H870" marker-end="url(#ah)" style="stroke-dasharray:4 3;"/><text class="k" x="890" y="34">audit trail surfaced in the GUI</text>
+   <!-- Audit log -->
+   <rect class="zone" x="20" y="490" width="1200" height="96"/>
+   <text class="h" x="36" y="514">Audit log · observability</text>
+   <text class="m" x="36" y="534">Every session end to end: the message, the agent's</text>
+   <text class="m" x="36" y="550">full trace, A2A exchanges, layer reads, connector calls.</text>
+   <rect class="box" x="400" y="506" width="186" height="62"/><text class="h" x="412" y="528">Thinking</text><text class="m" x="412" y="548">reasoning steps and checks</text>
+   <rect class="box" x="598" y="506" width="186" height="62"/><text class="h" x="610" y="528">Actions</text><text class="m" x="610" y="548">what the agent did, in order</text>
+   <rect class="box" x="796" y="506" width="200" height="62"/><text class="h" x="808" y="528">Tool calls and results</text><text class="m" x="808" y="548">what was fetched, from where</text>
+   <rect class="box" x="1008" y="506" width="196" height="62"/><text class="h" x="1020" y="528">Context metadata</text><text class="m" x="1020" y="548">session, user, time, sources</text>
+   <path class="edge" d="M110 356 V490" marker-end="url(#ah)" style="stroke-dasharray:4 3;"/>
+   <path class="edge" d="M370 372 V490" marker-end="url(#ah)" style="stroke-dasharray:4 3;"/>
+   <path class="edge" d="M705 468 V490" marker-end="url(#ah)" style="stroke-dasharray:4 3;"/>
+   <path class="edge" d="M1075 462 V490" marker-end="url(#ah)" style="stroke-dasharray:4 3;"/>
+  </svg>
+</section>
+
+<!-- 19 分隔 社会 -->
+<section class="center dark">
+  <div class="eyebrow">Scale three</div>
+  <div class="divider-title">Society</div>
+  <p class="divider-sub">Inequality, an ideological fight, regulation, a vacuum of meaning.</p>
+</section>
+
+<!-- 20 不平权 -->
+<section>
+  <div class="eyebrow">Society · one</div>
+  <h2 style="margin-bottom:12px;">Extreme inequality: not a curve, a funnel</h2>
+  <style>
+    .funnel { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+    .funnel .row { display:grid; grid-template-columns:150px 1fr; align-items:center; gap:20px; }
+    .funnel .row .v { font-family:var(--serif); font-size:34px; font-weight:700; color:var(--deep); text-align:right; line-height:1; }
+    .funnel .row .track { display:flex; align-items:center; gap:14px; }
+    .funnel .row .bar { height:46px; border-radius:6px; background:var(--signal); flex:none; }
+    .funnel .row .lab { font-size:20px; color:var(--ink); white-space:nowrap; }
+    .funnel .row.l4 .bar { background:var(--deep); }
+  </style>
+  <div class="funnel">
+    <div class="row"><div class="v">6 billion</div><div class="track"><div class="bar" style="width:100%;display:flex;align-items:center;padding:0 18px;box-sizing:border-box;"><span class="lab" style="color:#fff;">Have never used a large model. Three quarters of humanity</span></div></div></div>
+    <div class="row"><div class="v">1–2 billion</div><div class="track"><div class="bar" style="width:25%;"></div><div class="lab">Occasionally use a free tier, as better search and writing help</div></div></div>
+    <div class="row"><div class="v">20 million</div><div class="track"><div class="bar" style="width:3.5%;"></div><div class="lab">Use frontier models for professional work: coding, math</div></div></div>
+    <div class="row l4"><div class="v">5,000</div><div class="track"><div class="bar" style="width:0.6%;min-width:4px;"></div><div class="lab">Inside the big labs, with hands on the newest systems</div></div></div>
+  </div>
+  <div class="grid3" style="margin-top:22px;gap:16px;">
+    <div class="card" style="padding:16px 20px;"><p style="font-size:19px;"><b style="color:var(--ink);">18.8%</b> of the world's working-age population used generative AI in June. Global North 28.8%, Global South 16.2%, and the gap is widening.</p></div>
+    <div class="card" style="padding:16px 20px;"><p style="font-size:19px;"><b style="color:var(--ink);">64%</b> in Singapore, second in the world. Usage per capita tracks GDP almost exactly.</p></div>
+    <div class="card acc" style="padding:16px 20px;"><p style="font-size:19px;">Which layer of the funnel you are in decides what you think AI is. Most people in this room are in the third.</p></div>
+  </div>
+  <p class="foot">Funnel: Karpathy's estimate of October 11 (his words: napkin math). 18.8% and 64%: Microsoft AI Economy Institute, Q2 2026 report.</p>
+</section>
+
+<!-- 21 开源 vs 闭源 -->
+<section>
+  <div class="eyebrow">Society · two</div>
+  <h2 style="margin-bottom:16px;">Open or closed: no longer a technical choice, an ideology</h2>
+  <div class="cols">
+    <div class="col"><h3>Open camp · China leads</h3><ul><li>Chinese models took 41% of Hugging Face downloads over the past year, ahead of the US.</li><li>The largest open-weight model has 2.8 trillion parameters, about 3 months behind the frontier.</li><li>Beijing's story: open weights are the fairer alternative to closed American models; US controls are an "AI iron curtain".</li></ul></div>
+    <div class="col acc"><h3>Closed camp · the US digs in</h3><ul><li>The White House is weighing putting Chinese open-source labs on the Entity List.</li><li>The labs' line: open weights are inherently "decelerationist". VCs and two hundred startups signed a letter against it.</li><li>Most national sovereign-AI programs are built on Chinese open weights.</li></ul></div>
+  </div>
+  <p class="big" style="margin-top:28px;">What this fight decides: who ends up owning the fourth factor of production, and whose rules it flows by.</p>
+  <p class="foot">What it means for you: sovereignty or ceding control is now a question for countries, not just companies. Your organization will have to answer whose model it uses and where its data lives.</p>
+</section>
+
+<!-- 21a 监管 -->
+<section>
+  <div class="eyebrow">Society · three</div>
+  <h2 style="margin-bottom:14px;">Regulation is uneven, and tied to ideology</h2>
+  <style>
+    .reg { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .reg .sg { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .reg .sg h4 { font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--deep); margin:0 0 6px; font-weight:500; }
+    .reg .sg p { font-size:14.5px; margin:0 0 5px; line-height:1.4; }
+    .reg .c { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px 18px; }
+    .reg .c.on { background:var(--soft); border-color:var(--signal); }
+    .reg .c h3 { font-family:var(--sans); font-size:21px; font-weight:600; margin:0 0 4px; color:var(--ink); text-transform:none; letter-spacing:0; }
+    .reg .c .t { font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--muted); margin-bottom:10px; text-transform:uppercase; }
+    .reg .c p { font-size:15.5px; color:var(--body); line-height:1.42; margin:0 0 6px; }
+  </style>
+  <div class="reg">
+    <div class="c"><h3>United States</h3><div class="t">No federal law; states legislate; the federal government sues them</div><p>No federal AI statute. A December executive order set up a DOJ task force to challenge state AI laws.</p><p>California's frontier-model transparency act took effect in January; Colorado's law was rewritten and pushed to next year. Congress has repeatedly declined a national framework.</p></div>
+    <div class="c"><h3>European Union</h3><div class="t">Rights first, ex-ante compliance, now retreating</div><p>Risk tiers: social scoring and manipulation banned; hiring, credit, education and policing are high-risk, needing prior assessment, documentation and human oversight; general-purpose models owe transparency and copyright compliance; the strongest report incidents. Fines up to 7% of global revenue.</p><p>But this year's Digital Omnibus pushed high-risk rules to late 2027 and 2028: a retreat under competitiveness pressure. Companies don't know which version to build to.</p></div>
+    <div class="c on"><h3>Singapore</h3><div class="t">Pragmatic: PM-led, 9 agencies moving together</div><p><b>Adoption</b>: the PM chairs the National AI Council; four national missions cover 40% of GDP; 10,000 firms and 100,000 workers in three years; 150,000 public officers each get an agent, with a registry.</p><p><b>Regulation</b>: IMDA's agentic AI governance framework; data, cyber and legal agencies each issued guidance; <b>MAS</b> October guidelines cover all AI including agents; <b>SAFR</b>: declare, authorize, assess before every action, fully logged.</p></div>
+    <div class="c"><h3>China</h3><div class="t">Fast, specific, regulated by application</div><p>The amended Cybersecurity Law took effect in January, writing AI into a foundational law for the first time.</p><p>Mandatory labeling of generated content since last September; rules for human-like interactive AI this year. No grand statute; one measure per application.</p></div>
+  </div>
+  <p class="big" style="margin-top:14px;font-size:22px;">One more reason underneath: regulators' own understanding of AI is generational. Most people writing the rules have never run an agent themselves.</p>
+</section>
+
+<!-- 21b 意义真空 -->
+<section class="center">
+  <div class="eyebrow">Society · four</div>
+  <h2>When work no longer fills the day: a vacuum of meaning, and the tribes that fill it</h2>
+  <div class="grid3" style="margin-top:8px;">
+    <div class="card"><h3>Working hours are loosening</h3><p>Once input and output are taken over, the same output no longer needs the same hours. The young go first: employment in highly exposed jobs already lags by 19%.</p></div>
+    <div class="card warn"><h3>An existential crisis surfaces</h3><p>Industrialization defined people by their work; loosen the work and "who am I" comes back. The other side of de-alienation is a vacuum of meaning.</p></div>
+    <div class="card warn"><h3>Tribes fill it</h3><p>A vacuum doesn't stay empty. Open vs closed, accelerate vs decelerate, pro-AI vs anti-AI are already tribes. People fill the space work left with identity.</p></div>
+  </div>
+  <p class="foot">What it means for you: managing mental energy, judgment and taste, and a stake. All three are answers to this vacuum.</p>
+</section>
+
+<!-- 22 五个关注点 -->
+<section>
+  <div class="eyebrow">The next 6 to 12 months</div>
+  <h2 style="margin-bottom:10px;">Fifteen people at the frontier: what they watch, in five things</h2>
+  <style>
+    .kol table { font-size:16px; }
+    .kol table td { padding:8px 10px; line-height:1.35; }
+    .kol td.k { width:215px; font-size:17px; }
+    .kol td.w { width:470px; color:var(--muted); font-size:14.5px; }
+    .kol td.w b { color:var(--ink); font-weight:600; }
+  </style>
+  <div class="kol">
+  <table>
+    <thead><tr><th>What</th><th>Who is watching</th><th>What it means for you</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Agents go from one to swarms; tasks from hours to weeks</td><td class="w"><b>Karpathy</b>: the outside saw the preview; inside, thousands of agents collaborate for weeks · <b>Mollick</b>: the swarm organized itself · <b>Altman</b>: always-on agents became a product</td><td>The entry point becomes one sentence to an agent; you move to defining and accepting; both fragments and long runs grow</td></tr>
+      <tr><td class="k">Verification is the bottleneck and the scarcest resource</td><td class="w"><b>Karpathy</b>: whatever can be verified gets automated · <b>Catalini et al. (MIT)</b>: automation gets cheap faster than verification; the gap has a name, the Measurability Gap · <b>Nadella</b>: treat models as insiders with powerful access; independent audit and an emergency brake</td><td>Write the judgment down: what counts as done, who verifies, who is accountable. A checkpoint before every agent action</td></tr>
+      <tr><td class="k">Continual learning and memory: the next inflection, and the new lock-in battleground</td><td class="w"><b>Hassabis, Sutskever, Karpathy</b>: continual learning is the missing piece; nobody has shipped it · <b>LeCun, Fei-Fei Li, Sutton</b>: world models and experience · <b>Dwarkesh</b>: 60% odds memory still lives in context by mid next year</td><td>Models swap within months, so platforms hold on to your memory instead. Keep rules and records yourself; when switching vendors, ask "can I take my context with me"</td></tr>
+      <tr><td class="k">The labor market splits first among the young and codified knowledge</td><td class="w"><b>Brynjolfsson</b>: young workers in exposed jobs lag by 19%; the productivity take-off is visible · <b>Amodei</b>: a general labor substitute; wealth concentrates · <b>Lütke</b>: prove AI can't do it before adding headcount</td><td>Experience shifts from "knowing how" to "knowing what good looks like". The way out is a position accountable for results</td></tr>
+      <tr><td class="k">Power: sovereignty, open source, compute and new institutions</td><td class="w"><b>Jensen Huang</b>: every country needs its own AI · <b>Hadfield</b>: an agent economy needs identity, liability and registration · <b>Amodei</b>: two 2028 scenarios for US–China leadership · <b>Altman</b>: alignment is not solved</td><td>Sovereignty or ceding control is a question for your organization, not only for countries. Contracts come before law; you set the boundaries</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="margin-top:14px;font-size:17px;font-weight:700;color:var(--ink);">Mu's own view: each of them has an interest behind the position. Where you sit decides what you think.</p>
+</section>
+
+<!-- 24 议程 -->
+<section>
+  <div class="eyebrow">The rest of today · AI collaboration one-day workshop</div>
+  <h2 style="margin-bottom:16px;">From judgment to execution</h2>
+  <style>
+    .ag { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+    .ag table { font-size:17px; }
+    .ag table td { padding:7px 10px; line-height:1.35; }
+    .ag table td.t { width:112px; font-family:var(--mono); font-size:14px; color:var(--muted); white-space:nowrap; }
+    .ag table td.w { width:150px; color:var(--muted); font-size:15px; text-align:right; }
+    .ag h3 { font-family:var(--mono); font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:var(--deep); font-weight:500; margin:0 0 6px; }
+    .ag tr.me td { color:var(--ink); font-weight:600; }
+  </style>
+  <div class="ag">
+    <div>
+      <h3>Morning · talks, foundations, the challenge</h3>
+      <table><tbody>
+        <tr class="me"><td class="t">10:00–10:40</td><td>Opening talk: AI's impact on individuals, companies and society</td><td class="w">Mu</td></tr>
+        <tr><td class="t">10:40–11:00</td><td>From humanities major to AI builder: agents that stand out</td><td class="w">Derek</td></tr>
+        <tr><td class="t">11:00–11:10</td><td>An engineer's AI journey: how engineers use AI</td><td class="w">Qihao</td></tr>
+        <tr><td class="t">11:10–11:30</td><td>When AI works on its own: from LLM to agent harness</td><td class="w">Qihao</td></tr>
+        <tr><td class="t">11:30–11:40</td><td>Codex orientation: meet your AI workbench</td><td class="w">Derek</td></tr>
+        <tr><td class="t">11:40–12:10</td><td>The AI Challenge: from learning to practice (challenge rules)</td><td class="w">Derek</td></tr>
+        <tr><td class="t">12:10–12:30</td><td>Grill Me: think it through before you let AI act</td><td class="w">Derek</td></tr>
+      </tbody></table>
+    </div>
+    <div>
+      <h3>Afternoon · hands-on workshop and showcase</h3>
+      <table><tbody>
+        <tr><td class="t">12:30–13:30</td><td>Lunch &amp; Plan: from why to how, over food</td><td class="w">Derek, Qihao, Coco, Suxian</td></tr>
+        <tr><td class="t">13:30–17:30</td><td>From Plan to Product: hands-on, build a full due-diligence report</td><td class="w">Everyone</td></tr>
+        <tr><td class="t">16:30–16:50</td><td>Group discussion and internal selection</td><td class="w">Derek</td></tr>
+        <tr><td class="t">16:50–17:30</td><td>The Grand Showcase: every good idea gets seen</td><td class="w">Derek</td></tr>
+        <tr><td class="t">17:30–17:55</td><td>From personal productivity to organizational intelligence</td><td class="w">Qihao</td></tr>
+        <tr><td class="t">17:55–18:00</td><td>Beyond the Workshop: from AI user to AI builder</td><td class="w">Derek</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+  <p class="foot">The afternoon is this morning's argument in practice: hand generation to AI, keep judgment, show the system knows when it is done.</p>
+</section>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  function toggleFullscreen(){ const d=document; if(d.fullscreenElement){ d.exitFullscreen(); } else { d.documentElement.requestFullscreen().catch(()=>{}); } }
+  Reveal.initialize({ hash:true, width:1280, height:720, margin:0.04, transition:'none', center:false, controls:false, plugins:[RevealNotes],
+    keyboard:{ 70: toggleFullscreen } });
+  const fsBtn=document.createElement('button'); fsBtn.id='fsbtn'; fsBtn.textContent='Fullscreen · F'; fsBtn.title='Press F or click to toggle fullscreen (Chrome: ⌃⌘F)';
+  fsBtn.addEventListener('click', toggleFullscreen); if(!/[?&]nofs/.test(location.search)) document.body.appendChild(fsBtn);
+  document.addEventListener('fullscreenchange', ()=>{ fsBtn.textContent = document.fullscreenElement ? 'Exit fullscreen · F' : 'Fullscreen · F'; });
+</script>
+</body>
+</html>
