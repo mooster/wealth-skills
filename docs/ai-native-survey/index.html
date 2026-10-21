@@ -387,7 +387,7 @@ input[type="email"][aria-invalid="true"] { border-color: #E05252; }
 
 <script>
 (() => {
-  const SURVEY_API_URL = 'https://ai-native-survey-api.youngrhino.chatgpt.site/api/survey';
+  const SURVEY_API_URL = 'https://survey.wealthskills.ai/ai-native/api/survey';
   const totalQ = 13;
   let currentQ = 0;
   let submitting = false;
@@ -607,11 +607,16 @@ input[type="email"][aria-invalid="true"] { border-color: #E05252; }
   }
 
   async function submitSurvey() {
+    if (submitting) return;
     if (!emailIsValid()) {
       document.getElementById('respondentEmail').focus();
       return;
     }
     submitting = true;
+    answers.submission_id ||= crypto.randomUUID();
+    updateNextEnabled();
+    btnBack.disabled = true;
+    document.getElementById('q12Skip').disabled = true;
     answers.complex_task = document.getElementById('q7Text').value.trim();
     answers.questions = document.getElementById('q12Text').value.trim();
     const payload = { ...answers, timestamp: new Date().toISOString(), duration_seconds: Math.round((Date.now() - startedAt) / 1000) };
@@ -631,9 +636,11 @@ input[type="email"][aria-invalid="true"] { border-color: #E05252; }
       download.hidden = true;
       download.onclick = () => downloadResponse(payload);
       thankYou.classList.add('active');
-      localStorage.removeItem(storageKey);
+      try { localStorage.removeItem(storageKey); } catch (_) { /* already saved on the server */ }
     } catch (error) {
       submitting = false;
+      btnBack.disabled = false;
+      document.getElementById('q12Skip').disabled = false;
       btnNext.textContent = 'Submit';
       submitError.classList.add('visible');
       updateNextEnabled();
@@ -686,6 +693,7 @@ input[type="email"][aria-invalid="true"] { border-color: #E05252; }
   document.getElementById('q7Text').addEventListener('input', () => { answers.complex_task = document.getElementById('q7Text').value.trim(); persistDraft(); });
   document.getElementById('q12Text').addEventListener('input', () => { answers.questions = document.getElementById('q12Text').value.trim(); persistDraft(); });
   document.getElementById('q12Skip').addEventListener('click', () => {
+    if (submitting) return;
     document.getElementById('q12Text').value = '';
     answers.questions = '';
     submitSurvey();
@@ -705,7 +713,7 @@ input[type="email"][aria-invalid="true"] { border-color: #E05252; }
     if (currentQ === totalQ - 1) submitSurvey();
     else showQuestion(nextQuestion(currentQ));
   });
-  btnBack.addEventListener('click', () => { if (currentQ > 0) showQuestion(previousQuestion(currentQ)); });
+  btnBack.addEventListener('click', () => { if (!submitting && currentQ > 0) showQuestion(previousQuestion(currentQ)); });
   showQuestion(0);
 })();
 </script>
